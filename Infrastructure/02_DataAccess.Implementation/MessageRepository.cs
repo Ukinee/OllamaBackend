@@ -4,33 +4,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementation
 {
-    public class MessageRepository(MainRepository mainRepository) : IMessageRepository
+    public class MessageRepository(ChatDbContext chatDbContext) : IMessageRepository
     {
-        public async Task<DatabaseMessageDto?> FindMessageByIdAsync(Guid id) =>
-            await mainRepository.Messages.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<MessageEntity?> FindMessageByIdAsync(Guid id) =>
+            await chatDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task AddAsync(DatabaseMessageDto message) =>
-            await mainRepository.Messages.AddAsync(message);
+        public async Task AddAsync(MessageEntity message) =>
+            await chatDbContext.Messages.AddAsync(message);
 
-        public Task RemoveAsync(DatabaseMessageDto message)
+        public Task RemoveAsync(MessageEntity message)
         {
-            mainRepository.Messages.Remove(message);
+            chatDbContext.Messages.Remove(message);
 
             return Task.CompletedTask;
         }
 
         public async Task RemoveByOwnerAsync(Guid ownerId)
         {
-            List<DatabaseMessageDto> messages = await FindMessagesByConversationAsync(ownerId);
-            mainRepository.Messages.RemoveRange(messages);
+            List<MessageEntity> messages = await FindMessagesByConversationAsync(ownerId);
+            chatDbContext.Messages.RemoveRange(messages);
         }
 
         public async Task SaveAsync() =>
-            await mainRepository.SaveChangesAsync();
+            await chatDbContext.SaveChangesAsync();
 
-        public async Task<List<DatabaseMessageDto>> FindMessagesByConversationAsync(Guid conversationId)
+        public async Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId)
         {
-            return await mainRepository
+            return await chatDbContext
                 .Messages
                 .Where(x => x.ConversationDtoId == conversationId)
                 .ToListAsync();

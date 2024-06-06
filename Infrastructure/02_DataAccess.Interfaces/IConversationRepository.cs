@@ -4,12 +4,10 @@ namespace DataAccess.Interfaces
 {
     public interface IConversationRepository
     {
-        public Task<List<DatabaseConversationDto>> GetAllAsync();
-        public Task<DatabaseConversationDto?> FindConversationByIdAsync(Guid id);
+        public Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken);
+        public Task<ConversationEntity?> FindConversationById(Guid id);
         
-        public Task AddAsync(DatabaseConversationDto conversation);
-        public Task RemoveAsync(DatabaseConversationDto conversation);
-        
-        public Task SaveAsync();
+        public Task Add(ConversationEntity conversation);
+        public Task Remove(ConversationEntity conversation);
     }
 }

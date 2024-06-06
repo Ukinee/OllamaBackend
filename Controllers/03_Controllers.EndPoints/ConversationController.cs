@@ -6,22 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Controllers.EndPoints
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class ConversationController(IConversationRepository conversationRepository, IMessageRepository messageRepository) : ControllerBase
+    [ApiController, Route("api/[controller]")]
+    public class ConversationController //use cases
+    (
+        IConversationRepository conversationRepository,
+        IMessageRepository messageRepository
+    ) : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetGeneralConversations()
-        {
-            List<DatabaseConversationDto> conversations = await conversationRepository.GetAllAsync();
-
-            return Ok(conversations.Select(x => x.ToGeneralConversation()));
-        }
-
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
         {
-            DatabaseConversationDto? conversation = await conversationRepository.FindConversationByIdAsync(id);
+            ConversationEntity? conversation = await conversationRepository.FindConversationById(id);
 
             if (conversation == null)
                 return NotFound();
@@ -30,30 +25,26 @@ namespace Controllers.EndPoints
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostConversation([FromBody] PostConversationDto conversation)
+        public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest conversation)
         {
-            DatabaseConversationDto databaseConversationDto = conversation.ToDatabaseConversation();
+            ConversationEntity conversationEntity = conversation.ToDatabaseConversation();
 
-            await conversationRepository.AddAsync(databaseConversationDto);
-            await conversationRepository.SaveAsync();
+            await conversationRepository.Add(conversationEntity);
 
-            return Ok(databaseConversationDto);
+            return Ok(conversationEntity);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
         {
-            DatabaseConversationDto? conversation = await conversationRepository.FindConversationByIdAsync(id);
-            
+            ConversationEntity? conversation = await conversationRepository.FindConversationById(id);
+
             if (conversation == null)
                 return NotFound();
 
             await messageRepository.RemoveByOwnerAsync(conversation.Id);
-            await conversationRepository.RemoveAsync(conversation);
-            
-            await messageRepository.SaveAsync();
-            await conversationRepository.SaveAsync();
-            
+            await conversationRepository.Remove(conversation);
+
             return NoContent();
         }
     }

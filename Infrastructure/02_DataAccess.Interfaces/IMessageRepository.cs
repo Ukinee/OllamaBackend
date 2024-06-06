@@ -4,13 +4,11 @@ namespace DataAccess.Interfaces
 {
     public interface IMessageRepository
     {
-        public Task<DatabaseMessageDto?> FindMessageByIdAsync(Guid id);
-        public Task<List<DatabaseMessageDto>> FindMessagesByConversationAsync(Guid conversationId);
+        public Task<MessageEntity?> FindMessageByIdAsync(Guid id);
+        public Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId);
         
-        public Task AddAsync(DatabaseMessageDto message);
-        public Task RemoveAsync(DatabaseMessageDto message);
+        public Task AddAsync(MessageEntity message);
+        public Task RemoveAsync(MessageEntity message);
         public Task RemoveByOwnerAsync(Guid ownerId);
-        
-        public Task SaveAsync();
     }
 }

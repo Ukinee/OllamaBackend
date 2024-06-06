@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>aspnet-OllamaBackend-92BB1D5B-3EF3-4FBF-9EC8-AAB2C31B701A</UserSecretsId>
+        <RootNamespace>OllamaBackend</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,6 +29,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Controllers\03_Controllers.EndPoints\03_Controllers.EndPoints.csproj" />
+      <ProjectReference Include="..\Handshake\Handshake.Controllers\Handshake.Controllers.csproj" />
       <ProjectReference Include="..\Infrastructure\02_DataAccess.Implementation\02_DataAccess.Implementation.csproj" />
     </ItemGroup>
 

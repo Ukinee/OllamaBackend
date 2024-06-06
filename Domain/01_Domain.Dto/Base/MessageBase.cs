@@ -1,8 +1,7 @@
-﻿namespace Domain.Dto.WebDtos.GetDtos
+﻿namespace Domain.Dto.Base
 {
-    public record GetMessageDto
+    public record MessageBase
     {
-        public Guid Id { get; set; }
         public string ChatName { get; set; }
         public string ChatRole { get; set; }
         public string Content { get; set; }

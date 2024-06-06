@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Implementation.Migrations
 {
-    [DbContext(typeof(MainRepository))]
+    [DbContext(typeof(ChatDbContext))]
     [Migration("20240605104911_Initial")]
     partial class Initial
     {

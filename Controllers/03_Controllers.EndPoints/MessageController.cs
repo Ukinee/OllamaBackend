@@ -13,7 +13,7 @@ namespace Controllers.EndPoints
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetMessage([FromRoute] Guid id)
         {
-            DatabaseMessageDto? message = await messageRepository.FindMessageByIdAsync(id);
+            MessageEntity? message = await messageRepository.FindMessageByIdAsync(id);
 
             if (message == null)
                 return NotFound();
@@ -22,20 +22,19 @@ namespace Controllers.EndPoints
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostMessage([FromBody] PostMessageDto message)
+        public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest)
         {
-            DatabaseMessageDto databaseMessage = message.ToDatabaseMessage();
+            MessageEntity message = messageRequest.ToDatabaseMessage();
 
-            await messageRepository.AddAsync(databaseMessage);
-            await messageRepository.SaveAsync();
+            await messageRepository.AddAsync(message);
 
-            return CreatedAtAction(nameof(GetMessage), new { id = databaseMessage.Id }, databaseMessage);
+            return CreatedAtAction(nameof(GetMessage), new { id = message.Id }, message);
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
         {
-            DatabaseMessageDto? message = await messageRepository.FindMessageByIdAsync(id);
+            MessageEntity? message = await messageRepository.FindMessageByIdAsync(id);
             
             if (message == null)
                 return NotFound();

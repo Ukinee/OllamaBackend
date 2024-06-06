@@ -6,26 +6,26 @@ namespace Domain.Dto.Extensions
 {
     public static class MessageExtensions
     {
-        public static DatabaseMessageDto ToDatabaseMessage(this PostMessageDto message) =>
-            new DatabaseMessageDto
+        public static MessageEntity ToDatabaseMessage(this PostMessageRequest message) =>
+            new MessageEntity
             {
                 Id = Guid.NewGuid(),
                 ConversationDtoId = message.ConversationId,
                 Content = message.Content,
-                ChatName = message.AgentName,
-                Role = message.Role,
+                ChatName = message.ChatName,
+                ChatRole = message.ChatRole,
                 Images = message.Images,
                 Timestamp = DateTime.UtcNow,
             };
 
-        public static GetMessageDto ToGetMessageDto(this DatabaseMessageDto message)
+        public static MessageViewModel ToGetMessageDto(this MessageEntity message)
         {
-            return new GetMessageDto
+            return new MessageViewModel
             {
                 Id = message.Id,
                 Content = message.Content,
                 Images = message.Images,
-                ChatRole = message.Role,
+                ChatRole = message.ChatRole,
                 ChatName = message.ChatName,
                 Timestamp = message.Timestamp,
             };

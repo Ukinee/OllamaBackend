@@ -6,9 +6,9 @@ namespace Domain.Dto.Extensions
 {
     public static class ConversationExtensions
     {
-        public static DatabaseConversationDto ToDatabaseConversation(this PostConversationDto conversation)
+        public static ConversationEntity ToDatabaseConversation(this PostConversationRequest conversation)
         {
-            return new DatabaseConversationDto
+            return new ConversationEntity
             {
                 Id = Guid.NewGuid(),
                 GlobalContext = conversation.GlobalContext,
@@ -16,18 +16,18 @@ namespace Domain.Dto.Extensions
             };
         }
 
-        public static GetGeneralConversationDto ToGeneralConversation(this DatabaseConversationDto conversation)
+        public static GeneralConversationViewModel ToGeneralConversation(this ConversationEntity conversation)
         {
-            return new GetGeneralConversationDto
+            return new GeneralConversationViewModel
             {
                 Id = conversation.Id,
                 GlobalContext = conversation.GlobalContext,
             };
         }
 
-        public static GetConcreteConversationDto ToConcreteConversation(this DatabaseConversationDto conversation)
+        public static ConcreteConversationViewModel ToConcreteConversation(this ConversationEntity conversation)
         {
-            return new GetConcreteConversationDto
+            return new ConcreteConversationViewModel
             {
                 Id = conversation.Id,
                 GlobalContext = conversation.GlobalContext,

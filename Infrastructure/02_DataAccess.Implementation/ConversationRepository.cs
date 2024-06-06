@@ -4,31 +4,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Implementation
 {
-    public class ConversationRepository(MainRepository mainRepository) : IConversationRepository
+    public class ConversationRepository(ChatDbContext chatDbContext) : IConversationRepository
     {
-        public async Task<List<DatabaseConversationDto>> GetAllAsync() =>
-             await mainRepository
+        public async Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken) =>
+             await chatDbContext
                  .Conversations
                  .Include(dto => dto.Messages)
-                 .ToListAsync();
+                 .ToListAsync(cancellationToken);
 
-        public async Task<DatabaseConversationDto?> FindConversationByIdAsync(Guid id) =>
-            await mainRepository
+        public async Task<ConversationEntity?> FindConversationById(Guid id) =>
+            await chatDbContext
                 .Conversations
                 .Include(dto => dto.Messages)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task AddAsync(DatabaseConversationDto conversation) =>
-            await mainRepository.Conversations.AddAsync(conversation);
+        public async Task Add(ConversationEntity conversation) =>
+            await  chatDbContext.Conversations.AddAsync(conversation);
 
-        public Task RemoveAsync(DatabaseConversationDto conversation)
+        public async Task Remove(ConversationEntity conversation) 
         {
-            mainRepository.Conversations.Remove(conversation);
+            chatDbContext.Conversations.Remove(conversation);
             
-            return Task.CompletedTask;
+            await Save();
         }
 
-        public async Task SaveAsync() =>
-            await mainRepository.SaveChangesAsync();
+        public async Task Save() =>
+            await chatDbContext.SaveChangesAsync();
     }
 }
