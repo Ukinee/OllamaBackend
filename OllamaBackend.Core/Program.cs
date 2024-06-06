@@ -1,3 +1,5 @@
+using Authorization.Services.Implementations;
+
 namespace OllamaBackend;
 
 public class Program
@@ -12,7 +14,7 @@ public class Program
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddControllers();
-
+        
         WebApplication app = builder.Build();
 
         if (app.Environment.IsDevelopment())
@@ -20,7 +22,7 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        
         WebSocketOptions webSocketOptions = new WebSocketOptions
         {
             KeepAliveInterval = TimeSpan.FromMinutes(2),

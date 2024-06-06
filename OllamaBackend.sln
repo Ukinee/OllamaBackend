@@ -24,6 +24,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handshake", "Handshake", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handshake.Controllers", "Handshake\Handshake.Controllers\Handshake.Controllers.csproj", "{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Setup", "Authorization\Authorization.Setup\Authorization.Setup.csproj", "{D5F98198-2438-451C-B811-AEC44D53865E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Interfaces", "Authorization\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj", "{0AC75447-EDC3-46AD-87CF-4FB0957FD811}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Implementations", "Authorization\Authorization.Services.Implementations\Authorization.Services.Implementations.csproj", "{1BDDF736-64F9-4224-A75A-D6353B750FE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Controllers", "Authorization\Authorization.Controllers\Authorization.Controllers.csproj", "{DE0BE15A-8621-4BF8-8122-0CC34E735309}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Domain", "Authorization\Authorization.Domain\Authorization.Domain.csproj", "{7568D20D-B232-464F-A057-B5E2C3F68BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataAccess", "Authorization\Authorization.DataAccess\Authorization.DataAccess.csproj", "{B9B4E595-87FB-448C-9AAB-4377F015B625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +76,30 @@ Global
 		{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F98198-2438-451C-B811-AEC44D53865E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F98198-2438-451C-B811-AEC44D53865E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F98198-2438-451C-B811-AEC44D53865E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F98198-2438-451C-B811-AEC44D53865E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC75447-EDC3-46AD-87CF-4FB0957FD811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC75447-EDC3-46AD-87CF-4FB0957FD811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC75447-EDC3-46AD-87CF-4FB0957FD811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC75447-EDC3-46AD-87CF-4FB0957FD811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDDF736-64F9-4224-A75A-D6353B750FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDDF736-64F9-4224-A75A-D6353B750FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDDF736-64F9-4224-A75A-D6353B750FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDDF736-64F9-4224-A75A-D6353B750FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0BE15A-8621-4BF8-8122-0CC34E735309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0BE15A-8621-4BF8-8122-0CC34E735309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0BE15A-8621-4BF8-8122-0CC34E735309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0BE15A-8621-4BF8-8122-0CC34E735309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7568D20D-B232-464F-A057-B5E2C3F68BAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7568D20D-B232-464F-A057-B5E2C3F68BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7568D20D-B232-464F-A057-B5E2C3F68BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7568D20D-B232-464F-A057-B5E2C3F68BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C475CA1-19E3-471F-9541-ACC90F258C33} = {CF550231-0F05-41DF-831D-750DAA4E208A}
@@ -72,5 +110,11 @@ Global
 		{31719E32-4F0F-412C-A05D-126278C341D5} = {FE50965B-CFA8-4CE2-B9AF-B7C8240D65FF}
 		{6A4AC542-178C-4C4A-B380-C38F440EF97D} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
 		{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D} = {979478CD-F8E9-42D3-A102-FBEFFAF31C56}
+		{D5F98198-2438-451C-B811-AEC44D53865E} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{0AC75447-EDC3-46AD-87CF-4FB0957FD811} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{1BDDF736-64F9-4224-A75A-D6353B750FE3} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{DE0BE15A-8621-4BF8-8122-0CC34E735309} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{7568D20D-B232-464F-A057-B5E2C3F68BAD} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{B9B4E595-87FB-448C-9AAB-4377F015B625} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
 	EndGlobalSection
 EndGlobal

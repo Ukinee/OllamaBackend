@@ -28,6 +28,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Authorization\Authorization.Controllers\Authorization.Controllers.csproj" />
+      <ProjectReference Include="..\Authorization\Authorization.Setup\Authorization.Setup.csproj" />
       <ProjectReference Include="..\Controllers\03_Controllers.EndPoints\03_Controllers.EndPoints.csproj" />
       <ProjectReference Include="..\Handshake\Handshake.Controllers\Handshake.Controllers.csproj" />
       <ProjectReference Include="..\Infrastructure\02_DataAccess.Implementation\02_DataAccess.Implementation.csproj" />

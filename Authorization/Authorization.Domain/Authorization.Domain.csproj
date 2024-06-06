@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>Domain.Dto</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="WebDtos\DeleteDtos\" />
+      <ProjectReference Include="..\..\Domain\01_Domain.Dto\01_Domain.Dto.csproj" />
+      <ProjectReference Include="..\..\Domain\01_Domain.Models\01_Domain.Models.csproj" />
     </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using DataAccess.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Implementation.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    partial class LocalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240606214224_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,18 +39,25 @@ namespace DataAccess.Implementation.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("Conversations");
                 });
 
-            modelBuilder.Entity("Domain.Dto.DataBaseDtos.DatabaseMessageDto", b =>
+            modelBuilder.Entity("Domain.Dto.DataBaseDtos.MessageEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ChatName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChatRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -61,10 +71,6 @@ namespace DataAccess.Implementation.Migrations
                     b.Property<string>("Images")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
@@ -75,7 +81,7 @@ namespace DataAccess.Implementation.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Domain.Dto.DataBaseDtos.DatabaseMessageDto", b =>
+            modelBuilder.Entity("Domain.Dto.DataBaseDtos.MessageEntity", b =>
                 {
                     b.HasOne("Domain.Dto.DataBaseDtos.ConversationEntity", "ConversationDto")
                         .WithMany("Messages")

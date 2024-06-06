@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Controllers.EndPoints
 {
     [ApiController, Route("api/[controller]")]
-    public class ConversationController //use cases
+    public class ConversationController //todo use cases
     (
         IConversationRepository conversationRepository,
         IMessageRepository messageRepository
@@ -31,7 +31,7 @@ namespace Controllers.EndPoints
 
             await conversationRepository.Add(conversationEntity);
 
-            return Ok(conversationEntity);
+            return CreatedAtAction(nameof(GetConcreteConversation), new { id = conversationEntity.Id }, conversationEntity);
         }
 
         [HttpDelete("{id:guid}")]

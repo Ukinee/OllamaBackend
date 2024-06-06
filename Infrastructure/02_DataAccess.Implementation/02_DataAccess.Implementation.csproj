@@ -18,7 +18,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Authorization\Authorization.Controllers\Authorization.Controllers.csproj" />
+      <ProjectReference Include="..\..\Authorization\Authorization.DataAccess\Authorization.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Authorization\Authorization.Services.Implementations\Authorization.Services.Implementations.csproj" />
+      <ProjectReference Include="..\..\Authorization\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\..\Authorization\Authorization.Setup\Authorization.Setup.csproj" />
+      <ProjectReference Include="..\..\Controllers\03_Controllers.EndPoints\03_Controllers.EndPoints.csproj" />
       <ProjectReference Include="..\..\Domain\01_Domain.Dto\01_Domain.Dto.csproj" />
+      <ProjectReference Include="..\..\Handshake\Handshake.Controllers\Handshake.Controllers.csproj" />
       <ProjectReference Include="..\02_DataAccess.Interfaces\02_DataAccess.Interfaces.csproj" />
     </ItemGroup>
 

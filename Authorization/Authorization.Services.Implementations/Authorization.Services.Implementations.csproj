@@ -2,13 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
-        <RootNamespace>Domain.Dto</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="WebDtos\DeleteDtos\" />
+      <ProjectReference Include="..\Authorization.DataAccess\Authorization.DataAccess.csproj" />
+      <ProjectReference Include="..\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>
