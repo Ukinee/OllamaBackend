@@ -10,7 +10,16 @@ namespace OllamaBackend
         public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration) =>
             services
                 .ConfigureAuthorization(configuration)
-                .ConfigureCore(configuration);
+                .ConfigureCore(configuration)
+                .AddLogging
+                (
+                    logging =>
+                    {
+                        logging.ClearProviders();
+                        logging.AddConsole();
+                        logging.AddDebug();
+                    }
+                );
 
         private static IServiceCollection ConfigureCore(this IServiceCollection services, IConfiguration configuration)
         {

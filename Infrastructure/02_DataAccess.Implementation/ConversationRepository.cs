@@ -7,10 +7,10 @@ namespace DataAccess.Implementation
     public class ConversationRepository(ChatDbContext chatDbContext) : IConversationRepository
     {
         public async Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken) =>
-             await chatDbContext
-                 .Conversations
-                 .Include(dto => dto.Messages)
-                 .ToListAsync(cancellationToken);
+            await chatDbContext
+                .Conversations
+                .Include(dto => dto.Messages)
+                .ToListAsync(cancellationToken);
 
         public async Task<ConversationEntity?> FindConversationById(Guid id) =>
             await chatDbContext
@@ -18,13 +18,17 @@ namespace DataAccess.Implementation
                 .Include(dto => dto.Messages)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task Add(ConversationEntity conversation) =>
-            await  chatDbContext.Conversations.AddAsync(conversation);
+        public async Task Add(ConversationEntity conversation)
+        {
+            await chatDbContext.Conversations.AddAsync(conversation);
+            
+            await Save();
+        }
 
-        public async Task Remove(ConversationEntity conversation) 
+        public async Task Remove(ConversationEntity conversation)
         {
             chatDbContext.Conversations.Remove(conversation);
-            
+
             await Save();
         }
 

@@ -3,7 +3,7 @@ using Authorization.Domain.Base;
 
 namespace Authorization.Domain
 {
-    public class UserCreateRequest : UserBase 
+    public class UserLoginRequest : UserBase
     {
         [Required]
         public string Password { get; set; }

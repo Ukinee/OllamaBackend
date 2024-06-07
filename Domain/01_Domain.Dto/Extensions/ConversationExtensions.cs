@@ -11,6 +11,7 @@ namespace Domain.Dto.Extensions
             return new ConversationEntity
             {
                 Id = Guid.NewGuid(),
+                Name = conversation.Name,
                 GlobalContext = conversation.GlobalContext,
                 Messages = [],
             };
@@ -21,6 +22,7 @@ namespace Domain.Dto.Extensions
             return new GeneralConversationViewModel
             {
                 Id = conversation.Id,
+                Name = conversation.Name,
                 GlobalContext = conversation.GlobalContext,
             };
         }
@@ -30,6 +32,7 @@ namespace Domain.Dto.Extensions
             return new ConcreteConversationViewModel
             {
                 Id = conversation.Id,
+                Name = conversation.Name,
                 GlobalContext = conversation.GlobalContext,
                 Messages = conversation.Messages.Select(x => x.ToGetMessageDto()).ToList(),
             };

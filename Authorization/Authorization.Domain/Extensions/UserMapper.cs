@@ -2,23 +2,22 @@
 {
     public static class UserMapper
     {
-        public static UserEntity ToEntity(this UserCreateRequest createRequest, string hashedPassword, string salt) =>
+        public static UserEntity ToEntity(this UserCreateRequest createRequest) =>
             new UserEntity()
             {
-                Name = createRequest.Name,
+                UserName = createRequest.UserName,
                 Id = Guid.NewGuid(),
                 CreatedAt = DateTime.Now,
-                HashedPassword = hashedPassword,
-                Salt = salt,
                 ConversationIds = [],
             };
 
-        public static UserViewModel ToViewModel(this UserEntity request) =>
+        public static UserViewModel ToViewModel(this UserEntity entity, string token) =>
             new UserViewModel()
             {
-                Name = request.Name,
-                Id = request.Id,
-                ConversationIds = request.ConversationIds,
+                UserName = entity.UserName ?? throw new NullReferenceException(nameof(entity.UserName)),
+                Id = entity.Id,
+                Token = token,
+                ConversationIds = entity.ConversationIds,
             };
     }
 }

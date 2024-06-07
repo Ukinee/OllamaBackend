@@ -1,16 +1,9 @@
-﻿using Authorization.Domain.Base;
-using Domain.Dto.DataBaseDtos;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Authorization.Domain;
 
-public class UserEntity : UserBase
+public class UserEntity : IdentityUser<Guid>
 {
-    public Guid Id { get; set; }
-    
-    public string HashedPassword { get; set; }
-    public string Salt { get; set; }
-
-    public List<Guid> ConversationIds { get; set; } = [];
-    
     public DateTime CreatedAt { get; set; }
+    public List<Guid> ConversationIds { get; set; } = new();
 }

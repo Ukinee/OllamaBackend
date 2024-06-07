@@ -1,4 +1,6 @@
 using Authorization.Services.Implementations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace OllamaBackend;
 
@@ -12,9 +14,10 @@ public class Program
             .Services
             .ConfigureServices(builder.Configuration)
             .AddEndpointsApiExplorer()
-            .AddSwaggerGen()
             .AddControllers();
-        
+
+        AddSwaggerGen(builder);
+
         WebApplication app = builder.Build();
 
         if (app.Environment.IsDevelopment())
@@ -22,13 +25,16 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        
+
         WebSocketOptions webSocketOptions = new WebSocketOptions
         {
             KeepAliveInterval = TimeSpan.FromMinutes(2),
         };
 
         app.UseWebSockets(webSocketOptions);
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseHttpsRedirection();
         app.MapControllers();
@@ -41,6 +47,49 @@ public class Program
         // tailwind / bootstrap - CDN
 
         //web socket - real time updating - rabbitMq
+    }
+
+private static void AddSwaggerGen(WebApplicationBuilder builder)
+{
+builder.Services.AddSwaggerGen
+(
+option =>
+{
+option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+
+option.AddSecurityDefinition
+(
+"Bearer",
+new OpenApiSecurityScheme
+{
+In = ParameterLocation.Header,
+Description = "Please enter a valid token",
+Name = "Authorization",
+Type = SecuritySchemeType.Http,
+BearerFormat = "JWT",
+Scheme = "Bearer"
+    }
+);
+
+option.AddSecurityRequirement
+(
+new OpenApiSecurityRequirement
+{
+{
+new OpenApiSecurityScheme
+{
+Reference = new OpenApiReference
+{
+    Type = ReferenceType.SecurityScheme,
+    Id = "Bearer"
+}
+},
+new string[] { }
+}
+    }
+);
+    }
+);
     }
 
     /*

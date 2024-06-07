@@ -1,7 +1,10 @@
-﻿namespace Authorization.Domain.Base
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Authorization.Domain.Base
 {
     public class UserBase
     {
-        public string Name { get; set; }
+        [Required]
+        public string UserName { get; set; }
     }
 }

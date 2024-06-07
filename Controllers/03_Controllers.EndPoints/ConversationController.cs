@@ -2,6 +2,7 @@
 using Domain.Dto.DataBaseDtos;
 using Domain.Dto.Extensions;
 using Domain.Dto.WebDtos.PostDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Controllers.EndPoints
@@ -16,6 +17,8 @@ namespace Controllers.EndPoints
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
         {
+            Console.WriteLine("Searching for conversation with id: " + id);
+            
             ConversationEntity? conversation = await conversationRepository.FindConversationById(id);
 
             if (conversation == null)

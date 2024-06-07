@@ -1,79 +1,100 @@
-﻿using Authorization.Domain;
+﻿using System.Security.Claims;
+using Authorization.Domain;
 using Authorization.Domain.Extensions;
 using Authorization.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Authorization.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class UserController
     (
-        IUserRepository userRepository,
-        IValidationService validationService,
-        IPasswordService passwordService
+        ITokenService tokenService,
+        UserManager<UserEntity> userManager
     ) : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> Authorize([FromBody] UserRequest userRequest)
-        {
-            UserEntity? user = await userRepository.Get(userRequest.Id);
-    
-            if (user == null)
-                return NotFound();
-    
-            if (validationService.Validate(user, userRequest) == false)
-                return Unauthorized();
-    
-            return Ok(user.ToViewModel());
-        }
-    
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserCreateRequest createRequest)
+        public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
         {
-            bool exists = await userRepository.Exists(createRequest.Name);
+            try
+            {
+                if (ModelState.IsValid == false)
+                    return BadRequest(ModelState);
+
+                UserEntity user = createRequest.ToEntity();
+
+                IdentityResult result = await userManager.CreateAsync(user, createRequest.Password);
+
+                if (result.Succeeded == false)
+                    return BadRequest(result.Errors);
+
+                IdentityResult roleResult = await userManager.AddToRoleAsync(user, "User"); //todo : hardcode
+
+                if (roleResult.Succeeded == false)
+                    return BadRequest(roleResult.Errors);
+
+                string token = await tokenService.CreateToken(userManager, user);
+
+                return Ok(user.ToViewModel(token)); //todo : hardcode
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Authorize([FromBody] UserLoginRequest userRequest)
+        {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+
+            UserEntity? user = await userManager
+                .Users
+                .FirstOrDefaultAsync(x => x.UserName == userRequest.UserName);
+
+            if (user == null)
+                return Unauthorized("Wrong username or password"); //todo : hardcode
+
+            if (await userManager.CheckPasswordAsync(user, userRequest.Password) == false)
+                return Unauthorized("Wrong username or password"); //todo : hardcode
+
+            string token = await tokenService.CreateToken(userManager, user);
+
+            return Ok(user.ToViewModel(token));
+        }
+        
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult TestAuthorization()
+        {
+            List<string> roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
             
-            if(exists)
-                return Conflict();
-    
-            passwordService.HashPassword(createRequest.Password, out string hashedPassword, out string salt);
-    
-            UserEntity user = createRequest.ToEntity(hashedPassword, salt);
-    
-            await userRepository.Add(user);
-    
-            return CreatedAtAction(nameof(Authorize), new { id = user.Id }, user.ToViewModel());
+            return Ok("You're Authorized, your roles are: " + string.Join(", ", roles));
         }
     
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UserRequest userRequest)
+    
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+        [HttpGet]
+        public IActionResult IsAdmin()
         {
-            UserEntity? user = await userRepository.Get(userRequest.Id);
-    
-            if (user == null)
-                return NotFound();
-    
-            if (validationService.Validate(user, userRequest) == false)
-                return Unauthorized();
-    
-            passwordService.HashPassword(userRequest.Password, out string hashedPassword, out string salt);
-    
-            UserEntity updatedUser = await userRepository.Update(userRequest, hashedPassword, salt);
-    
-            return Ok(updatedUser.ToViewModel());
+            return Ok("You're Admin");
         }
-    
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] UserRequest createRequest)
-        {
-            UserEntity? user = await userRepository.Get(createRequest.Id);
-    
-            if (user == null)
-                return NotFound();
-    
-            await userRepository.Delete(user);
-    
-            return NoContent();
-        }
+
+        // [HttpPut]
+        // public async Task<IActionResult> Update([FromBody] UserRequest userRequest)
+        // {
+        //     return Ok();
+        // }
+        //
+        // [HttpDelete]
+        // public async Task<IActionResult> Delete([FromBody] UserRequest createRequest)
+        // {
+        //     return Ok();
+        // }
     }
 }

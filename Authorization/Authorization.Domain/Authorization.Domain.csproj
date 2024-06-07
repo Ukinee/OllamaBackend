@@ -11,4 +11,8 @@
       <ProjectReference Include="..\..\Domain\01_Domain.Models\01_Domain.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.6" />
+    </ItemGroup>
+
 </Project>
