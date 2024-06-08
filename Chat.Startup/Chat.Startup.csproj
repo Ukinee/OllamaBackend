@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.3\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.3\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Chat.DataAccess\Chat.DataAccess.csproj" />
+      <ProjectReference Include="..\Chat.Services.Implementations\Chat.Services.Implementations.csproj" />
+      <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllamaBackend.Core", "Core\OllamaBackend.Core\OllamaBackend.Core.csproj", "{8C475CA1-19E3-471F-9541-ACC90F258C33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OllamaBackend.Core", "OllamaBackend.Core\OllamaBackend.Core.csproj", "{8C475CA1-19E3-471F-9541-ACC90F258C33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "Chat\Chat.Common\Chat.Common.csproj", "{0EC0FCCF-4294-41F6-942D-3153551423B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Common", "Chat.Common\Chat.Common.csproj", "{0EC0FCCF-4294-41F6-942D-3153551423B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Domain", "Chat\Chat.Domain\Chat.Domain.csproj", "{31719E32-4F0F-412C-A05D-126278C341D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Domain", "Chat.Domain\Chat.Domain.csproj", "{31719E32-4F0F-412C-A05D-126278C341D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataAccess", "Chat\Chat.DataAccess\Chat.DataAccess.csproj", "{90B2D728-EA58-404E-B213-774A263937E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataAccess", "Chat.DataAccess\Chat.DataAccess.csproj", "{90B2D728-EA58-404E-B213-774A263937E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Services.Interfaces", "Chat\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj", "{5320368A-22B0-4A16-965E-2DCAF26A443D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Services.Interfaces", "Chat.Services.Interfaces\Chat.Services.Interfaces.csproj", "{5320368A-22B0-4A16-965E-2DCAF26A443D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Controllers", "Chat\Chat.Controllers\Chat.Controllers.csproj", "{6A4AC542-178C-4C4A-B380-C38F440EF97D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Controllers", "Chat.Controllers\Chat.Controllers.csproj", "{6A4AC542-178C-4C4A-B380-C38F440EF97D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{89D250A1-9953-4E0D-996D-C80F6AA028B4}"
 EndProject
@@ -18,25 +18,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{CF550231-0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Handshake", "Handshake", "{979478CD-F8E9-42D3-A102-FBEFFAF31C56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handshake.Controllers", "Handshake\Handshake.Controllers\Handshake.Controllers.csproj", "{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handshake.Controllers", "Handshake.Controllers\Handshake.Controllers.csproj", "{784D5AB9-DD72-4A2E-B027-6DFF7D7A0B1D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authorization", "Authorization", "{7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Setup", "Authorization\Authorization.Setup\Authorization.Setup.csproj", "{D5F98198-2438-451C-B811-AEC44D53865E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Startup", "Authorization.Startup\Authorization.Startup.csproj", "{D5F98198-2438-451C-B811-AEC44D53865E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Interfaces", "Authorization\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj", "{0AC75447-EDC3-46AD-87CF-4FB0957FD811}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Interfaces", "Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj", "{0AC75447-EDC3-46AD-87CF-4FB0957FD811}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Implementations", "Authorization\Authorization.Services.Implementations\Authorization.Services.Implementations.csproj", "{1BDDF736-64F9-4224-A75A-D6353B750FE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Services.Implementations", "Authorization.Services.Implementations\Authorization.Services.Implementations.csproj", "{1BDDF736-64F9-4224-A75A-D6353B750FE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Controllers", "Authorization\Authorization.Controllers\Authorization.Controllers.csproj", "{DE0BE15A-8621-4BF8-8122-0CC34E735309}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Controllers", "Authorization.Controllers\Authorization.Controllers.csproj", "{DE0BE15A-8621-4BF8-8122-0CC34E735309}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Domain", "Authorization\Authorization.Domain\Authorization.Domain.csproj", "{7568D20D-B232-464F-A057-B5E2C3F68BAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Domain", "Authorization.Domain\Authorization.Domain.csproj", "{7568D20D-B232-464F-A057-B5E2C3F68BAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataAccess", "Authorization\Authorization.DataAccess\Authorization.DataAccess.csproj", "{B9B4E595-87FB-448C-9AAB-4377F015B625}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataAccess", "Authorization.DataAccess\Authorization.DataAccess.csproj", "{B9B4E595-87FB-448C-9AAB-4377F015B625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Common", "Authorization\Authorization.Common\Authorization.Common.csproj", "{C7B8B439-F901-488A-9EFA-703C408DA9D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Common", "Authorization.Common\Authorization.Common.csproj", "{C7B8B439-F901-488A-9EFA-703C408DA9D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Services.Implementations", "Chat\Chat.Services.Implementations\Chat.Services.Implementations.csproj", "{ECDA2A26-BE67-49EF-870F-1516D7E087C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Services.Implementations", "Chat.Services.Implementations\Chat.Services.Implementations.csproj", "{ECDA2A26-BE67-49EF-870F-1516D7E087C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Startup", "Chat.Startup\Chat.Startup.csproj", "{E4653A35-18A3-4358-8A04-1A9B44F28E06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.CQRS", "Chat.CQRS\Chat.CQRS.csproj", "{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.CQRS", "Authorization.CQRS\Authorization.CQRS.csproj", "{9614165F-CC87-40A2-8525-465EEB766690}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.DataAccess", "Common.DataAccess\Common.DataAccess.csproj", "{1C831DED-B46A-4AE3-BC04-04A7183D4A21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{BA6131F3-1BDA-4C98-9541-F61AAF6E24DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.CQRS", "Common.CQRS\Common.CQRS.csproj", "{35D1B213-3D63-45B8-94CA-7788088918BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{971482F7-66C7-4872-9A0A-8A5BC8958851}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users.CQRS", "Users.CQRS\Users.CQRS.csproj", "{2C6109B8-40F0-46EC-9850-3D5310B02969}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +120,30 @@ Global
 		{ECDA2A26-BE67-49EF-870F-1516D7E087C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECDA2A26-BE67-49EF-870F-1516D7E087C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECDA2A26-BE67-49EF-870F-1516D7E087C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4653A35-18A3-4358-8A04-1A9B44F28E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4653A35-18A3-4358-8A04-1A9B44F28E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4653A35-18A3-4358-8A04-1A9B44F28E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4653A35-18A3-4358-8A04-1A9B44F28E06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9614165F-CC87-40A2-8525-465EEB766690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9614165F-CC87-40A2-8525-465EEB766690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9614165F-CC87-40A2-8525-465EEB766690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9614165F-CC87-40A2-8525-465EEB766690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C831DED-B46A-4AE3-BC04-04A7183D4A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C831DED-B46A-4AE3-BC04-04A7183D4A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C831DED-B46A-4AE3-BC04-04A7183D4A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C831DED-B46A-4AE3-BC04-04A7183D4A21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D1B213-3D63-45B8-94CA-7788088918BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D1B213-3D63-45B8-94CA-7788088918BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D1B213-3D63-45B8-94CA-7788088918BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D1B213-3D63-45B8-94CA-7788088918BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6109B8-40F0-46EC-9850-3D5310B02969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6109B8-40F0-46EC-9850-3D5310B02969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6109B8-40F0-46EC-9850-3D5310B02969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6109B8-40F0-46EC-9850-3D5310B02969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C475CA1-19E3-471F-9541-ACC90F258C33} = {CF550231-0F05-41DF-831D-750DAA4E208A}
@@ -121,5 +161,12 @@ Global
 		{ECDA2A26-BE67-49EF-870F-1516D7E087C4} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
 		{5320368A-22B0-4A16-965E-2DCAF26A443D} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
 		{0EC0FCCF-4294-41F6-942D-3153551423B1} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
+		{E4653A35-18A3-4358-8A04-1A9B44F28E06} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
+		{AD2D8FB5-408B-47A0-B8CA-78A5C441DE11} = {89D250A1-9953-4E0D-996D-C80F6AA028B4}
+		{9614165F-CC87-40A2-8525-465EEB766690} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{1C831DED-B46A-4AE3-BC04-04A7183D4A21} = {BA6131F3-1BDA-4C98-9541-F61AAF6E24DF}
+		{35D1B213-3D63-45B8-94CA-7788088918BE} = {BA6131F3-1BDA-4C98-9541-F61AAF6E24DF}
+		{7EF95EF1-ABC4-4D38-B2CB-B4B357952A18} = {971482F7-66C7-4872-9A0A-8A5BC8958851}
+		{2C6109B8-40F0-46EC-9850-3D5310B02969} = {971482F7-66C7-4872-9A0A-8A5BC8958851}
 	EndGlobalSection
 EndGlobal
