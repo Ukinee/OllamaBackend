@@ -33,33 +33,22 @@ public static class AuthorizationStartup
         (
             options =>
             {
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false; //todo : hardcode
+                options.Password.RequireLowercase = false; //todo : hardcode
+                options.Password.RequireNonAlphanumeric = false; //todo : hardcode
+                options.Password.RequireUppercase = false; //todo : hardcode
+                options.Password.RequiredLength = 6; //todo : hardcode
             }
-        );
-
-        identityBuilder.AddEntityFrameworkStores<UserDbContext>();
+        ).AddEntityFrameworkStores<UserDbContext>();
 
         return services;
     }
 
     private static IServiceCollection SetupJwt(this IServiceCollection services, IConfiguration configuration)
     {
-        AuthenticationBuilder authenticationBuilder = services.AddAuthentication
-        (
-            options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-            }
-        );
+        AuthenticationBuilder authenticationBuilder = services
+            .AddAuthorization()
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
         authenticationBuilder.AddJwtBearer
         (
@@ -68,17 +57,18 @@ public static class AuthorizationStartup
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = configuration["Jwt:Issuer"],
+                    ValidIssuer = configuration["Jwt:Issuer"], //todo : hardcode
                     ValidateAudience = true,
-                    ValidAudience = configuration["Jwt:Audience"],
+                    ValidAudience = configuration["Jwt:Audience"], //todo : hardcode
                     ValidateIssuerSigningKey = true,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SigningKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey
+                        (Encoding.UTF8.GetBytes(configuration["Jwt:SigningKey"])), //todo : hardcode
                 };
             }
         );
-        
+
         return services;
     }
 }

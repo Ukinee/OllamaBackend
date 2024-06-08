@@ -8,11 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Authorization\Authorization.Common\Authorization.Common.csproj" />
         <ProjectReference Include="..\..\Infrastructure\02_DataAccess.Interfaces\02_DataAccess.Interfaces.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     </ItemGroup>
 
 </Project>

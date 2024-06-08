@@ -1,4 +1,5 @@
-﻿using DataAccess.Interfaces;
+﻿using Authorization.Common;
+using DataAccess.Interfaces;
 using Domain.Dto.DataBaseDtos;
 using Domain.Dto.Extensions;
 using Domain.Dto.WebDtos.PostDtos;
@@ -28,8 +29,11 @@ namespace Controllers.EndPoints
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest conversation)
         {
+            Guid userId = User.GetGuid();
+            
             ConversationEntity conversationEntity = conversation.ToDatabaseConversation();
 
             await conversationRepository.Add(conversationEntity);

@@ -2,6 +2,7 @@
 using Authorization.Domain;
 using Authorization.Domain.Extensions;
 using Authorization.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,7 @@ namespace Authorization.Controllers
 
                 string token = await tokenService.CreateToken(userManager, user);
 
-                return Ok(user.ToViewModel(token)); //todo : hardcode
+                return Ok(user.ToViewModel(token));
             }
             catch (Exception e)
             {
@@ -69,32 +70,12 @@ namespace Authorization.Controllers
         }
         
         [HttpGet]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult TestAuthorization()
         {
             List<string> roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
             
-            return Ok("You're Authorized, your roles are: " + string.Join(", ", roles));
+            return Ok("You're Authorized, your roles are: " + string.Join(", ", roles)); //todo : hardcode
         }
-    
-    
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
-        [HttpGet]
-        public IActionResult IsAdmin()
-        {
-            return Ok("You're Admin");
-        }
-
-        // [HttpPut]
-        // public async Task<IActionResult> Update([FromBody] UserRequest userRequest)
-        // {
-        //     return Ok();
-        // }
-        //
-        // [HttpDelete]
-        // public async Task<IActionResult> Delete([FromBody] UserRequest createRequest)
-        // {
-        //     return Ok();
-        // }
     }
 }

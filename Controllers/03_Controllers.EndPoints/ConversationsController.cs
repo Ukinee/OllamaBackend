@@ -3,6 +3,7 @@ using System.Security.Principal;
 using DataAccess.Interfaces;
 using Domain.Dto.DataBaseDtos;
 using Domain.Dto.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ public class ConversationsController(IConversationRepository conversationReposit
     : ControllerBase
 {
     [HttpGet]
-    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<IActionResult> GetGeneralConversations(CancellationToken cancellationToken)
     {
         List<ConversationEntity> conversations = await conversationRepository.GetAll(cancellationToken);

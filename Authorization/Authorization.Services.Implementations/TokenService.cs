@@ -27,17 +27,10 @@ namespace Authorization.Services.Implementations
 
         public async Task<string> CreateToken(UserManager<UserEntity> userManager, UserEntity user)
         {
-            IList<string> roles = await userManager.GetRolesAsync(user);
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName ?? throw new NullReferenceException(nameof(user.UserName))),
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
             };
-
-            foreach (string role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
 
             SigningCredentials credentials = new SigningCredentials
             (

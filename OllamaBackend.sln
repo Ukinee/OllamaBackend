@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Domain", "Aut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.DataAccess", "Authorization\Authorization.DataAccess\Authorization.DataAccess.csproj", "{B9B4E595-87FB-448C-9AAB-4377F015B625}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Common", "Authorization\Authorization.Common\Authorization.Common.csproj", "{C7B8B439-F901-488A-9EFA-703C408DA9D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9B4E595-87FB-448C-9AAB-4377F015B625}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B8B439-F901-488A-9EFA-703C408DA9D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B8B439-F901-488A-9EFA-703C408DA9D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B8B439-F901-488A-9EFA-703C408DA9D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B8B439-F901-488A-9EFA-703C408DA9D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C475CA1-19E3-471F-9541-ACC90F258C33} = {CF550231-0F05-41DF-831D-750DAA4E208A}
@@ -116,5 +122,6 @@ Global
 		{DE0BE15A-8621-4BF8-8122-0CC34E735309} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
 		{7568D20D-B232-464F-A057-B5E2C3F68BAD} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
 		{B9B4E595-87FB-448C-9AAB-4377F015B625} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
+		{C7B8B439-F901-488A-9EFA-703C408DA9D9} = {7EF95EF1-ABC4-4D38-B2CB-B4B357952A18}
 	EndGlobalSection
 EndGlobal
