@@ -2,7 +2,7 @@
 {
     public static class MessageExtensions
     {
-        public static MessageEntity ToDatabaseMessage(this PostMessageRequest message)
+        public static MessageEntity ToEntity(this PostMessageRequest message)
         {
             return new MessageEntity
             {
@@ -16,7 +16,7 @@
             };
         }
 
-        public static MessageViewModel ToGetMessageDto(this MessageEntity message)
+        public static MessageViewModel ToViewModel(this MessageEntity message)
         {
             return new MessageViewModel
             {

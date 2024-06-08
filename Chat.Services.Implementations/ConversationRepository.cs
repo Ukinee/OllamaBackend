@@ -15,6 +15,14 @@ namespace Chat.Services.Implementations
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<List<ConversationEntity>> GetGeneralConversations(IList<Guid> ids)
+        {
+            return await chatDbContext
+                .Conversations
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
+        }
+
         public async Task<ConversationEntity?> FindConversationById(Guid id)
         {
             return await chatDbContext

@@ -1,5 +1,6 @@
 ﻿using Authorization.Domain;
 using Authorization.Services.Interfaces;
+using Common.DataAccess;
 
 namespace Users.CQRS
 {
@@ -17,7 +18,7 @@ namespace Users.CQRS
             UserEntity? userEntity = await _userRepository.Get(userId);
 
             if (userEntity == null)
-                throw new Exception("User not found"); //TODO: create custom exception
+                throw new NotFoundException(nameof(userEntity));
 
             await _userRepository.AddConversationToUser(userEntity, conversationId);
         }

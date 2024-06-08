@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Authorization.Domain\Authorization.Domain.csproj" />
       <ProjectReference Include="..\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Common.DataAccess\Common.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,9 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Authorization.Services.Implementations\Authorization.Services.Implementations.csproj" />
+      <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
       <ProjectReference Include="..\Chat.DataAccess\Chat.DataAccess.csproj" />
       <ProjectReference Include="..\Chat.Services.Implementations\Chat.Services.Implementations.csproj" />
       <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Users.CQRS\Users.CQRS.csproj" />
     </ItemGroup>
 
 </Project>

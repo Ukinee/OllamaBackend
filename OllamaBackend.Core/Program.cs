@@ -1,4 +1,5 @@
 using System;
+using Chat.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,7 +20,7 @@ namespace OllamaBackend2
                 .AddControllers();
 
             AddSwaggerGen(builder);
-
+            
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())

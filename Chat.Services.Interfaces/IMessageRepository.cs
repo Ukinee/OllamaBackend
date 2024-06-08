@@ -7,7 +7,7 @@ namespace Chat.Services.Interfaces
         public Task<MessageEntity?> FindMessageByIdAsync(Guid id);
         public Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId);
 
-        public Task AddAsync(MessageEntity message);
+        public Task Add(MessageEntity message);
         public Task RemoveAsync(MessageEntity message);
         public Task DeleteByConversationId(Guid id);
     }

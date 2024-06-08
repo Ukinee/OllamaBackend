@@ -26,10 +26,10 @@ namespace Authorization.Services.Implementations
 
         public async Task<string> CreateToken(UserManager<UserEntity> userManager, UserEntity user)
         {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-            };
+            List<Claim> claims =
+            [
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            ];
 
             SigningCredentials credentials = new SigningCredentials
             (

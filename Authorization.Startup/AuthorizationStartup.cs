@@ -49,28 +49,27 @@ namespace Authorization.Startup
 
         private static IServiceCollection SetupJwt(this IServiceCollection services, IConfiguration configuration)
         {
-            AuthenticationBuilder authenticationBuilder = services
+            services
                 .AddAuthorization()
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-
-            authenticationBuilder.AddJwtBearer
-            (
-                options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer
+                (
+                    options =>
                     {
-                        ValidateIssuer = true,
-                        ValidIssuer = configuration["Jwt:Issuer"], //todo : hardcode
-                        ValidateAudience = true,
-                        ValidAudience = configuration["Jwt:Audience"], //todo : hardcode
-                        ValidateIssuerSigningKey = true,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero,
-                        IssuerSigningKey = new SymmetricSecurityKey
-                            (Encoding.UTF8.GetBytes(configuration["Jwt:SigningKey"])), //todo : hardcode
-                    };
-                }
-            );
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = configuration["Jwt:Issuer"], //todo : hardcode
+                            ValidateAudience = true,
+                            ValidAudience = configuration["Jwt:Audience"], //todo : hardcode
+                            ValidateIssuerSigningKey = true,
+                            ValidateLifetime = true,
+                            ClockSkew = TimeSpan.Zero,
+                            IssuerSigningKey = new SymmetricSecurityKey
+                                (Encoding.UTF8.GetBytes(configuration["Jwt:SigningKey"])), //todo : hardcode
+                        };
+                    }
+                );
 
             return services;
         }

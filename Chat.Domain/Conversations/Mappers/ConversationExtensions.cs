@@ -32,7 +32,7 @@ namespace Chat.Domain.Conversations.Mappers
                 Id = conversation.Id,
                 Name = conversation.Name,
                 GlobalContext = conversation.GlobalContext,
-                Messages = conversation.Messages.Select(x => x.ToGetMessageDto()).ToList(),
+                Messages = conversation.Messages.Select(x => x.ToViewModel()).ToList(),
             };
         }
     }

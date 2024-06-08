@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.6.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Common.DataAccess\Common.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>

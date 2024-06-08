@@ -12,7 +12,7 @@ namespace Chat.Services.Implementations
             return await chatDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task AddAsync(MessageEntity message)
+        public async Task Add(MessageEntity message)
         {
             await chatDbContext.Messages.AddAsync(message);
         }

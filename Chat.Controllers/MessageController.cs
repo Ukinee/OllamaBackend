@@ -1,6 +1,7 @@
 ﻿using Chat.Domain.Messages;
 using Chat.Domain.Messages.Mappers;
 using Chat.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.Controllers
@@ -10,6 +11,7 @@ namespace Chat.Controllers
     public class MessageController(IMessageRepository messageRepository) : ControllerBase
     {
         [HttpGet("{id:guid}")]
+        [Authorize(Roles = "Admin")] // todo: hardcode
         public async Task<IActionResult> GetMessage([FromRoute] Guid id)
         {
             MessageEntity? message = await messageRepository.FindMessageByIdAsync(id);
@@ -17,17 +19,17 @@ namespace Chat.Controllers
             if (message == null)
                 return NotFound();
 
-            return Ok(message.ToGetMessageDto());
+            return Ok(message.ToViewModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest)
         {
-            MessageEntity message = messageRequest.ToDatabaseMessage();
+            MessageEntity message = messageRequest.ToEntity();
 
-            await messageRepository.AddAsync(message);
+            await messageRepository.Add(message);
 
-            return CreatedAtAction(nameof(GetMessage), new { id = message.Id }, message);
+            return CreatedAtAction(nameof(GetMessage), new { id = message.Id }, message.ToViewModel());
         }
 
         [HttpDelete]

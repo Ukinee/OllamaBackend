@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Microsoft.IdentityModel.JsonWebTokens;
+using Common.DataAccess;
 
 namespace Users.Authorization.Common
 {
@@ -7,10 +7,10 @@ namespace Users.Authorization.Common
     {
         public static Guid GetGuid(this ClaimsPrincipal user)
         {
-            Claim? claim = user.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.NameId);
-
+            Claim? claim = user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            
             if (claim == null)
-                throw new Exception("Claim not found");
+                throw new NotFoundException(nameof(claim));
 
             return Guid.Parse(claim.Value);
         }

@@ -1,5 +1,6 @@
 ﻿using Chat.Domain.Conversations;
 using Chat.Services.Interfaces;
+using Common.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.CQRS.Commands
@@ -19,17 +20,15 @@ namespace Chat.CQRS.Commands
             _messageRepository = messageRepository;
         }
 
-        public async Task<IActionResult> Execute(ControllerBase controller, Guid id)
+        public async Task Execute(Guid id)
         {
             ConversationEntity? conversation = await _conversationRepository.FindConversationById(id);
 
             if (conversation == null)
-                return controller.NotFound();
+                throw new NotFoundException(nameof(ConversationEntity));
 
             await _conversationRepository.Delete(conversation);
             await _messageRepository.DeleteByConversationId(id);
-
-            return controller.NoContent();
         }
     }
 }

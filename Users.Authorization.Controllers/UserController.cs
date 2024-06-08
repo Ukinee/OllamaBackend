@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Users.Authorization.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")] //todo : use cases
     public class UserController(ITokenService tokenService, UserManager<UserEntity> userManager) : ControllerBase
     {
         [HttpPost]
