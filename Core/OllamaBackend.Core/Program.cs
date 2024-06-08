@@ -1,5 +1,3 @@
-using Authorization.Services.Implementations;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
 namespace OllamaBackend;

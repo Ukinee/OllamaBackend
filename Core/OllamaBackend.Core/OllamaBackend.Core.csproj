@@ -36,9 +36,11 @@
     <ItemGroup>
       <ProjectReference Include="..\Authorization\Authorization.Controllers\Authorization.Controllers.csproj" />
       <ProjectReference Include="..\Authorization\Authorization.Setup\Authorization.Setup.csproj" />
-      <ProjectReference Include="..\Controllers\03_Controllers.EndPoints\03_Controllers.EndPoints.csproj" />
+      <ProjectReference Include="..\Chat\Chat.DataAccess\Chat.DataAccess.csproj" />
+      <ProjectReference Include="..\Chat\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Controllers\Chat.Controllers\Chat.Controllers.csproj" />
       <ProjectReference Include="..\Handshake\Handshake.Controllers\Handshake.Controllers.csproj" />
-      <ProjectReference Include="..\Infrastructure\02_DataAccess.Implementation\02_DataAccess.Implementation.csproj" />
+      <ProjectReference Include="..\Infrastructure\Chat.DataAccess\Chat.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>

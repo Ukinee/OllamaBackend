@@ -16,7 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Domain\01_Domain.Dto\01_Domain.Dto.csproj" />
+      <ProjectReference Include="..\..\Domain\Chat.Domain\Chat.Domain.csproj" />
+      <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
     </ItemGroup>
 
 </Project>
