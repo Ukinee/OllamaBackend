@@ -1,28 +1,32 @@
-﻿using DataAccess.Implementation;
-using DataAccess.Interfaces;
-using Domain.Models.Conversations;
+﻿using Chat.DataAccess;
+using Chat.Domain.Conversations;
+using Chat.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
     public class ConversationRepository(ChatDbContext chatDbContext) : IConversationRepository
     {
-        public async Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken) =>
-            await chatDbContext
+        public async Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken)
+        {
+            return await chatDbContext
                 .Conversations
                 .Include(dto => dto.Messages)
                 .ToListAsync(cancellationToken);
+        }
 
-        public async Task<ConversationEntity?> FindConversationById(Guid id) =>
-            await chatDbContext
+        public async Task<ConversationEntity?> FindConversationById(Guid id)
+        {
+            return await chatDbContext
                 .Conversations
                 .Include(dto => dto.Messages)
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
 
         public async Task Add(ConversationEntity conversation)
         {
             await chatDbContext.Conversations.AddAsync(conversation);
-            
+
             await Save();
         }
 
@@ -33,7 +37,9 @@ namespace Chat.Services.Implementations
             await Save();
         }
 
-        private async Task Save() =>
+        private async Task Save()
+        {
             await chatDbContext.SaveChangesAsync();
+        }
     }
 }

@@ -8,15 +8,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Authorization.Controllers
+namespace Users.Authorization.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class UserController
-    (
-        ITokenService tokenService,
-        UserManager<UserEntity> userManager
-    ) : ControllerBase
+    public class UserController(ITokenService tokenService, UserManager<UserEntity> userManager) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
@@ -68,13 +64,13 @@ namespace Authorization.Controllers
 
             return Ok(user.ToViewModel(token));
         }
-        
+
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult TestAuthorization()
         {
             List<string> roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
-            
+
             return Ok("You're Authorized, your roles are: " + string.Join(", ", roles)); //todo : hardcode
         }
     }

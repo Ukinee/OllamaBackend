@@ -1,12 +1,12 @@
-﻿using Domain.Models.Conversations.Base;
-using Domain.Models.Messages;
+﻿using Chat.Domain.Conversations.Base;
+using Chat.Domain.Messages;
 
-namespace Domain.Models.Conversations
+namespace Chat.Domain.Conversations
 {
     public record ConversationEntity : ConversationBase
     {
         public Guid UserId { get; init; }
-        
+
         public Guid Id { get; set; }
 
         public List<MessageEntity> Messages { get; init; } = new List<MessageEntity>();

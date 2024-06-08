@@ -1,26 +1,23 @@
-﻿using System.Security.Claims;
-using System.Security.Principal;
-using DataAccess.Interfaces;
-using Domain.Models.Conversations;
-using Domain.Models.Conversations.Mappers;
+﻿using Chat.Domain.Conversations;
+using Chat.Domain.Conversations.Mappers;
+using Chat.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace Controllers.EndPoints;
-
-[Route("api/[controller]/[action]")]
-[ApiController]
-public class ConversationsController(IConversationRepository conversationRepository, ILogger<ConversationsController> logger)
-    : ControllerBase
+namespace Chat.Controllers
 {
-    [HttpGet]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<IActionResult> GetGeneralConversations(CancellationToken cancellationToken)
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class ConversationsController(IConversationRepository conversationRepository) : ControllerBase
     {
-        List<ConversationEntity> conversations = await conversationRepository.GetAll(cancellationToken);
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetGeneralConversations(CancellationToken cancellationToken)
+        {
+            List<ConversationEntity> conversations = await conversationRepository.GetAll(cancellationToken);
 
-        return Ok(conversations.Select(x => x.ToGeneralConversation()));
+            return Ok(conversations.Select(x => x.ToGeneralConversation()));
+        }
     }
 }

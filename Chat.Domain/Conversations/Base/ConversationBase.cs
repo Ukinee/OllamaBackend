@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Conversations.Base
+﻿namespace Chat.Domain.Conversations.Base
 {
     public record ConversationBase
     {

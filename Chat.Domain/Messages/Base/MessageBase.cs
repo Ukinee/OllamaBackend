@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Messages.Base
+﻿namespace Chat.Domain.Messages.Base
 {
     public record MessageBase
     {

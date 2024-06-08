@@ -1,7 +1,7 @@
-﻿using Domain.Models.Conversations.Base;
-using Domain.Models.Messages;
+﻿using Chat.Domain.Conversations.Base;
+using Chat.Domain.Messages;
 
-namespace Domain.Models.Conversations
+namespace Chat.Domain.Conversations
 {
     public record ConcreteConversationViewModel : ConversationBase
     {

@@ -1,9 +1,10 @@
-﻿namespace Domain.Models.Messages.Mappers
+﻿namespace Chat.Domain.Messages.Mappers
 {
     public static class MessageExtensions
     {
-        public static MessageEntity ToDatabaseMessage(this PostMessageRequest message) =>
-            new MessageEntity
+        public static MessageEntity ToDatabaseMessage(this PostMessageRequest message)
+        {
+            return new MessageEntity
             {
                 Id = Guid.NewGuid(),
                 ConversationDtoId = message.ConversationId,
@@ -13,6 +14,7 @@
                 Images = message.Images,
                 Timestamp = DateTime.UtcNow,
             };
+        }
 
         public static MessageViewModel ToGetMessageDto(this MessageEntity message)
         {

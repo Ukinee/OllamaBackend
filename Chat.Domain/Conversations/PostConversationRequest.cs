@@ -1,8 +1,8 @@
-﻿using Domain.Models.Conversations.Base;
+﻿using Chat.Domain.Conversations.Base;
 
-namespace Domain.Models.Conversations
+namespace Chat.Domain.Conversations
 {
-    public record PostConversationRequest: ConversationBase
+    public record PostConversationRequest : ConversationBase
     {
     }
 }

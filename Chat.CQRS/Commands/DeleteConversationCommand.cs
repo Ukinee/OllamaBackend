@@ -1,5 +1,5 @@
-﻿using DataAccess.Interfaces;
-using Domain.Models.Conversations;
+﻿using Chat.Domain.Conversations;
+using Chat.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.CQRS.Commands
@@ -28,7 +28,7 @@ namespace Chat.CQRS.Commands
 
             await _conversationRepository.Delete(conversation);
             await _messageRepository.DeleteByConversationId(id);
-            
+
             return controller.NoContent();
         }
     }

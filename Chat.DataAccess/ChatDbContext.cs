@@ -1,8 +1,8 @@
-﻿using Domain.Models.Conversations;
-using Domain.Models.Messages;
+﻿using Chat.Domain.Conversations;
+using Chat.Domain.Messages;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess.Implementation
+namespace Chat.DataAccess
 {
     public class ChatDbContext(DbContextOptions<ChatDbContext> options) : DbContext(options)
     {

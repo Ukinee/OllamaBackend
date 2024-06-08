@@ -12,6 +12,4 @@
       <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
     </ItemGroup>
 
-
-
 </Project>

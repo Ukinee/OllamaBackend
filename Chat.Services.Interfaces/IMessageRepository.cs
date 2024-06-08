@@ -1,12 +1,12 @@
-﻿using Domain.Models.Messages;
+﻿using Chat.Domain.Messages;
 
-namespace DataAccess.Interfaces
+namespace Chat.Services.Interfaces
 {
     public interface IMessageRepository
     {
         public Task<MessageEntity?> FindMessageByIdAsync(Guid id);
         public Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId);
-        
+
         public Task AddAsync(MessageEntity message);
         public Task RemoveAsync(MessageEntity message);
         public Task DeleteByConversationId(Guid id);

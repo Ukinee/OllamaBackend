@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using Common;
+using Chat.Common;
 
-namespace Domain.Models.Messages
+namespace Chat.Domain.Messages
 {
     [DebuggerDisplay("[{Timestamp.ToShortDateString()}] {Role} as {ChatName}: {Content}")]
     public readonly record struct Message

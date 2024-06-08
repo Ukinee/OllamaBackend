@@ -1,6 +1,6 @@
-﻿using Domain.Models.Messages.Mappers;
+﻿using Chat.Domain.Messages.Mappers;
 
-namespace Domain.Models.Conversations.Mappers
+namespace Chat.Domain.Conversations.Mappers
 {
     public static class ConversationExtensions
     {

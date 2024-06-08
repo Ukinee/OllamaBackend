@@ -1,6 +1,6 @@
-﻿using Domain.Models.Messages;
+﻿using Chat.Domain.Messages;
 
-namespace Domain.Models.Conversations
+namespace Chat.Domain.Conversations
 {
     public record Conversation
     {
@@ -36,8 +36,10 @@ namespace Domain.Models.Conversations
 
         public Guid Id { get; }
 
-        public void AddMessage(Message message) =>
+        public void AddMessage(Message message)
+        {
             _messages.Add(message);
+        }
 
         public void RemoveMessage(Guid messageId)
         {

@@ -6,7 +6,6 @@ using Authorization.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace Authorization.Services.Implementations
 {
@@ -29,7 +28,7 @@ namespace Authorization.Services.Implementations
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString())
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
             };
 
             SigningCredentials credentials = new SigningCredentials
@@ -44,7 +43,7 @@ namespace Authorization.Services.Implementations
                 Expires = DateTime.Now.AddDays(1), // todo: hardcoded 
                 SigningCredentials = credentials,
                 Issuer = _configuration["Jwt:Issuer"], // todo: hardcoded 
-                Audience = _configuration["Jwt:Audience"] // todo: hardcoded 
+                Audience = _configuration["Jwt:Audience"], // todo: hardcoded 
             };
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();

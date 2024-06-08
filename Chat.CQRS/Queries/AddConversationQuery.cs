@@ -1,6 +1,6 @@
-﻿using DataAccess.Interfaces;
-using Domain.Models.Conversations;
-using Domain.Models.Conversations.Mappers;
+﻿using Chat.Domain.Conversations;
+using Chat.Domain.Conversations.Mappers;
+using Chat.Services.Interfaces;
 
 namespace Chat.CQRS.Queries
 {

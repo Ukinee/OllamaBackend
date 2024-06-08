@@ -1,6 +1,6 @@
-﻿using Domain.Models.Messages.Base;
+﻿using Chat.Domain.Messages.Base;
 
-namespace Domain.Models.Messages
+namespace Chat.Domain.Messages
 {
     public record MessageViewModel : MessageBase
     {

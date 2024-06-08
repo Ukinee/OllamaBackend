@@ -1,20 +1,21 @@
-﻿using Authorization.Common;
-using Chat.CQRS.Commands;
+﻿using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
-using Domain.Models.Conversations;
+using Chat.Domain.Conversations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Users.Authorization.Common;
 using Users.CQRS;
 
-namespace Controllers.EndPoints
+namespace Chat.Controllers
 {
-    [ApiController, Route("api/[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class ConversationController : ControllerBase //todo use cases
     {
-        private readonly DeleteConversationCommand _deleteConversationCommand;
-        private readonly GetConcreteConversationQuery _getConcreteConversationQuery;
         private readonly AddConversationQuery _addConversation;
         private readonly AddConversationToUserCommand _addConversationToUserCommand;
+        private readonly DeleteConversationCommand _deleteConversationCommand;
+        private readonly GetConcreteConversationQuery _getConcreteConversationQuery;
 
         public ConversationController
         (
@@ -31,8 +32,10 @@ namespace Controllers.EndPoints
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id) =>
-            await _getConcreteConversationQuery.Execute(this, id);
+        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
+        {
+            return await _getConcreteConversationQuery.Execute(this, id);
+        }
 
         [HttpPost]
         [Authorize]
@@ -47,7 +50,9 @@ namespace Controllers.EndPoints
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteConversation([FromRoute] Guid id) =>
-            await _deleteConversationCommand.Execute(this, id);
+        public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
+        {
+            return await _deleteConversationCommand.Execute(this, id);
+        }
     }
 }

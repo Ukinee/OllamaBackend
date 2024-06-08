@@ -1,9 +1,9 @@
-﻿using DataAccess.Interfaces;
-using Domain.Models.Messages;
-using Domain.Models.Messages.Mappers;
+﻿using Chat.Domain.Messages;
+using Chat.Domain.Messages.Mappers;
+using Chat.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Controllers.EndPoints
+namespace Chat.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -34,12 +34,12 @@ namespace Controllers.EndPoints
         public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
         {
             MessageEntity? message = await messageRepository.FindMessageByIdAsync(id);
-            
+
             if (message == null)
                 return NotFound();
-            
+
             await messageRepository.RemoveAsync(message);
-            
+
             return NoContent();
         }
     }

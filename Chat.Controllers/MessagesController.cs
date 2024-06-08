@@ -1,8 +1,8 @@
-﻿using DataAccess.Interfaces;
-using Domain.Models.Messages;
+﻿using Chat.Domain.Messages;
+using Chat.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Controllers.EndPoints
+namespace Chat.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,7 +12,7 @@ namespace Controllers.EndPoints
         public async Task<IActionResult> GetMessages([FromRoute] Guid conversationId)
         {
             List<MessageEntity> messages = await messageRepository.FindMessagesByConversationAsync(conversationId);
-            
+
             return Ok(messages);
         }
     }

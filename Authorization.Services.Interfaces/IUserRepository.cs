@@ -9,7 +9,7 @@ namespace Authorization.Services.Interfaces
         public Task Delete(UserEntity entity);
 
         public Task<bool> Exists(string name);
-        
+
         public Task AddConversationToUser(UserEntity userEntity, Guid conversationId);
     }
 }

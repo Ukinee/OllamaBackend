@@ -1,4 +1,4 @@
-﻿namespace Common
+﻿namespace Chat.Common
 {
     public enum ResponseStatus
     {

@@ -1,6 +1,6 @@
-﻿using DataAccess.Interfaces;
-using Domain.Models.Conversations;
-using Domain.Models.Conversations.Mappers;
+﻿using Chat.Domain.Conversations;
+using Chat.Domain.Conversations.Mappers;
+using Chat.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.CQRS.Queries
@@ -9,10 +9,7 @@ namespace Chat.CQRS.Queries
     {
         private readonly IConversationRepository _conversationRepository;
 
-        public GetConcreteConversationQuery
-        (
-            IConversationRepository conversationRepository
-        )
+        public GetConcreteConversationQuery(IConversationRepository conversationRepository)
         {
             _conversationRepository = conversationRepository;
         }

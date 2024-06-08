@@ -14,25 +14,25 @@ namespace Authorization.DataAccess
         public DbSet<UserEntity> UsersEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        { 
+        {
             base.OnModelCreating(builder);
-            
+
             List<IdentityRole<Guid>> roles = new List<IdentityRole<Guid>>
             {
                 new IdentityRole<Guid>
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Admin",//todo : hardcode
-                    NormalizedName = "ADMIN",//todo : hardcode
+                    Name = "Admin", //todo : hardcode
+                    NormalizedName = "ADMIN", //todo : hardcode
                 },
-                new IdentityRole<Guid> 
+                new IdentityRole<Guid>
                 {
                     Id = Guid.NewGuid(),
-                    Name = "User",//todo : hardcode
-                    NormalizedName = "USER",//todo : hardcode
+                    Name = "User", //todo : hardcode
+                    NormalizedName = "USER", //todo : hardcode
                 },
             };
-            
+
             builder.Entity<IdentityRole<Guid>>().HasData(roles);
         }
     }
