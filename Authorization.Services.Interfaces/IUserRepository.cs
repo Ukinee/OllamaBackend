@@ -1,4 +1,5 @@
 ﻿using Authorization.Domain;
+using Common.DataAccess.SharedEntities;
 
 namespace Authorization.Services.Interfaces
 {
@@ -9,7 +10,5 @@ namespace Authorization.Services.Interfaces
         public Task Delete(UserEntity entity);
 
         public Task<bool> Exists(string name);
-
-        public Task AddConversationToUser(UserEntity userEntity, Guid conversationId);
     }
 }

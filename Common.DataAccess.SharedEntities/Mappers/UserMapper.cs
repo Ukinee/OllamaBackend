@@ -1,4 +1,6 @@
-﻿namespace Authorization.Domain.Extensions
+﻿using Authorization.Domain;
+
+namespace Common.DataAccess.SharedEntities.Mappers
 {
     public static class UserMapper
     {
@@ -9,7 +11,7 @@
                 UserName = createRequest.UserName,
                 Id = Guid.NewGuid(),
                 CreatedAt = DateTime.Now,
-                ConversationIds = [],
+                Conversations = [],
             };
         }
 
@@ -20,7 +22,7 @@
                 UserName = entity.UserName ?? throw new NullReferenceException(nameof(entity.UserName)),
                 Id = entity.Id,
                 Token = token,
-                ConversationIds = entity.ConversationIds,
+                ConversationIds = entity.Conversations.Select(x => x.Id).ToList(),
             };
         }
     }

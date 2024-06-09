@@ -1,13 +1,14 @@
 ﻿using Chat.DataAccess;
 using Chat.Domain.Messages;
 using Chat.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
     public class MessageRepository(ChatDbContext chatDbContext) : IMessageRepository
     {
-        public async Task<MessageEntity?> FindMessageByIdAsync(Guid id)
+        public async Task<MessageEntity?> Get(Guid id)
         {
             return await chatDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -17,7 +18,7 @@ namespace Chat.Services.Implementations
             await chatDbContext.Messages.AddAsync(message);
         }
 
-        public Task RemoveAsync(MessageEntity message)
+        public Task Remove(MessageEntity message)
         {
             chatDbContext.Messages.Remove(message);
 
@@ -41,7 +42,7 @@ namespace Chat.Services.Implementations
         {
             return await chatDbContext
                 .Messages
-                .Where(x => x.ConversationDtoId == conversationId)
+                .Where(x => x.ConversationId == conversationId)
                 .ToListAsync();
         }
     }

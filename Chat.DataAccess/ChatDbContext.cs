@@ -1,5 +1,6 @@
 ﻿using Chat.Domain.Conversations;
 using Chat.Domain.Messages;
+using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.DataAccess

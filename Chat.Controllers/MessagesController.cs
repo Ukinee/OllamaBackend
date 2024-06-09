@@ -1,5 +1,6 @@
 ﻿using Chat.Domain.Messages;
 using Chat.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.Controllers

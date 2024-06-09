@@ -1,12 +1,12 @@
 ﻿using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
 using Chat.Domain.Conversations;
-using Chat.Domain.Conversations.Mappers;
+using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Users.Authorization.Common;
-using Users.CQRS;
 
 namespace Chat.Controllers
 {
@@ -15,7 +15,7 @@ namespace Chat.Controllers
     public class ConversationController : ControllerBase
     {
         private readonly AddConversationQuery _addConversation;
-        private readonly AddConversationToUserCommand _addConversationToUserCommand;
+        private readonly CheckUserOwnsConversationQuery _checkUserOwnsConversationQuery;
         private readonly DeleteConversationCommand _deleteConversationCommand;
         private readonly GetConversationQuery _getConversationQuery;
 
@@ -24,41 +24,36 @@ namespace Chat.Controllers
             DeleteConversationCommand deleteConversationCommand,
             GetConversationQuery getConversationQuery,
             AddConversationQuery addConversation,
-            AddConversationToUserCommand addConversationToUserCommand
+            CheckUserOwnsConversationQuery checkUserOwnsConversationQuery
         )
         {
             _deleteConversationCommand = deleteConversationCommand;
             _getConversationQuery = getConversationQuery;
             _addConversation = addConversation;
-            _addConversationToUserCommand = addConversationToUserCommand;
+            _checkUserOwnsConversationQuery = checkUserOwnsConversationQuery;
         }
 
-        [HttpGet("[action]/{id:guid}")]
+        [HttpGet("{id:guid}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
         {
-            ConversationEntity conversation = await _getConversationQuery.Execute(id);
+            Guid userId = User.GetGuid();
+
+            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+                return Unauthorized();
             
+            ConversationEntity conversation = await _getConversationQuery.Execute(id);
+
             return Ok(conversation.ToConcreteConversation());
         }
         
-        
-        [HttpGet("[action]/{id:guid}")]
-        // [Obsolete($"Probably you need to use {nameof(ConversationsController.GetGeneralConversations)} instead")]
-        public async Task<IActionResult> GetGeneralConversation([FromRoute] Guid id)
-        {
-            ConversationEntity conversation = await _getConversationQuery.Execute(id);
-            
-            return Ok(conversation.ToGeneralConversation());
-        }
-
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest conversation)
         {
             Guid userId = User.GetGuid();
 
-            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(conversation);
-            await _addConversationToUserCommand.Execute(userId, conversationViewModel.Id);
+            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(conversation, userId);
 
             return Ok(conversationViewModel);
         }
@@ -67,10 +62,13 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
-            
+            Guid userId = User.GetGuid();
+
+            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+                return Unauthorized();
+
             await _deleteConversationCommand.Execute(id);
-            
+
             return NoContent();
         }
     }

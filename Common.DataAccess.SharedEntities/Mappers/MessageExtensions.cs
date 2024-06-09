@@ -1,13 +1,16 @@
-﻿namespace Chat.Domain.Messages.Mappers
+﻿using Chat.Domain.Messages;
+
+namespace Common.DataAccess.SharedEntities.Mappers
 {
     public static class MessageExtensions
     {
-        public static MessageEntity ToEntity(this PostMessageRequest message)
+        public static MessageEntity ToEntity(this PostMessageRequest message, Guid userId)
         {
             return new MessageEntity
             {
                 Id = Guid.NewGuid(),
-                ConversationDtoId = message.ConversationId,
+                SenderId = userId,
+                ConversationId = message.ConversationId,
                 Content = message.Content,
                 ChatName = message.ChatName,
                 ChatRole = message.ChatRole,
@@ -21,6 +24,7 @@
             return new MessageViewModel
             {
                 Id = message.Id,
+                SenderId = message.SenderId,
                 Content = message.Content,
                 Images = message.Images,
                 ChatRole = message.ChatRole,

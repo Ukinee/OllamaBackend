@@ -1,6 +1,7 @@
 ﻿using Chat.Domain.Conversations;
-using Chat.Domain.Conversations.Mappers;
 using Chat.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Mappers;
 
 namespace Chat.CQRS.Queries
 {
@@ -13,9 +14,9 @@ namespace Chat.CQRS.Queries
             _conversationRepository = conversationRepository;
         }
 
-        public async Task<GeneralConversationViewModel> Handle(PostConversationRequest conversation)
+        public async Task<GeneralConversationViewModel> Handle(PostConversationRequest conversation, Guid userId)
         {
-            ConversationEntity conversationEntity = conversation.ToEntity();
+            ConversationEntity conversationEntity = conversation.ToEntity(userId);
 
             await _conversationRepository.Add(conversationEntity);
 

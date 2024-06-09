@@ -1,29 +1,22 @@
 ﻿using Chat.DataAccess;
 using Chat.Domain.Conversations;
 using Chat.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
     public class ConversationRepository(ChatDbContext chatDbContext) : IConversationRepository
     {
-        public async Task<List<ConversationEntity>> GetAll(CancellationToken cancellationToken)
+        public async Task<List<ConversationEntity>> GetGeneralConversations(Guid userId)
         {
             return await chatDbContext
                 .Conversations
-                .Include(dto => dto.Messages)
-                .ToListAsync(cancellationToken);
-        }
-
-        public async Task<List<ConversationEntity>> GetGeneralConversations(IList<Guid> ids)
-        {
-            return await chatDbContext
-                .Conversations
-                .Where(x => ids.Contains(x.Id))
+                .Where(conversationEntity => conversationEntity.OwnerId == userId)
                 .ToListAsync();
         }
 
-        public async Task<ConversationEntity?> FindConversationById(Guid id)
+        public async Task<ConversationEntity?> Get(Guid id)
         {
             return await chatDbContext
                 .Conversations

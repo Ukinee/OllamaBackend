@@ -8,7 +8,6 @@ using Chat.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Users.CQRS;
 
 namespace Chat.Startup
 {
@@ -21,7 +20,6 @@ namespace Chat.Startup
                 .AddScoped<IMessageRepository, MessageRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<DeleteConversationCommand>()
-                .AddScoped<AddConversationToUserCommand>()
                 .AddScoped<AddConversationQuery>()
                 .AddScoped<GetConversationQuery>()
                 .AddScoped<GetGeneralConversationsWithUserIdQuery>()

@@ -1,6 +1,7 @@
 ﻿using Authorization.DataAccess;
 using Authorization.Domain;
 using Authorization.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authorization.Services.Implementations
@@ -27,12 +28,6 @@ namespace Authorization.Services.Implementations
         public Task<bool> Exists(string name)
         {
             return dbContext.Users.AnyAsync(x => x.UserName == name);
-        }
-
-        public async Task AddConversationToUser(UserEntity userEntity, Guid conversationId)
-        {
-            userEntity.ConversationIds.Add(conversationId);
-            await Save();
         }
 
         private async Task Save()

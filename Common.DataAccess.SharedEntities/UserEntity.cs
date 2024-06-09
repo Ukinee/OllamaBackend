@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Authorization.Domain
+namespace Common.DataAccess.SharedEntities
 {
     public class UserEntity : IdentityUser<Guid>
     {
         public DateTime CreatedAt { get; init; }
         
-        public List<Guid> ConversationIds { get; init; } = [];
-        public List<Guid> MessagesIds { get; init; } = [];
+        public List<ConversationEntity> Conversations { get; init; } = [];
     }
 }

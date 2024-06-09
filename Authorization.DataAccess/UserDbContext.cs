@@ -1,4 +1,5 @@
 ﻿using Authorization.Domain;
+using Common.DataAccess.SharedEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

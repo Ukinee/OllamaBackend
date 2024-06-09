@@ -1,7 +1,8 @@
 ﻿using System.Security.Claims;
 using Authorization.Domain;
-using Authorization.Domain.Extensions;
 using Authorization.Services.Interfaces;
+using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -1,31 +1,22 @@
-﻿using Authorization.Domain;
-using Authorization.Services.Interfaces;
-using Chat.Domain.Conversations;
-using Chat.Domain.Conversations.Mappers;
+﻿using Chat.Domain.Conversations;
 using Chat.Services.Interfaces;
-using Common.DataAccess;
+using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Mappers;
 
 namespace Chat.CQRS.Queries
 {
     public class GetGeneralConversationsWithUserIdQuery
     {
         private readonly IConversationRepository _conversationRepository;
-        private readonly IUserRepository _userRepository;
 
-        public GetGeneralConversationsWithUserIdQuery(IConversationRepository conversationRepository, IUserRepository userRepository)
+        public GetGeneralConversationsWithUserIdQuery(IConversationRepository conversationRepository)
         {
             _conversationRepository = conversationRepository;
-            _userRepository = userRepository;
         }
         
         public async Task<IList<GeneralConversationViewModel>> Execute(Guid userId)
         {
-            UserEntity? user = await _userRepository.Get(userId);
-
-            if (user == null)
-                throw new NotFoundException(nameof(user));
-         
-            List<ConversationEntity> conversations = await _conversationRepository.GetGeneralConversations(user.ConversationIds);
+            List<ConversationEntity> conversations = await _conversationRepository.GetGeneralConversations(userId);
             
             return conversations.Select(x => x.ToGeneralConversation()).ToList();
         }
