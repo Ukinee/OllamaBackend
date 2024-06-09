@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Chat.DataAccess\Chat.DataAccess.csproj" />
       <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
       <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Common.DataAccess\Common.DataAccess.csproj" />
     </ItemGroup>
 
 </Project>

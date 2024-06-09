@@ -1,6 +1,5 @@
-﻿using Authorization.DataAccess;
-using Authorization.Domain;
-using Authorization.Services.Interfaces;
+﻿using Authorization.Services.Interfaces;
+using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 

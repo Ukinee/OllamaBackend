@@ -1,5 +1,7 @@
 ﻿using Authorization.Startup;
 using Chat.Startup;
+using Common.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,6 +15,10 @@ namespace OllamaBackend2
             return services
                 .ConfigureAuthorization(configuration)
                 .ConfigureChat(configuration)
+                .AddDbContext<UserDbContext>
+                (
+                    options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                )
                 .AddLogging
                 (
                     logging =>

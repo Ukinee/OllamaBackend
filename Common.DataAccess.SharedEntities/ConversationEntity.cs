@@ -1,4 +1,5 @@
-﻿using Chat.Domain.Conversations.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Chat.Domain.Conversations.Base;
 
 namespace Common.DataAccess.SharedEntities
 {

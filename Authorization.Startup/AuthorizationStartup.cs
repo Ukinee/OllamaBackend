@@ -1,10 +1,8 @@
 ﻿using System.Text;
-using Authorization.DataAccess;
-using Authorization.Domain;
 using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
+using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +18,6 @@ namespace Authorization.Startup
             (this IServiceCollection services, IConfiguration configuration)
         {
             return services
-                .AddDbContext<UserDbContext>
-                (
-                    options => options.UseSqlServer(configuration.GetConnectionString("UserConnection"))
-                )
                 .AddScoped<ITokenService, TokenService>()
                 .SetupJwt(configuration)
                 .SetupIdentity();

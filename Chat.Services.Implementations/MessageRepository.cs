@@ -1,26 +1,27 @@
-﻿using Chat.DataAccess;
-using Chat.Domain.Messages;
-using Chat.Services.Interfaces;
+﻿using Chat.Services.Interfaces;
+using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
-    public class MessageRepository(ChatDbContext chatDbContext) : IMessageRepository
+    public class MessageRepository(UserDbContext userDbContext) : IMessageRepository
     {
         public async Task<MessageEntity?> Get(Guid id)
         {
-            return await chatDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
+            return await userDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Add(MessageEntity message)
         {
-            await chatDbContext.Messages.AddAsync(message);
+            await userDbContext.Messages.AddAsync(message);
+            
+            await Save();
         }
 
         public Task Remove(MessageEntity message)
         {
-            chatDbContext.Messages.Remove(message);
+            userDbContext.Messages.Remove(message);
 
             return Task.CompletedTask;
         }
@@ -28,19 +29,19 @@ namespace Chat.Services.Implementations
         public async Task DeleteByConversationId(Guid ownerId)
         {
             List<MessageEntity> messages = await FindMessagesByConversationAsync(ownerId);
-            chatDbContext.Messages.RemoveRange(messages);
+            userDbContext.Messages.RemoveRange(messages);
 
             await Save();
         }
 
         private async Task Save()
         {
-            await chatDbContext.SaveChangesAsync();
+            await userDbContext.SaveChangesAsync();
         }
 
         public async Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId)
         {
-            return await chatDbContext
+            return await userDbContext
                 .Messages
                 .Where(x => x.ConversationId == conversationId)
                 .ToListAsync();

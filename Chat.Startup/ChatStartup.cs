@@ -2,9 +2,9 @@
 using Authorization.Services.Interfaces;
 using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
-using Chat.DataAccess;
 using Chat.Services.Implementations;
 using Chat.Services.Interfaces;
+using Common.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,13 +20,14 @@ namespace Chat.Startup
                 .AddScoped<IMessageRepository, MessageRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<DeleteConversationCommand>()
+                .AddScoped<CheckUserOwnsMessageQuery>()
+                .AddScoped<GetMessageQuery>()
+                .AddScoped<DeleteMessageQuery>()
+                .AddScoped<AddMessageQuery>()
+                .AddScoped<CheckUserOwnsConversationQuery>()
                 .AddScoped<AddConversationQuery>()
                 .AddScoped<GetConversationQuery>()
-                .AddScoped<GetGeneralConversationsWithUserIdQuery>()
-                .AddDbContext<ChatDbContext>
-                (
-                    options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
-                );
+                .AddScoped<GetGeneralConversationsWithUserIdQuery>();
         }
     }
 }
