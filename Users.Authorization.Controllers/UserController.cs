@@ -15,6 +15,13 @@ namespace Users.Authorization.Controllers
     [Route("api/[controller]/[action]")] //todo : use cases
     public class UserController(ITokenService tokenService, UserManager<UserEntity> userManager) : ControllerBase
     {
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult CheckLogin()
+        {
+            return Ok();
+        }
+        
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
         {

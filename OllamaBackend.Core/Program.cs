@@ -19,8 +19,25 @@ namespace OllamaBackend2
                 .AddEndpointsApiExplorer()
                 .AddControllers();
 
+            builder.Services.AddCors
+            (
+                options =>
+                {
+                    options.AddDefaultPolicy
+                    (
+                        policy =>
+                        {
+                            policy
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader();
+                        }
+                    );
+                }
+            );
+
             AddSwaggerGen(builder);
-            
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -28,6 +45,17 @@ namespace OllamaBackend2
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            
+            app.UseCors
+            (
+                // policy =>
+                // {
+                //     policy
+                //         .AllowAnyOrigin()
+                //         .AllowAnyMethod()
+                //         .AllowAnyHeader();
+                // }
+            );
 
             WebSocketOptions webSocketOptions = new WebSocketOptions
             {
