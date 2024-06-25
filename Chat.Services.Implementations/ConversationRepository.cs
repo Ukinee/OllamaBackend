@@ -1,17 +1,18 @@
 ﻿using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
     public class ConversationRepository(UserDbContext userDbContext) : IConversationRepository
     {
-        public async Task<List<ConversationEntity>> GetGeneralConversations(Guid userId)
+        public async Task<List<ConversationEntity>> Get(Guid[] conversationIds)
         {
             return await userDbContext
                 .Conversations
-                .Where(conversationEntity => conversationEntity.OwnerId == userId)
+                .Where(x => conversationIds.Contains(x.Id))
                 .ToListAsync();
         }
 
@@ -19,7 +20,6 @@ namespace Chat.Services.Implementations
         {
             return await userDbContext
                 .Conversations
-                .Include(dto => dto.Messages)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

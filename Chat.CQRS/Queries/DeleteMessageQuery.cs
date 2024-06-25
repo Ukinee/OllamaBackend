@@ -1,6 +1,7 @@
 ﻿using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Chat.CQRS.Queries
 {

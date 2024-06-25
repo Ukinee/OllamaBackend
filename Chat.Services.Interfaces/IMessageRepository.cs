@@ -1,12 +1,11 @@
-﻿using Chat.Domain.Messages;
-using Common.DataAccess.SharedEntities;
+﻿using Common.DataAccess.SharedEntities.Objects;
 
 namespace Chat.Services.Interfaces
 {
     public interface IMessageRepository
     {
         public Task<MessageEntity?> Get(Guid id);
-        public Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId);
+        public Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid[] messageIds);
 
         public Task Add(MessageEntity message);
         public Task Remove(MessageEntity message);

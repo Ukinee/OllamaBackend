@@ -1,27 +1,33 @@
-﻿using Chat.Domain.Messages;
-using Chat.Services.Interfaces;
+﻿using Chat.Services.Interfaces;
+using ChatUserLink.Services.Interfaces;
 using Common.DataAccess;
-using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Chat.CQRS.Queries
 {
     public class GetMessageQuery
     {
+        private readonly IUserAssociationRepository _userAssociationRepository;
         private readonly IMessageRepository _messageRepository;
 
-        public GetMessageQuery(IMessageRepository messageRepository)
+        public GetMessageQuery
+        (
+            IUserAssociationRepository userAssociationRepository,
+            IMessageRepository messageRepository
+        )
         {
+            _userAssociationRepository = userAssociationRepository;
             _messageRepository = messageRepository;
         }
-        
-        public async Task<MessageEntity> Execute(Guid id)
+
+        public async Task<MessageEntity> Execute(Guid messageId, Guid userId)
         {
-            MessageEntity? user = await _messageRepository.Get(id);
-            
-            if(user == null)
-                throw new NotFoundException(nameof(user));
-            
-            return user;
+            MessageEntity? message = await _messageRepository.Get(messageId);
+
+            if (message == null)
+                throw new NotFoundException("Message not found");
+
+            return message;
         }
     }
 }

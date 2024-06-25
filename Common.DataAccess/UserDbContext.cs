@@ -1,4 +1,6 @@
 ﻿using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Links;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,38 +16,8 @@ namespace Common.DataAccess
         public DbSet<ConversationEntity> Conversations { get; init; }
         public DbSet<MessageEntity> Messages { get; init; }
         
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<ConversationEntity>()
-                .HasMany(conversationEntity => conversationEntity.Messages)
-                .WithOne(messageEntity => messageEntity.Conversation)
-                .HasForeignKey(messageEntity => messageEntity.ConversationId);
-
-            builder.Entity<ConversationEntity>()
-                .HasOne(conversationEntity => conversationEntity.Owner)
-                .WithMany(userEntity => userEntity.Conversations)
-                .HasForeignKey(conversationEntity => conversationEntity.OwnerId);
-            
-            List<IdentityRole<Guid>> roles =
-            [
-                new IdentityRole<Guid>
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Admin", //todo : hardcode
-                    NormalizedName = "ADMIN", //todo : hardcode
-                },
-
-                new IdentityRole<Guid>
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "User", //todo : hardcode
-                    NormalizedName = "USER", //todo : hardcode
-                },
-            ];
-
-            builder.Entity<IdentityRole<Guid>>().HasData(roles);
-        }
+        public DbSet<UserConversationEntity> UserConversations { get; init; }
+        public DbSet<ConversationMessageEntity> ConversationMessages { get; init; }
+        public DbSet<UserMessageEntity> UserMessages { get; init; }
     }
 }

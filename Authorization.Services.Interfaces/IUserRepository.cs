@@ -1,5 +1,6 @@
 ﻿using Authorization.Domain;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Authorization.Services.Interfaces
 {

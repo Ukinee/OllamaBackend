@@ -1,6 +1,7 @@
 ﻿using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
@@ -26,12 +27,9 @@ namespace Chat.Services.Implementations
             return Task.CompletedTask;
         }
 
-        public async Task DeleteByConversationId(Guid ownerId)
+        public Task DeleteByConversationId(Guid id)
         {
-            List<MessageEntity> messages = await FindMessagesByConversationAsync(ownerId);
-            userDbContext.Messages.RemoveRange(messages);
-
-            await Save();
+            throw new NotImplementedException();
         }
 
         private async Task Save()
@@ -39,11 +37,11 @@ namespace Chat.Services.Implementations
             await userDbContext.SaveChangesAsync();
         }
 
-        public async Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId)
+        public async Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid[] messageIds)
         {
             return await userDbContext
                 .Messages
-                .Where(x => x.ConversationId == conversationId)
+                .Where(x => messageIds.Contains(x.Id))
                 .ToListAsync();
         }
     }

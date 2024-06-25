@@ -1,4 +1,5 @@
 ﻿using Authorization.Domain;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Common.DataAccess.SharedEntities.Mappers
 {
@@ -11,7 +12,6 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 UserName = createRequest.UserName,
                 Id = Guid.NewGuid(),
                 CreatedAt = DateTime.Now,
-                Conversations = [],
             };
         }
 
@@ -22,7 +22,6 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 UserName = entity.UserName ?? throw new NullReferenceException(nameof(entity.UserName)),
                 Id = entity.Id,
                 Token = token,
-                ConversationIds = entity.Conversations.Select(x => x.Id).ToList(),
             };
         }
     }

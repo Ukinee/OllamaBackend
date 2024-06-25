@@ -1,8 +1,10 @@
 ﻿using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
 using Chat.Domain.Conversations;
+using ChatUserLink.CQRS;
 using Common.DataAccess.SharedEntities;
 using Common.DataAccess.SharedEntities.Mappers;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,22 +17,25 @@ namespace Chat.Controllers
     public class ConversationController : ControllerBase
     {
         private readonly AddConversationQuery _addConversation;
-        private readonly CheckUserOwnsConversationQuery _checkUserOwnsConversationQuery;
+        private readonly UserKnowAboutConversationQuery _checkUserOwnsConversationQuery;
         private readonly DeleteConversationCommand _deleteConversationCommand;
         private readonly GetConversationQuery _getConversationQuery;
+        private readonly GetMessagesQuery _getMessagesQuery;
 
         public ConversationController
         (
             DeleteConversationCommand deleteConversationCommand,
             GetConversationQuery getConversationQuery,
             AddConversationQuery addConversation,
-            CheckUserOwnsConversationQuery checkUserOwnsConversationQuery
+            UserKnowAboutConversationQuery checkUserOwnsConversationQuery,
+            GetMessagesQuery getMessagesQuery
         )
         {
             _deleteConversationCommand = deleteConversationCommand;
             _getConversationQuery = getConversationQuery;
             _addConversation = addConversation;
             _checkUserOwnsConversationQuery = checkUserOwnsConversationQuery;
+            _getMessagesQuery = getMessagesQuery;
         }
 
         [HttpGet("{id:guid}")]
@@ -43,8 +48,9 @@ namespace Chat.Controllers
                 return Unauthorized();
             
             ConversationEntity conversation = await _getConversationQuery.Execute(id);
+            IList<MessageEntity> messages = await _getMessagesQuery.Execute(id);
 
-            return Ok(conversation.ToConcreteConversation());
+            return Ok(conversation.ToConcreteConversation(messages));
         }
         
         [HttpPost]
@@ -66,6 +72,8 @@ namespace Chat.Controllers
 
             if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
+            
+            throw new NotImplementedException();
 
             await _deleteConversationCommand.Execute(id);
 

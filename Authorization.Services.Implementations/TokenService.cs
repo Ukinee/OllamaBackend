@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Authorization.Services.Interfaces;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

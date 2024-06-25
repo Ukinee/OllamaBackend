@@ -3,6 +3,7 @@ using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

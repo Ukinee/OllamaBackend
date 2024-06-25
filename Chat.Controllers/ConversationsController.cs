@@ -16,7 +16,7 @@ namespace Chat.Controllers
         public async Task<IActionResult> GetGeneralConversations()
         {
             Guid userId = User.GetGuid();
-
+            
             IList<GeneralConversationViewModel> conversations = await generalConversationsQuery.Execute(userId);
             
             return Ok(conversations);

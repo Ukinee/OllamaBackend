@@ -1,4 +1,5 @@
 ﻿using Chat.Domain.Messages;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Common.DataAccess.SharedEntities.Mappers
 {
@@ -10,7 +11,6 @@ namespace Common.DataAccess.SharedEntities.Mappers
             {
                 Id = Guid.NewGuid(),
                 SenderId = userId,
-                ConversationId = message.ConversationId,
                 Content = message.Content,
                 ChatName = message.ChatName,
                 ChatRole = message.ChatRole,

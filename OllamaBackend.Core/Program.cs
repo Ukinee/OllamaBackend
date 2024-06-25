@@ -1,5 +1,4 @@
 using System;
-using Chat.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +20,27 @@ namespace OllamaBackend2
 
             AddSwaggerGen(builder);
             
+            builder.Services.AddCors
+            (
+                options => options.AddPolicy
+                (
+                    "AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .SetIsOriginAllowed(_ => true)
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    }
+                )
+            );
+
             WebApplication app = builder.Build();
+            
+            app.UseCors("AllowAll");
+            app.UseHttpsRedirection();
+            app.MapControllers();
 
             if (app.Environment.IsDevelopment())
             {
@@ -35,9 +54,6 @@ namespace OllamaBackend2
             };
 
             app.UseWebSockets(webSocketOptions);
-
-            app.UseHttpsRedirection();
-            app.MapControllers();
 
             app.Run();
 

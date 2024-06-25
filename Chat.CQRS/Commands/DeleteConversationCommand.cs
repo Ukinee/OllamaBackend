@@ -3,6 +3,7 @@ using Chat.Domain.Conversations;
 using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Chat.CQRS.Commands

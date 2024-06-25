@@ -2,6 +2,7 @@
 using Chat.Domain.Messages;
 using Common.DataAccess.SharedEntities;
 using Common.DataAccess.SharedEntities.Mappers;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +20,16 @@ namespace Chat.Controllers
         DeleteMessageQuery deleteMessageQuery
     ) : ControllerBase
     {
-        [HttpGet("{id:guid}")]
+        [HttpGet("{messageId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetMessage([FromRoute] Guid id)
+        public async Task<IActionResult> GetMessage([FromRoute] Guid messageId)
         {
             Guid userId = User.GetGuid();
 
-            if (await checkUserOwnsMessageQuery.Execute(id, userId) == false)
+            if (await checkUserOwnsMessageQuery.Execute(messageId, userId) == false)
                 return Unauthorized();
 
-            MessageEntity message = await getMessageQuery.Execute(id);
+            MessageEntity message = await getMessageQuery.Execute(messageId, userId);
 
             return Ok(message.ToViewModel());
         }

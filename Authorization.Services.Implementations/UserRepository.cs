@@ -1,6 +1,7 @@
 ﻿using Authorization.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Authorization.Services.Implementations

@@ -1,9 +1,11 @@
 ﻿using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Objects;
 
 namespace Chat.CQRS.Queries
 {
+    [Obsolete]
     public class CheckUserOwnsConversationQuery
     {
         private readonly IConversationRepository _conversationRepository;
@@ -20,7 +22,9 @@ namespace Chat.CQRS.Queries
             if (conversationEntity == null)
                 throw new NotFoundException(nameof(conversationEntity));
 
-            return conversationEntity.OwnerId == userId;
+            return false;
+
+            // return conversationEntity.OwnerId == userId;
         }
     }
 }
