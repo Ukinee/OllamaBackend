@@ -12,39 +12,29 @@ namespace Chat.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ConversationController : ControllerBase
+    public class ConversationController
+    (
+        DeleteConversationCommand deleteConversationCommand,
+        GetConversationQuery getConversationQuery,
+        AddConversationQuery addConversation,
+        CheckUserOwnsConversationQuery checkUserOwnsConversationQuery,
+        GetMessagesQuery getMessagesQuery
+    )
+        : ControllerBase
     {
-        private readonly AddConversationQuery _addConversation;
-        private readonly CheckUserOwnsConversationQuery _checkUserOwnsConversationQuery;
-        private readonly DeleteConversationCommand _deleteConversationCommand;
-        private readonly GetConversationQuery _getConversationQuery;
-
-        public ConversationController
-        (
-            DeleteConversationCommand deleteConversationCommand,
-            GetConversationQuery getConversationQuery,
-            AddConversationQuery addConversation,
-            CheckUserOwnsConversationQuery checkUserOwnsConversationQuery
-        )
-        {
-            _deleteConversationCommand = deleteConversationCommand;
-            _getConversationQuery = getConversationQuery;
-            _addConversation = addConversation;
-            _checkUserOwnsConversationQuery = checkUserOwnsConversationQuery;
-        }
-
         [HttpGet("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
         {
             Guid userId = User.GetGuid();
 
-            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+            if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
             
-            ConversationEntity conversation = await _getConversationQuery.Execute(id);
+            ConversationEntity conversation = await getConversationQuery.Execute(id);
+            IList<MessageEntity> messages = await getMessagesQuery.Execute(id, userId);
 
-            return Ok(conversation.ToConcreteConversation());
+            return Ok(conversation.ToConcreteConversation(messages));
         }
         
         [HttpPost]
@@ -53,7 +43,7 @@ namespace Chat.Controllers
         {
             Guid userId = User.GetGuid();
 
-            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(conversation, userId);
+            GeneralConversationViewModel conversationViewModel = await addConversation.Handle(conversation, userId);
 
             return Ok(conversationViewModel);
         }
@@ -64,10 +54,10 @@ namespace Chat.Controllers
         {
             Guid userId = User.GetGuid();
 
-            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+            if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
 
-            await _deleteConversationCommand.Execute(id);
+            await deleteConversationCommand.Execute(id);
 
             return NoContent();
         }

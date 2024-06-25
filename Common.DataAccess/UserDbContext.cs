@@ -17,16 +17,6 @@ namespace Common.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<ConversationEntity>()
-                .HasMany(conversationEntity => conversationEntity.Messages)
-                .WithOne(messageEntity => messageEntity.Conversation)
-                .HasForeignKey(messageEntity => messageEntity.ConversationId);
-
-            builder.Entity<ConversationEntity>()
-                .HasOne(conversationEntity => conversationEntity.Owner)
-                .WithMany(userEntity => userEntity.Conversations)
-                .HasForeignKey(conversationEntity => conversationEntity.OwnerId);
             
             List<IdentityRole<Guid>> roles =
             [

@@ -14,18 +14,22 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 GlobalContext = conversation.GlobalContext,
             };
         }
-        
-        public static ConcreteConversationViewModel ToConcreteConversation(this ConversationEntity conversation)
+
+        public static ConcreteConversationViewModel ToConcreteConversation
+        (
+            this ConversationEntity conversation,
+            IList<MessageEntity> messageEntities
+        )
         {
             return new ConcreteConversationViewModel
             {
                 Id = conversation.Id,
                 Name = conversation.Name,
                 GlobalContext = conversation.GlobalContext,
-                Messages = conversation.Messages.Select<MessageEntity, MessageViewModel>(x => x.ToViewModel()).ToList(),
+                Messages = messageEntities.Select(x => x.ToViewModel()).ToList(),
             };
         }
-        
+
         public static ConversationEntity ToEntity(this PostConversationRequest conversation, Guid ownerId)
         {
             return new ConversationEntity
@@ -34,6 +38,7 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 Name = conversation.Name,
                 OwnerId = ownerId,
                 GlobalContext = conversation.GlobalContext,
+                Participants = [ownerId],
                 Messages = [],
             };
         }

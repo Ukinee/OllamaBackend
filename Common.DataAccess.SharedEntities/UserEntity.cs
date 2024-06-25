@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Common.DataAccess.SharedEntities
 {
@@ -7,6 +6,6 @@ namespace Common.DataAccess.SharedEntities
     {
         public DateTime CreatedAt { get; init; }
         
-        public List<ConversationEntity> Conversations { get; init; } = [];
+        public List<Guid> Conversations { get; init; } = [];
     }
 }

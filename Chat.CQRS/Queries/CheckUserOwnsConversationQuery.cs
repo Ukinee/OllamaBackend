@@ -20,7 +20,7 @@ namespace Chat.CQRS.Queries
             if (conversationEntity == null)
                 throw new NotFoundException(nameof(conversationEntity));
 
-            return conversationEntity.OwnerId == userId;
+            return conversationEntity.OwnerId == userId || conversationEntity.Participants.Contains(userId);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 UserName = entity.UserName ?? throw new NullReferenceException(nameof(entity.UserName)),
                 Id = entity.Id,
                 Token = token,
-                ConversationIds = entity.Conversations.Select(x => x.Id).ToList(),
+                ConversationIds = entity.Conversations,
             };
         }
     }

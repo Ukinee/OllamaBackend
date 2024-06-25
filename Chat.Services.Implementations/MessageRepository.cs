@@ -7,44 +7,43 @@ namespace Chat.Services.Implementations
 {
     public class MessageRepository(UserDbContext userDbContext) : IMessageRepository
     {
-        public async Task<MessageEntity?> Get(Guid id)
+        public Task<MessageEntity?> Get(Guid id)
         {
-            return await userDbContext.Messages.FirstOrDefaultAsync(x => x.Id == id);
+            return userDbContext
+                .Messages
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<MessageEntity>> Get(IList<Guid> messageIds)
+        {
+            return await userDbContext
+                .Messages
+                .Where(x => messageIds.Contains(x.Id))
+                .ToListAsync();
         }
 
         public async Task Add(MessageEntity message)
         {
             await userDbContext.Messages.AddAsync(message);
-            
+
             await Save();
         }
 
-        public Task Remove(MessageEntity message)
+        public async Task Remove(MessageEntity message)
         {
             userDbContext.Messages.Remove(message);
-
-            return Task.CompletedTask;
+            await Save();
         }
 
-        public async Task DeleteByConversationId(Guid ownerId)
+        public Task DeleteByConversationId(Guid id)
         {
-            List<MessageEntity> messages = await FindMessagesByConversationAsync(ownerId);
-            userDbContext.Messages.RemoveRange(messages);
-
-            await Save();
+            throw new NotImplementedException();
         }
 
         private async Task Save()
         {
             await userDbContext.SaveChangesAsync();
-        }
-
-        public async Task<List<MessageEntity>> FindMessagesByConversationAsync(Guid conversationId)
-        {
-            return await userDbContext
-                .Messages
-                .Where(x => x.ConversationId == conversationId)
-                .ToListAsync();
         }
     }
 }
