@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Persona.Controllers</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
+      <ProjectReference Include="..\Persona.CQRS\Persona.CQRS.csproj" />
+      <ProjectReference Include="..\Persona.Models\Persona.Models.csproj" />
+      <ProjectReference Include="..\Users.Authorization.Common\Users.Authorization.Common.csproj" />
+    </ItemGroup>
+
+</Project>

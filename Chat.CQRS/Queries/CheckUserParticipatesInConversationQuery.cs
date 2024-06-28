@@ -4,11 +4,11 @@ using Common.DataAccess.SharedEntities;
 
 namespace Chat.CQRS.Queries
 {
-    public class CheckUserOwnsConversationQuery
+    public class CheckUserParticipatesInConversationQuery
     {
         private readonly IConversationRepository _conversationRepository;
 
-        public CheckUserOwnsConversationQuery(IConversationRepository conversationRepository)
+        public CheckUserParticipatesInConversationQuery(IConversationRepository conversationRepository)
         {
             _conversationRepository = conversationRepository;
         }
@@ -20,7 +20,7 @@ namespace Chat.CQRS.Queries
             if (conversationEntity == null)
                 throw new NotFoundException(nameof(conversationEntity));
 
-            return conversationEntity.OwnerId == userId;
+            return conversationEntity.OwnerId == userId || conversationEntity.Participants.Contains(userId);
         }
     }
 }

@@ -23,6 +23,9 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetMessage([FromRoute] Guid id)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+
             Guid userId = User.GetGuid();
 
             if (await checkUserOwnsMessageQuery.Execute(id, userId) == false)
@@ -37,6 +40,9 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+
             Guid userId = User.GetGuid();
 
             MessageViewModel messageViewModel = await addMessageQuery.Handle(messageRequest, userId);
@@ -44,9 +50,13 @@ namespace Chat.Controllers
             return CreatedAtAction(nameof(GetMessage), new { id = messageViewModel.Id }, messageViewModel);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:guid}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+
             Guid userId = User.GetGuid();
 
             if (await checkUserOwnsMessageQuery.Execute(id, userId) == false)

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Persona.Models;
+using Persona.Models.Personas;
 
 namespace Common.DataAccess
 {
@@ -14,6 +16,9 @@ namespace Common.DataAccess
         public DbSet<ConversationEntity> Conversations { get; init; }
         public DbSet<MessageEntity> Messages { get; init; }
         
+        public DbSet<PersonaEntity> Personas { get; init; }
+        public DbSet<PersonaLinkEntity> PersonaLinks { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

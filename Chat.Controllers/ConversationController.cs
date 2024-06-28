@@ -18,29 +18,35 @@ namespace Chat.Controllers
         GetConversationQuery getConversationQuery,
         AddConversationQuery addConversation,
         CheckUserOwnsConversationQuery checkUserOwnsConversationQuery,
-        GetMessagesQuery getMessagesQuery
-    )
-        : ControllerBase
+        GetMessagesQuery getMessagesQuery,
+        UpdateConversationCommand updateConversationCommand
+    ) : ControllerBase
     {
         [HttpGet("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+            
             Guid userId = User.GetGuid();
 
             if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
-            
+
             ConversationEntity conversation = await getConversationQuery.Execute(id);
             IList<MessageEntity> messages = await getMessagesQuery.Execute(id, userId);
 
             return Ok(conversation.ToConcreteConversation(messages));
         }
-        
+
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest conversation)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+            
             Guid userId = User.GetGuid();
 
             GeneralConversationViewModel conversationViewModel = await addConversation.Handle(conversation, userId);
@@ -48,10 +54,32 @@ namespace Chat.Controllers
             return Ok(conversationViewModel);
         }
 
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> PutConversation([FromBody] PutConversationRequest conversation)
+        {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+            
+            Guid userId = User.GetGuid();
+
+            if (await checkUserOwnsConversationQuery.Execute(conversation.Id, userId) == false)
+                return Unauthorized($"{conversation.Id} does not belong to {userId}");
+
+            await updateConversationCommand.Execute(conversation);
+
+            ConversationEntity updatedConversation = await getConversationQuery.Execute(conversation.Id);
+
+            return Ok(updatedConversation.ToGeneralConversation());
+        }
+
         [HttpDelete("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+            
             Guid userId = User.GetGuid();
 
             if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)

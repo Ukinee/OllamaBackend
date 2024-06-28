@@ -10,10 +10,9 @@ namespace Common.DataAccess.SharedEntities.Mappers
             {
                 Id = Guid.NewGuid(),
                 SenderId = userId,
+                PersonaId = message.PersonaId,
                 ConversationId = message.ConversationId,
                 Content = message.Content,
-                ChatName = message.ChatName,
-                ChatRole = message.ChatRole,
                 Images = message.Images,
                 Timestamp = DateTime.UtcNow,
             };
@@ -26,9 +25,8 @@ namespace Common.DataAccess.SharedEntities.Mappers
                 Id = message.Id,
                 SenderId = message.SenderId,
                 Content = message.Content,
+                PersonaId = message.PersonaId,
                 Images = message.Images,
-                ChatRole = message.ChatRole,
-                ChatName = message.ChatName,
                 Timestamp = message.Timestamp,
             };
         }

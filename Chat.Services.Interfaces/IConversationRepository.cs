@@ -11,5 +11,6 @@ namespace Chat.Services.Interfaces
 
         public Task Add(ConversationEntity conversation);
         public Task Delete(ConversationEntity conversation);
+        public Task Update(PutConversationRequest request);
     }
 }

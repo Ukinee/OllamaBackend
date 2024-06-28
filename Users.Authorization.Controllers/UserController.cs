@@ -21,15 +21,15 @@ namespace Users.Authorization.Controllers
         {
             return Ok();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
         {
+            if (ModelState.IsValid == false)
+                return BadRequest(ModelState);
+
             try
             {
-                if (ModelState.IsValid == false)
-                    return BadRequest(ModelState);
-
                 UserEntity user = createRequest.ToEntity();
 
                 IdentityResult result = await userManager.CreateAsync(user, createRequest.Password);
@@ -53,7 +53,7 @@ namespace Users.Authorization.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Authorize([FromBody] UserLoginRequest userRequest)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest userRequest)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);

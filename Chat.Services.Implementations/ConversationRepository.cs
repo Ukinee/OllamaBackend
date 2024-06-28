@@ -1,4 +1,5 @@
-﻿using Chat.Services.Interfaces;
+﻿using Chat.Domain.Conversations;
+using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,6 @@ namespace Chat.Services.Implementations
         {
             return await userDbContext
                 .Conversations
-                .Include(dto => dto.Messages)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -34,6 +34,23 @@ namespace Chat.Services.Implementations
         {
             userDbContext.Conversations.Remove(conversation);
 
+            await Save();
+        }
+
+        public async Task Update(PutConversationRequest request)
+        {
+            ConversationEntity? conversation = await userDbContext
+                .Conversations
+                .FirstOrDefaultAsync(x => x.Id == request.Id);
+            
+            if (conversation == null)
+            {
+                throw new NotFoundException(nameof(conversation));
+            }
+            
+            conversation.Name = request.Name;
+            conversation.GlobalContext = request.GlobalContext;
+            
             await Save();
         }
 
