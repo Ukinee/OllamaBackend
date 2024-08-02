@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Persona.CQRS.Queries;
-using Persona.Models.Mappers;
 using Persona.Models.Personas;
 using Users.Authorization.Common;
 
@@ -32,19 +31,19 @@ namespace Persona.Controllers
             _updatePersonaQuery = updatePersonaQuery;
         }
 
-        [HttpGet("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
-        {
-            IActionResult? validateResult = await Validate(id);
-
-            if (validateResult != null)
-                return validateResult;
-
-            PersonaEntity personaEntity = await _getPersonaQuery.Execute(id);
-
-            return Ok(personaEntity.ToViewModel());
-        }
+        // [HttpGet("{id:guid}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // public async Task<IActionResult> Get([FromRoute] Guid id)
+        // {
+        //     IActionResult? validateResult = await Validate(id);
+        //
+        //     if (validateResult != null)
+        //         return validateResult;
+        //
+        //     PersonaEntity personaEntity = await _getPersonaQuery.Execute(id);
+        //
+        //     return Ok(personaEntity.ToViewModel());
+        // }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

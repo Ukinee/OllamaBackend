@@ -24,8 +24,10 @@ namespace Common.DataAccess.SharedEntities.Mappers
             {
                 Id = message.Id,
                 SenderId = message.SenderId,
-                Content = message.Content,
                 PersonaId = message.PersonaId,
+                ChatName = message.ChatName,
+                ChatRole = message.ChatRole,
+                Content = message.Content,
                 Images = message.Images,
                 Timestamp = message.Timestamp,
             };

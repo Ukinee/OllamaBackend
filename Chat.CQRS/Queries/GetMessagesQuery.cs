@@ -1,5 +1,4 @@
-﻿using Authorization.Services.Interfaces;
-using Chat.Services.Interfaces;
+﻿using Chat.Services.Interfaces;
 using Common.DataAccess.SharedEntities;
 
 namespace Chat.CQRS.Queries
@@ -19,7 +18,7 @@ namespace Chat.CQRS.Queries
             _conversationRepository = conversationRepository;
         }
 
-        public async Task<IList<MessageEntity>> Execute(Guid conversationId, Guid userId)
+        public async Task<IList<MessageEntity>> Execute(Guid conversationId, Guid userId, int page, int pageSize)
         {
             ConversationEntity? conversation = await _conversationRepository.Get(conversationId);
 
@@ -28,8 +27,14 @@ namespace Chat.CQRS.Queries
             
             if (conversation.OwnerId != userId && conversation.Participants.Contains(userId) == false)
                 throw new UnauthorizedAccessException("You don't have permission to access this conversation");
+            
+            List<Guid> messageIds = conversation
+                .Messages
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
-            return await _messageRepository.Get(conversation.Messages);
+            return await _messageRepository.Get(messageIds);
         }
     }
 }

@@ -23,8 +23,9 @@ namespace Chat.Controllers
     ) : ControllerBase
     {
         [HttpGet("{id:guid}")]
+        [HttpGet("{conversationId:guid}/messages/page/{routePage:int?}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id)
+        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id, int? routePage)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
@@ -34,8 +35,10 @@ namespace Chat.Controllers
             if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
 
+            int page = routePage ?? 1; //todo: hardcode
+
             ConversationEntity conversation = await getConversationQuery.Execute(id);
-            IList<MessageEntity> messages = await getMessagesQuery.Execute(id, userId);
+            IList<MessageEntity> messages = await getMessagesQuery.Execute(id, userId, page, 20); //todo: hardcode
 
             return Ok(conversation.ToConcreteConversation(messages));
         }

@@ -18,9 +18,11 @@ namespace Chat.Services.Implementations
 
         public async Task<ConversationEntity?> Get(Guid id)
         {
-            return await userDbContext
+            ConversationEntity? conversationEntity = await userDbContext
                 .Conversations
                 .FirstOrDefaultAsync(x => x.Id == id);
+            
+            return conversationEntity;
         }
 
         public async Task Add(ConversationEntity conversation)

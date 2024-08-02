@@ -8,6 +8,6 @@ namespace Common.DataAccess.SharedEntities
         
         public Guid OwnerId { get; init; }
         public List<Guid> Participants { get; init; } = [];
-        public List<Guid> Messages { get; init; } = [];
+        public List<Guid> Messages { get; set; } = [];
     }
 }

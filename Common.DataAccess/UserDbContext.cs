@@ -39,6 +39,9 @@ namespace Common.DataAccess
                     NormalizedName = "USER", //todo : hardcode
                 },
             ];
+            
+            builder.Entity<PersonaLinkEntity>()
+                .HasKey(pl => new { pl.UserId, pl.ConversationId });
 
             builder.Entity<IdentityRole<Guid>>().HasData(roles);
         }
