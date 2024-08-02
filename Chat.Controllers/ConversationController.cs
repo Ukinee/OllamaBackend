@@ -1,8 +1,8 @@
 ﻿using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
 using Chat.Domain.Conversations;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Mappers;
+using Common.DataAccess.SharedEntities.Chats;
+using Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,16 +12,30 @@ namespace Chat.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ConversationController
-    (
-        DeleteConversationCommand deleteConversationCommand,
-        GetConversationQuery getConversationQuery,
-        AddConversationQuery addConversation,
-        CheckUserOwnsConversationQuery checkUserOwnsConversationQuery,
-        GetMessagesQuery getMessagesQuery,
-        UpdateConversationCommand updateConversationCommand
-    ) : ControllerBase
+    public class ConversationController : ControllerBase
     {
+        private readonly DeleteConversationCommand _deleteConversationCommand;
+        private readonly GetConversationQuery _getConversationQuery;
+        private readonly AddConversationQuery _addConversation;
+        private readonly CheckUserOwnsConversationQuery _checkUserOwnsConversationQuery;
+        private readonly GetMessagesQuery _getMessagesQuery;
+        private readonly UpdateConversationCommand _updateConversationCommand;
+
+        public ConversationController(DeleteConversationCommand deleteConversationCommand,
+            GetConversationQuery getConversationQuery,
+            AddConversationQuery addConversation,
+            CheckUserOwnsConversationQuery checkUserOwnsConversationQuery,
+            GetMessagesQuery getMessagesQuery,
+            UpdateConversationCommand updateConversationCommand)
+        {
+            _deleteConversationCommand = deleteConversationCommand;
+            _getConversationQuery = getConversationQuery;
+            _addConversation = addConversation;
+            _checkUserOwnsConversationQuery = checkUserOwnsConversationQuery;
+            _getMessagesQuery = getMessagesQuery;
+            _updateConversationCommand = updateConversationCommand;
+        }
+
         [HttpGet("{id:guid}")]
         [HttpGet("{conversationId:guid}/messages/page/{routePage:int?}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -32,13 +46,13 @@ namespace Chat.Controllers
             
             Guid userId = User.GetGuid();
 
-            if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
+            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
 
             int page = routePage ?? 1; //todo: hardcode
 
-            ConversationEntity conversation = await getConversationQuery.Execute(id);
-            IList<MessageEntity> messages = await getMessagesQuery.Execute(id, userId, page, 20); //todo: hardcode
+            ConversationEntity conversation = await _getConversationQuery.Execute(id);
+            IList<MessageEntity> messages = await _getMessagesQuery.Execute(id, userId, page, 20); //todo: hardcode
 
             return Ok(conversation.ToConcreteConversation(messages));
         }
@@ -52,7 +66,7 @@ namespace Chat.Controllers
             
             Guid userId = User.GetGuid();
 
-            GeneralConversationViewModel conversationViewModel = await addConversation.Handle(conversation, userId);
+            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(conversation, userId);
 
             return Ok(conversationViewModel);
         }
@@ -66,12 +80,12 @@ namespace Chat.Controllers
             
             Guid userId = User.GetGuid();
 
-            if (await checkUserOwnsConversationQuery.Execute(conversation.Id, userId) == false)
+            if (await _checkUserOwnsConversationQuery.Execute(conversation.Id, userId) == false)
                 return Unauthorized($"{conversation.Id} does not belong to {userId}");
 
-            await updateConversationCommand.Execute(conversation);
+            await _updateConversationCommand.Execute(conversation);
 
-            ConversationEntity updatedConversation = await getConversationQuery.Execute(conversation.Id);
+            ConversationEntity updatedConversation = await _getConversationQuery.Execute(conversation.Id);
 
             return Ok(updatedConversation.ToGeneralConversation());
         }
@@ -85,10 +99,10 @@ namespace Chat.Controllers
             
             Guid userId = User.GetGuid();
 
-            if (await checkUserOwnsConversationQuery.Execute(id, userId) == false)
+            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
                 return Unauthorized();
 
-            await deleteConversationCommand.Execute(id);
+            await _deleteConversationCommand.Execute(id);
 
             return NoContent();
         }

@@ -1,7 +1,8 @@
 ﻿using Chat.Domain.Messages;
 using Chat.Services.Interfaces;
 using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Mappers;
+using Common.DataAccess.SharedEntities.Chats;
+using Common.DataAccess.SharedEntities.Chats.Mappers;
 
 namespace Chat.CQRS.Queries
 {

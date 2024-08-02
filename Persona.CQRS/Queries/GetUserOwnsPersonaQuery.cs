@@ -1,4 +1,5 @@
 ﻿using Common.DataAccess;
+using Common.DataAccess.SharedEntities.Users;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;
 
@@ -20,7 +21,7 @@ namespace Persona.CQRS.Queries
             if (persona == null)
                 throw new NotFoundException(nameof(persona));
             
-            return persona.OwnerId == userId;
+            return persona.UserId == userId;
         }
     }
 }

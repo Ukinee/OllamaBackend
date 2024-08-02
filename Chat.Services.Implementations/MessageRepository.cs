@@ -1,15 +1,23 @@
 ﻿using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Chats;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
-    public class MessageRepository(UserDbContext userDbContext) : IMessageRepository
+    public class MessageRepository : IMessageRepository
     {
+        private readonly ChatContext _userDbContext;
+
+        public MessageRepository(ChatContext userDbContext)
+        {
+            _userDbContext = userDbContext;
+        }
+
         public Task<MessageEntity?> Get(Guid id)
         {
-            return userDbContext
+            return _userDbContext
                 .Messages
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
@@ -19,7 +27,7 @@ namespace Chat.Services.Implementations
         {
             try
             {
-                return await userDbContext
+                return await _userDbContext
                     .Messages
                     .Where(x => messageIds.Contains(x.Id))
                     .ToListAsync();
@@ -35,14 +43,14 @@ namespace Chat.Services.Implementations
 
         public async Task Add(MessageEntity message)
         {
-            await userDbContext.Messages.AddAsync(message);
+            await _userDbContext.Messages.AddAsync(message);
 
             await Save();
         }
 
         public async Task Remove(MessageEntity message)
         {
-            userDbContext.Messages.Remove(message);
+            _userDbContext.Messages.Remove(message);
             await Save();
         }
 
@@ -53,7 +61,7 @@ namespace Chat.Services.Implementations
 
         private async Task Save()
         {
-            await userDbContext.SaveChangesAsync();
+            await _userDbContext.SaveChangesAsync();
         }
     }
 }

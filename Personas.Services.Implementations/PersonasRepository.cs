@@ -1,4 +1,5 @@
 ﻿using Common.DataAccess;
+using Common.DataAccess.SharedEntities.Users;
 using Microsoft.EntityFrameworkCore;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;
@@ -7,57 +8,67 @@ namespace Personas.Services.Implementations;
 
 public class PersonasRepository : IPersonaRepository
 {
-    private readonly UserDbContext _userDbContext;
+    private readonly UserContext _userContext;
 
-    public PersonasRepository(UserDbContext userDbContext)
+    public PersonasRepository(UserContext userContext)
     {
-        _userDbContext = userDbContext;
+        _userContext = userContext;
     }
 
     public async Task<PersonaEntity?> Get(Guid id)
     {
-        return await _userDbContext.Personas
+        return await _userContext.Personas
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task Add(PersonaEntity personaEntity)
     {
-        _userDbContext.Personas.Add(personaEntity);
-        await Save();
+        _userContext.Personas.Add(personaEntity);
+        await SaveChangesAsync();
     }
 
     public async Task Update(PutPersonaRequest request)
     {
-        PersonaEntity? personaEntity = await _userDbContext.Personas
+        PersonaEntity? personaEntity = await _userContext.Personas
             .FirstOrDefaultAsync(x => x.Id == request.Id);
 
         if (personaEntity is null)
             throw new Exception("Persona not found");
 
-        personaEntity.Description = request.Description;
-        personaEntity.ChatRole = request.ChatRole;
-        personaEntity.ChatName = request.ChatName;
+        personaEntity.Name = request.Name;
 
-        await Save();
+        await SaveChangesAsync();
     }
 
-    public Task Delete(Guid id)
+    public async Task Delete(Guid id)
     {
-        throw new NotImplementedException();
+        PersonaEntity? personaEntity = await _userContext.Personas
+            .Include(persona => persona.User)
+            .ThenInclude(entity => entity.Personas)
+            .FirstOrDefaultAsync(persona => persona.Id == id);
+
+        if (personaEntity is null)
+            throw new InvalidOperationException("Persona not found");
+        
+        if(personaEntity.User.Personas.Count == 1)
+            throw new InvalidOperationException("Can't delete last persona");
+
+        personaEntity.IsDeleted = true;
+        await SaveChangesAsync();
     }
 
     public async Task<PersonaEntity[]> GetAll(Guid userId)
     {
-        PersonaEntity[] personas = await _userDbContext
+        PersonaEntity[] personas = await _userContext
             .Personas
-            .Where(x => x.OwnerId == userId)
+            .Where(x => x.UserId == userId && x.IsDeleted == false)
             .ToArrayAsync();
 
         return personas;
     }
 
-    private async Task Save()
+    private async Task SaveChangesAsync()
     {
-        await _userDbContext.SaveChangesAsync();
+        await _userContext.SaveChangesAsync();
     }
 }

@@ -2,15 +2,23 @@
 using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Chats;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chat.Services.Implementations
 {
-    public class ConversationRepository(UserDbContext userDbContext) : IConversationRepository
+    public class ConversationRepository : IConversationRepository
     {
+        private readonly ChatContext _userDbContext;
+
+        public ConversationRepository(ChatContext userDbContext)
+        {
+            _userDbContext = userDbContext;
+        }
+
         public async Task<List<ConversationEntity>> GetGeneralConversations(Guid userId)
         {
-            return await userDbContext
+            return await _userDbContext
                 .Conversations
                 .Where(conversationEntity => conversationEntity.OwnerId == userId)
                 .ToListAsync();
@@ -18,7 +26,7 @@ namespace Chat.Services.Implementations
 
         public async Task<ConversationEntity?> Get(Guid id)
         {
-            ConversationEntity? conversationEntity = await userDbContext
+            ConversationEntity? conversationEntity = await _userDbContext
                 .Conversations
                 .FirstOrDefaultAsync(x => x.Id == id);
             
@@ -27,28 +35,31 @@ namespace Chat.Services.Implementations
 
         public async Task Add(ConversationEntity conversation)
         {
-            await userDbContext.Conversations.AddAsync(conversation);
+            await _userDbContext.Conversations.AddAsync(conversation);
 
             await Save();
         }
 
-        public async Task Delete(ConversationEntity conversation)
+        public async Task Delete(Guid conversationId)
         {
-            userDbContext.Conversations.Remove(conversation);
+            ConversationEntity? conversation = await Get(conversationId);
+            
+            if(conversation == null)
+                throw new NotFoundException(nameof(conversation));
+
+            conversation.IsDeleted = true;
 
             await Save();
         }
 
         public async Task Update(PutConversationRequest request)
         {
-            ConversationEntity? conversation = await userDbContext
+            ConversationEntity? conversation = await _userDbContext
                 .Conversations
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
             
             if (conversation == null)
-            {
                 throw new NotFoundException(nameof(conversation));
-            }
             
             conversation.Name = request.Name;
             conversation.GlobalContext = request.GlobalContext;
@@ -58,7 +69,7 @@ namespace Chat.Services.Implementations
 
         private async Task Save()
         {
-            await userDbContext.SaveChangesAsync();
+            await _userDbContext.SaveChangesAsync();
         }
     }
 }

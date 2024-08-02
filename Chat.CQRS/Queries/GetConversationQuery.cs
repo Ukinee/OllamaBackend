@@ -2,6 +2,7 @@
 using Chat.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.CQRS.Queries
 {

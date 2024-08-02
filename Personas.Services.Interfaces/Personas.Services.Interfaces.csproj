@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Common.DataAccess.SharedEntities\Common.DataAccess.SharedEntities.csproj" />
       <ProjectReference Include="..\Persona.Models\Persona.Models.csproj" />
     </ItemGroup>
 

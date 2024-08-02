@@ -1,13 +1,14 @@
-﻿using Persona.Models.Personas;
+﻿using Common.DataAccess.SharedEntities.Users;
+using Persona.Models.Personas;
 
-namespace Personas.Services.Interfaces;
-
-public interface IPersonaRepository
+namespace Personas.Services.Interfaces
 {
-    public Task<PersonaEntity?> Get(Guid id);
-    public Task Add(PersonaEntity personaEntity);
-    public Task Update(PutPersonaRequest request);
-    public Task Delete(Guid id);
-    
-    public Task<PersonaEntity[]> GetAll(Guid userId);
+    public interface IPersonaRepository
+    {
+        public Task<PersonaEntity?> Get(Guid id);
+        public Task Add(PersonaEntity personaEntity);
+        public Task Update(PutPersonaRequest request);
+        public Task Delete(Guid id);
+        public Task<PersonaEntity[]> GetAll(Guid userId);
+    }
 }

@@ -51,8 +51,10 @@ namespace Persona.Controllers
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
+            
+            Guid userId = User.GetGuid();
 
-            PersonaViewModel viewModel = await _createPersonaQuery.Execute(personaRequest);
+            PersonaViewModel viewModel = await _createPersonaQuery.Execute(personaRequest, userId);
 
             return Ok(viewModel);
         }
@@ -76,12 +78,12 @@ namespace Persona.Controllers
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             IActionResult? validateResult = await Validate(id);
-
+        
             if (validateResult != null)
                 return validateResult;
-
+        
             throw new NotImplementedException();
-
+        
             return NoContent();
         }
 

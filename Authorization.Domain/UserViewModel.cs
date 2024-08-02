@@ -4,10 +4,8 @@ namespace Authorization.Domain
 {
     public class UserViewModel : UserBase
     {
-        public Guid Id { get; set; }
-
-        public string Token { get; set; }
-
-        public List<Guid> ConversationIds { get; set; } = [];
+        public required Guid Id { get; set; }
+        public required string Token { get; set; }
+        public required List<Guid> PersonasIds { get; set; }
     }
 }

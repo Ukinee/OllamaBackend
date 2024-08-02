@@ -1,5 +1,5 @@
 ﻿using Common.DataAccess;
-using Persona.Models.Personas;
+using Common.DataAccess.SharedEntities.Users;
 using Personas.Services.Interfaces;
 
 namespace Persona.CQRS.Queries
@@ -15,8 +15,12 @@ namespace Persona.CQRS.Queries
 
         public async Task<PersonaEntity> Execute(Guid id)
         {
-            return await _personaRepository.Get(id) 
-                   ?? throw new NotFoundException(nameof(PersonaEntity));
+            PersonaEntity? personaEntity = await _personaRepository.Get(id);
+            
+            if (personaEntity == null)
+                throw new NotFoundException(nameof(PersonaEntity));
+
+            return personaEntity;
         }
     }
 }

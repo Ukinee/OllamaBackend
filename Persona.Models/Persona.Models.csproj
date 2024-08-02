@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Common.DataAccess.SharedEntities\Common.DataAccess.SharedEntities.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Personas\Base\" />
+    </ItemGroup>
+
 </Project>

@@ -3,6 +3,7 @@ using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
 using Common.DataAccess;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace Authorization.Startup
                         options.Password.RequiredLength = 6; //todo : hardcode
                     }
                 )
-                .AddEntityFrameworkStores<UserDbContext>();
+                .AddEntityFrameworkStores<UserContext>();
 
             return services;
         }

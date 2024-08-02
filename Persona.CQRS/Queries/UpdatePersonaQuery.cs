@@ -1,5 +1,6 @@
 ﻿using Common.DataAccess;
-using Persona.Models.Mappers;
+using Common.DataAccess.SharedEntities.Users;
+using Persona.DomainServices;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;
 
@@ -8,10 +9,12 @@ namespace Persona.CQRS.Queries
     public class UpdatePersonaQuery
     {
         private readonly IPersonaRepository _personaRepository;
+        private readonly PersonaMapper _personaMapper;
 
-        public UpdatePersonaQuery(IPersonaRepository personaRepository)
+        public UpdatePersonaQuery(IPersonaRepository personaRepository, PersonaMapper personaMapper)
         {
             _personaRepository = personaRepository;
+            _personaMapper = personaMapper;
         }
 
         public async Task<PersonaViewModel> Execute(PutPersonaRequest updatePersonaRequest)
@@ -23,7 +26,7 @@ namespace Persona.CQRS.Queries
             if (persona == null)
                 throw new NotFoundException(nameof(persona));
 
-            return persona.ToViewModel();
+            return _personaMapper.ToViewModel(persona);
         }
     }
 }

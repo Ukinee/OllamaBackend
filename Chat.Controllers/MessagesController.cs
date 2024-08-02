@@ -1,5 +1,6 @@
 ﻿using Chat.CQRS.Queries;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Chats;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

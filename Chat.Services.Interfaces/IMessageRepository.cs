@@ -1,5 +1,6 @@
 ﻿using Chat.Domain.Messages;
 using Common.DataAccess.SharedEntities;
+using Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.Services.Interfaces
 {
@@ -10,6 +11,5 @@ namespace Chat.Services.Interfaces
 
         public Task Add(MessageEntity message);
         public Task Remove(MessageEntity message);
-        public Task DeleteByConversationId(Guid id);
     }
 }

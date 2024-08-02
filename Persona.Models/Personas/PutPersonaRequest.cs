@@ -1,9 +1,8 @@
-﻿using Persona.Models.Personas.Base;
-
-namespace Persona.Models.Personas
+﻿namespace Persona.Models.Personas
 {
-    public class PutPersonaRequest : PersonaBase
+    public class PutPersonaRequest
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
+        public required string Name { get; set; }
     }
 }
