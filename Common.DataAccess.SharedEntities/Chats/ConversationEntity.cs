@@ -1,15 +1,17 @@
 ﻿using Chat.Domain.Conversations.Base;
+using Common.DataAccess.SharedEntities.Users;
 
 namespace Common.DataAccess.SharedEntities.Chats
 {
     public record ConversationEntity : ConversationBase
     {
-        public Guid Id { get; init; }
+        public required Guid Id { get; init; }
         
-        public bool IsDeleted { get; set; }
+        public required bool IsFinished { get; init; }
+        public required DateTime CreatedAt { get; init; }
+        public required DateTime EndedAt { get; init; }
         
-        public Guid OwnerId { get; init; }
-        public List<Guid> Participants { get; init; } = [];
-        public List<Guid> Messages { get; set; } = [];
+        public required ICollection<MessageEntity> Messages { get; init; }
+        public required ICollection<PersonaEntity> Personas { get; init; }
     }
 }

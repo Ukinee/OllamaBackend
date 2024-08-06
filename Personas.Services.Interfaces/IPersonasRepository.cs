@@ -3,7 +3,7 @@ using Persona.Models.Personas;
 
 namespace Personas.Services.Interfaces
 {
-    public interface IPersonaRepository
+    public interface IPersonasRepository
     {
         public Task<PersonaEntity?> Get(Guid id);
         public Task Add(PersonaEntity personaEntity);

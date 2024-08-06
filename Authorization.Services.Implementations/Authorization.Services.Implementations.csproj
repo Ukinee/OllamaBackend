@@ -12,6 +12,7 @@
       <ProjectReference Include="..\Common.DataAccess\Common.DataAccess.csproj" />
       <ProjectReference Include="..\Identities.Services.Interfaces\Identities.Services.Interfaces.csproj" />
       <ProjectReference Include="..\Persona.Services.Factories\Persona.Services.Factories.csproj" />
+      <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
     </ItemGroup>
 
     <ItemGroup>

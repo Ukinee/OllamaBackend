@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Authorization.Services.Factories;
 using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
 using Common.DataAccess;
@@ -6,7 +7,6 @@ using Common.DataAccess.SharedEntities;
 using Common.DataAccess.SharedEntities.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +20,9 @@ namespace Authorization.Startup
         {
             return services
                 .AddScoped<ITokenService, TokenService>()
+                .AddScoped<IUserCreationService, UserCreationService>()
+                .AddScoped<UserManager<UserEntity>>()
+                .AddScoped<UserFactory>()
                 .SetupJwt(configuration)
                 .SetupIdentity();
         }

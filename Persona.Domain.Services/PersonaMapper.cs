@@ -1,24 +1,25 @@
-﻿using Authorization.Services.Factories;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Common.DataAccess.SharedEntities.Users;
+using Identities.Services.Interfaces;
 using Persona.Models.Personas;
+using Personas.Services.Interfaces;
 
-namespace Persona.DomainServices;
+namespace Persona.Domain.Services;
 
 public class PersonaMapper
 {
-    private readonly IdentityFactory _identityFactory;
-    private readonly PersonaFactory _personaFactory;
+    private readonly IIdentityCreationService _identityCreationService;
+    private readonly IPersonaCreationService _personaCreationService;
 
-    public PersonaMapper(IdentityFactory identityFactory, PersonaFactory personaFactory)
+    public PersonaMapper(IIdentityCreationService identityCreationService, IPersonaCreationService personaCreationService)
     {
-        _identityFactory = identityFactory;
-        _personaFactory = personaFactory;
+        _identityCreationService = identityCreationService;
+        _personaCreationService = personaCreationService;
     }
 
-    public PersonaEntity ToEntity(PostPersonaRequest createPersonaRequest, Guid userId)
+    public async Task<PersonaEntity> CreateEntity(PostPersonaRequest createPersonaRequest, Guid userId)
     {
-        IdentityEntity identity = _identityFactory.Create();
-        PersonaEntity persona = _personaFactory.Create(userId, identity, createPersonaRequest.Name);
+        IdentityEntity identity = await _identityCreationService.Create();
+        PersonaEntity persona = await _personaCreationService.Create(userId, identity, createPersonaRequest.Name);
 
         return persona;
     }

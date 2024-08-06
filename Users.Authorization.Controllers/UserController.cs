@@ -41,24 +41,22 @@ namespace Users.Authorization.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
         {
+            Console.WriteLine("Register request");
+
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
+            Console.WriteLine("ValidModel");
+
             try
             {
-                UserEntity user = _userCreationService.Create(createRequest);
+                UserEntity user = await _userCreationService.Create(createRequest);
 
-                IdentityResult result = await _userManager.CreateAsync(user, createRequest.Password);
-
-                if (result.Succeeded == false)
-                    return BadRequest(result.Errors);
-
-                IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "User"); //todo : hardcode
-
-                if (roleResult.Succeeded == false)
-                    return BadRequest(roleResult.Errors);
-
+                Console.WriteLine("User created");
+                
                 string token = await _tokenService.CreateToken(_userManager, user);
+                
+                Console.WriteLine("User token created");
 
                 return Ok(user.ToViewModel(token));
             }
@@ -76,6 +74,7 @@ namespace Users.Authorization.Controllers
 
             UserEntity? user = await _userManager
                 .Users
+                .Include(user => user.Personas)
                 .FirstOrDefaultAsync(x => x.UserName == userRequest.UserName);
 
             if (user == null)
@@ -95,8 +94,8 @@ namespace Users.Authorization.Controllers
         {
             List<string> roles = User
                 .Claims
-                .Where(c => c.Type == ClaimTypes.Role)
-                .Select(c => c.Value)
+                .Where(claim => claim.Type == ClaimTypes.Role)
+                .Select(claim => claim.Value)
                 .ToList();
 
             return Ok("You're Authorized, your roles are: " + string.Join(", ", roles)); //todo : hardcode

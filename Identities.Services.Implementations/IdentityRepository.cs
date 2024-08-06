@@ -19,5 +19,14 @@ namespace Identities.Services.Implementations
             
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task Link(IdentityEntity identity, PersonaEntity persona)
+        {
+            identity.Persona = persona;
+            identity.PersonaId = persona.Id;
+            
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
+

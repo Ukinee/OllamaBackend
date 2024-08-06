@@ -53,7 +53,7 @@ namespace Chat.Controllers
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-
+            
             Guid userId = User.GetGuid();
 
             MessageViewModel messageViewModel = await _addMessageQuery.Handle(messageRequest, userId);

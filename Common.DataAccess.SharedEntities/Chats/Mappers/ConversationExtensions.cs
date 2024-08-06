@@ -1,4 +1,5 @@
 ﻿using Chat.Domain.Conversations;
+using Common.DataAccess.SharedEntities.Users;
 
 namespace Common.DataAccess.SharedEntities.Chats.Mappers
 {
@@ -10,7 +11,7 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
             {
                 Id = conversation.Id,
                 Name = conversation.Name,
-                GlobalContext = conversation.GlobalContext,
+                Context = conversation.Context,
             };
         }
 
@@ -24,21 +25,23 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
             {
                 Id = conversation.Id,
                 Name = conversation.Name,
-                GlobalContext = conversation.GlobalContext,
+                Context = conversation.Context,
                 Messages = messageEntities.Select(x => x.ToViewModel()).ToList(),
             };
         }
 
-        public static ConversationEntity ToEntity(this PostConversationRequest conversation, Guid ownerId)
+        public static ConversationEntity ToEntity(this PostConversationRequest conversation, PersonaEntity ownerPersona)
         {
             return new ConversationEntity
             {
                 Id = Guid.NewGuid(),
+                IsFinished = false,
+                CreatedAt = DateTime.Now,
+                EndedAt = DateTime.MaxValue,
                 Name = conversation.Name,
-                OwnerId = ownerId,
-                GlobalContext = conversation.GlobalContext,
-                Participants = [ownerId],
+                Context = conversation.Context,
                 Messages = [],
+                Personas = [ownerPersona],
             };
         }
     }

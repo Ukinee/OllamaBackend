@@ -15,10 +15,10 @@ namespace Identities.Services.Implementations
             _identityFactory = identityFactory;
         }
         
-        public IdentityEntity Create()
+        public async Task<IdentityEntity> Create()
         {
             IdentityEntity identity = _identityFactory.Create();
-            _identityRepository.Add(identity);
+            await _identityRepository.Add(identity);
 
             return identity;
         }

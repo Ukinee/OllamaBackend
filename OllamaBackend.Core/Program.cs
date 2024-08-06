@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Chat.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,7 +16,7 @@ namespace OllamaBackend2
                 .ConfigureServices(builder.Configuration)
                 .AddEndpointsApiExplorer()
                 .AddControllers();
-
+            
             builder.Services.AddCors
             (
                 options =>
@@ -46,24 +43,13 @@ namespace OllamaBackend2
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            
-            app.UseCors
-            (
-                // policy =>
-                // {
-                //     policy
-                //         .AllowAnyOrigin()
-                //         .AllowAnyMethod()
-                //         .AllowAnyHeader();
-                // }
-            );
 
-            WebSocketOptions webSocketOptions = new WebSocketOptions
-            {
-                KeepAliveInterval = TimeSpan.FromMinutes(2),
-            };
-
-            app.UseWebSockets(webSocketOptions);
+            // WebSocketOptions webSocketOptions = new WebSocketOptions
+            // {
+            //     KeepAliveInterval = TimeSpan.FromMinutes(2),
+            // };
+            //
+            // app.UseWebSockets(webSocketOptions);
 
             app.UseHttpsRedirection();
             app.MapControllers();
@@ -144,3 +130,15 @@ namespace OllamaBackend2
         */
     }
 }
+
+/*
+drop table Messages;
+drop table Conversations;
+drop table AspNetRoleClaims;
+drop table AspNetUsers;
+drop table AspNetUserLogins;
+drop table AspNetUserRoles;
+drop table AspNetUserClaims;
+drop table AspNetUserTokens;
+ */
+

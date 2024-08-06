@@ -73,19 +73,19 @@ namespace Persona.Controllers
             return Ok(viewModel);
         }
 
-        [HttpDelete("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
-        {
-            IActionResult? validateResult = await Validate(id);
-        
-            if (validateResult != null)
-                return validateResult;
-        
-            throw new NotImplementedException();
-        
-            return NoContent();
-        }
+        // [HttpDelete("{id:guid}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // public async Task<IActionResult> Delete([FromRoute] Guid id)
+        // {
+        //     IActionResult? validateResult = await Validate(id);
+        //
+        //     if (validateResult != null)
+        //         return validateResult;
+        //
+        //     throw new NotImplementedException();
+        //
+        //     return NoContent();
+        // }
 
         private async Task<IActionResult?> Validate(Guid personaId)
         {

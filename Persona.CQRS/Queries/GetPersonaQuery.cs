@@ -6,16 +6,16 @@ namespace Persona.CQRS.Queries
 {
     public class GetPersonaQuery
     {
-        private readonly IPersonaRepository _personaRepository;
+        private readonly IPersonasRepository _personasRepository;
 
-        public GetPersonaQuery(IPersonaRepository personaRepository)
+        public GetPersonaQuery(IPersonasRepository personasRepository)
         {
-            _personaRepository = personaRepository;
+            _personasRepository = personasRepository;
         }
 
         public async Task<PersonaEntity> Execute(Guid id)
         {
-            PersonaEntity? personaEntity = await _personaRepository.Get(id);
+            PersonaEntity? personaEntity = await _personasRepository.Get(id);
             
             if (personaEntity == null)
                 throw new NotFoundException(nameof(PersonaEntity));

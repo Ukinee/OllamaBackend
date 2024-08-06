@@ -1,16 +1,19 @@
-﻿using Chat.Domain.Messages.Base;
+﻿using Common.DataAccess.SharedEntities.Users;
 
 namespace Common.DataAccess.SharedEntities.Chats
 {
-    public record MessageEntity : MessageBase
+    public record MessageEntity
     {
-        public Guid Id { get; init; }
-        public Guid SenderId { get; init; }
-        public DateTime Timestamp { get; set; }
+        public required Guid Id { get; init; }
+        public required string Content { get; init; }
+        public required string[] Images { get; init; }
+        public required DateTime Timestamp { get; init; }
         
-        public string ChatName { get; set; }
-        public string ChatRole { get; set; }
-
-        public Guid ConversationId { get; init; }
+        //Connections
+        public PersonaEntity? SenderPersona { get; init; }
+        public required Guid SenderPersonaId { get; init; }
+        
+        public ConversationEntity? Conversation { get; init; }
+        public required Guid ConversationId { get; init; }
     }
 }

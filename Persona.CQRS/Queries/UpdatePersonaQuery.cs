@@ -1,6 +1,6 @@
 ﻿using Common.DataAccess;
 using Common.DataAccess.SharedEntities.Users;
-using Persona.DomainServices;
+using Persona.Domain.Services;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;
 
@@ -8,20 +8,20 @@ namespace Persona.CQRS.Queries
 {
     public class UpdatePersonaQuery
     {
-        private readonly IPersonaRepository _personaRepository;
+        private readonly IPersonasRepository _personasRepository;
         private readonly PersonaMapper _personaMapper;
 
-        public UpdatePersonaQuery(IPersonaRepository personaRepository, PersonaMapper personaMapper)
+        public UpdatePersonaQuery(IPersonasRepository personasRepository, PersonaMapper personaMapper)
         {
-            _personaRepository = personaRepository;
+            _personasRepository = personasRepository;
             _personaMapper = personaMapper;
         }
 
         public async Task<PersonaViewModel> Execute(PutPersonaRequest updatePersonaRequest)
         {
-            await _personaRepository.Update(updatePersonaRequest);
+            await _personasRepository.Update(updatePersonaRequest);
 
-            PersonaEntity? persona = await _personaRepository.Get(updatePersonaRequest.Id);
+            PersonaEntity? persona = await _personasRepository.Get(updatePersonaRequest.Id);
 
             if (persona == null)
                 throw new NotFoundException(nameof(persona));

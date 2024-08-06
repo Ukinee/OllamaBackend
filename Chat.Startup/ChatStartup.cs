@@ -25,7 +25,7 @@ namespace Chat.Startup
                 .AddScoped<DeleteMessageQuery>()
                 .AddScoped<GetMessagesQuery>()
                 .AddScoped<AddMessageQuery>()
-                .AddScoped<CheckUserOwnsConversationQuery>()
+                .AddScoped<CheckUserInConversationQuery>()
                 .AddScoped<AddConversationQuery>()
                 .AddScoped<UpdateConversationCommand>()
                 .AddScoped<GetConversationQuery>()

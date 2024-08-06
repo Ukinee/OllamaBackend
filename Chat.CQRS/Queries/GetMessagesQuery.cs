@@ -26,16 +26,14 @@ namespace Chat.CQRS.Queries
             if (conversation == null)
                 throw new KeyNotFoundException("Conversation not found");
             
-            if (conversation.OwnerId != userId && conversation.Participants.Contains(userId) == false)
+            if (conversation.Personas.Any(x => x.UserId == userId) == false)
                 throw new UnauthorizedAccessException("You don't have permission to access this conversation");
             
-            List<Guid> messageIds = conversation
+            return conversation
                 .Messages
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
-
-            return await _messageRepository.Get(messageIds);
         }
     }
 }

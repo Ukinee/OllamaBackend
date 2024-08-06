@@ -4,6 +4,6 @@ namespace Identities.Services.Interfaces
 {
     public interface IIdentityCreationService
     {
-        public IdentityEntity Create();
+        public Task<IdentityEntity> Create();
     }
 }

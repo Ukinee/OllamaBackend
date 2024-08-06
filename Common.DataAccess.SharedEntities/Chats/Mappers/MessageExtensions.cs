@@ -4,13 +4,12 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
 {
     public static class MessageExtensions
     {
-        public static MessageEntity ToEntity(this PostMessageRequest message, Guid userId)
+        public static MessageEntity ToEntity(this PostMessageRequest message)
         {
             return new MessageEntity
             {
                 Id = Guid.NewGuid(),
-                SenderId = userId,
-                PersonaId = message.PersonaId,
+                SenderPersonaId = message.PersonaId,
                 ConversationId = message.ConversationId,
                 Content = message.Content,
                 Images = message.Images,
@@ -23,10 +22,8 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
             return new MessageViewModel
             {
                 Id = message.Id,
-                SenderId = message.SenderId,
-                PersonaId = message.PersonaId,
-                ChatName = message.ChatName,
-                ChatRole = message.ChatRole,
+                SenderId = message.SenderPersonaId,
+                PersonaId = message.SenderPersonaId,
                 Content = message.Content,
                 Images = message.Images,
                 Timestamp = message.Timestamp,

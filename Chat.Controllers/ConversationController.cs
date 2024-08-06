@@ -17,36 +17,39 @@ namespace Chat.Controllers
         private readonly DeleteConversationCommand _deleteConversationCommand;
         private readonly GetConversationQuery _getConversationQuery;
         private readonly AddConversationQuery _addConversation;
-        private readonly CheckUserOwnsConversationQuery _checkUserOwnsConversationQuery;
+        private readonly CheckUserInConversationQuery _checkUserInConversationQuery;
         private readonly GetMessagesQuery _getMessagesQuery;
         private readonly UpdateConversationCommand _updateConversationCommand;
 
-        public ConversationController(DeleteConversationCommand deleteConversationCommand,
+        public ConversationController
+        (
+            DeleteConversationCommand deleteConversationCommand,
             GetConversationQuery getConversationQuery,
             AddConversationQuery addConversation,
-            CheckUserOwnsConversationQuery checkUserOwnsConversationQuery,
+            CheckUserInConversationQuery checkUserInConversationQuery,
             GetMessagesQuery getMessagesQuery,
-            UpdateConversationCommand updateConversationCommand)
+            UpdateConversationCommand updateConversationCommand
+        )
         {
             _deleteConversationCommand = deleteConversationCommand;
             _getConversationQuery = getConversationQuery;
             _addConversation = addConversation;
-            _checkUserOwnsConversationQuery = checkUserOwnsConversationQuery;
+            _checkUserInConversationQuery = checkUserInConversationQuery;
             _getMessagesQuery = getMessagesQuery;
             _updateConversationCommand = updateConversationCommand;
         }
 
         [HttpGet("{id:guid}")]
-        [HttpGet("{conversationId:guid}/messages/page/{routePage:int?}")]
+        [HttpGet("{id:guid}/messages/page/{routePage:int?}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id, int? routePage)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-            
+
             Guid userId = User.GetGuid();
 
-            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+            if (await _checkUserInConversationQuery.Execute(id, userId) == false) //todo: isAdmin
                 return Unauthorized();
 
             int page = routePage ?? 1; //todo: hardcode
@@ -59,14 +62,14 @@ namespace Chat.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest conversation)
+        public async Task<IActionResult> PostConversation([FromBody] PostConversationRequest request)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-            
+
             Guid userId = User.GetGuid();
 
-            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(conversation, userId);
+            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(request, userId);
 
             return Ok(conversationViewModel);
         }
@@ -77,10 +80,10 @@ namespace Chat.Controllers
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-            
+
             Guid userId = User.GetGuid();
 
-            if (await _checkUserOwnsConversationQuery.Execute(conversation.Id, userId) == false)
+            if (await _checkUserInConversationQuery.Execute(conversation.Id, userId) == false) //todo: is admin
                 return Unauthorized($"{conversation.Id} does not belong to {userId}");
 
             await _updateConversationCommand.Execute(conversation);
@@ -90,21 +93,21 @@ namespace Chat.Controllers
             return Ok(updatedConversation.ToGeneralConversation());
         }
 
-        [HttpDelete("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
-        {
-            if (ModelState.IsValid == false)
-                return BadRequest(ModelState);
-            
-            Guid userId = User.GetGuid();
-
-            if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
-                return Unauthorized();
-
-            await _deleteConversationCommand.Execute(id);
-
-            return NoContent();
-        }
+        // [HttpDelete("{id:guid}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
+        // {
+        //     if (ModelState.IsValid == false)
+        //         return BadRequest(ModelState);
+        //
+        //     Guid userId = User.GetGuid();
+        //
+        //     if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
+        //         return Unauthorized();
+        //
+        //     await _deleteConversationCommand.Execute(id);
+        //
+        //     return NoContent();
+        // }
     }
 }

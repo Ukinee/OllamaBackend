@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Identities.Services.Implementations\Identities.Services.Implementations.csproj" />
-      <ProjectReference Include="..\Identities.Services.Interfaces\Identities.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Personas.Services.Implementations\Personas.Services.Implementations.csproj" />
+      <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

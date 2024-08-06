@@ -20,11 +20,13 @@ namespace Chat.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetGeneralConversations()
+        public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId)
         {
             Guid userId = User.GetGuid();
 
-            IList<GeneralConversationViewModel> conversations = await _generalConversationsQuery.Execute(userId);
+            //todo: check if user owns persona
+            
+            IList<GeneralConversationViewModel> conversations = await _generalConversationsQuery.Execute(personaId);
             
             return Ok(conversations);
         }

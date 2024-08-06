@@ -16,11 +16,11 @@ namespace Chat.Services.Implementations
             _userDbContext = userDbContext;
         }
 
-        public async Task<List<ConversationEntity>> GetGeneralConversations(Guid userId)
+        public async Task<List<ConversationEntity>> GetGeneralConversations(Guid personaId)
         {
             return await _userDbContext
                 .Conversations
-                .Where(conversationEntity => conversationEntity.OwnerId == userId)
+                .Where(conversationEntity => conversationEntity.Personas.Any(x => x.Id == personaId))
                 .ToListAsync();
         }
 
@@ -46,8 +46,10 @@ namespace Chat.Services.Implementations
             
             if(conversation == null)
                 throw new NotFoundException(nameof(conversation));
-
-            conversation.IsDeleted = true;
+            
+            throw new NotImplementedException("Must not be implemented");
+            
+            _userDbContext.Conversations.Remove(conversation);
 
             await Save();
         }
@@ -62,7 +64,7 @@ namespace Chat.Services.Implementations
                 throw new NotFoundException(nameof(conversation));
             
             conversation.Name = request.Name;
-            conversation.GlobalContext = request.GlobalContext;
+            conversation.Context = request.Context;
             
             await Save();
         }

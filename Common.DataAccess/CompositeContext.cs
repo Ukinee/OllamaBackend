@@ -1,18 +1,21 @@
-﻿using Common.DataAccess.SharedEntities.Users;
+﻿using Common.DataAccess.SharedEntities.Chats;
+using Common.DataAccess.SharedEntities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Common.DataAccess
 {
-    public class UserContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
+    public class CompositeContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
     {
-        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        public CompositeContext(DbContextOptions<CompositeContext> options) : base(options)
         {
         }
 
         public DbSet<PersonaEntity> Personas { get; set; }
         public DbSet<IdentityEntity> Identities { get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
+        public DbSet<ConversationEntity> Conversations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,21 +23,31 @@ namespace Common.DataAccess
 
             BuildRoles(modelBuilder);
             
-            modelBuilder
-                .Entity<PersonaEntity>()
+            // Add configurations from UserContext
+            modelBuilder.Entity<PersonaEntity>()
                 .HasOne(persona => persona.Identity)
                 .WithOne(identity => identity.Persona)
                 .HasForeignKey<PersonaEntity>(persona => persona.IdentityId)
-                .OnDelete(DeleteBehavior.Cascade); ;
+                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder
-                .Entity<PersonaEntity>()
+            modelBuilder.Entity<PersonaEntity>()
                 .HasOne(persona => persona.User)
                 .WithMany(user => user.Personas)
                 .HasForeignKey(persona => persona.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-        }
 
+            modelBuilder
+                .Entity<PersonaEntity>()
+                .HasMany(persona => persona.Conversations)
+                .WithMany(conversation => conversation.Personas)
+                .UsingEntity(builder => builder.ToTable("PersonaConversations"));
+
+            // Add configurations from ChatContext
+            modelBuilder.Entity<ConversationEntity>()
+                .HasMany(conversation => conversation.Personas)
+                .WithMany(persona => persona.Conversations);
+        }
+        
         private static void BuildRoles(ModelBuilder modelBuilder)
         {
             List<IdentityRole<Guid>> roles =

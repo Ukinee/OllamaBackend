@@ -34,6 +34,8 @@
       <ProjectReference Include="..\Authorization.Startup\Authorization.Startup.csproj" />
       <ProjectReference Include="..\Chat.Controllers\Chat.Controllers.csproj" />
       <ProjectReference Include="..\Chat.Startup\Chat.Startup.csproj" />
+      <ProjectReference Include="..\Identities.Startup\Identities.Startup.csproj" />
+      <ProjectReference Include="..\Personas.Startup\Personas.Startup.csproj" />
       <ProjectReference Include="..\Users.Authorization.Controllers\Users.Authorization.Controllers.csproj" />
     </ItemGroup>
 

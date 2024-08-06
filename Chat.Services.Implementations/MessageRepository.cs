@@ -25,20 +25,10 @@ namespace Chat.Services.Implementations
 
         public async Task<List<MessageEntity>> Get(IList<Guid> messageIds)
         {
-            try
-            {
-                return await _userDbContext
-                    .Messages
-                    .Where(x => messageIds.Contains(x.Id))
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                // Логирование ошибки
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-                throw;
-            }
+            return await _userDbContext
+                .Messages
+                .Where(x => messageIds.Contains(x.Id))
+                .ToListAsync();
         }
 
         public async Task Add(MessageEntity message)

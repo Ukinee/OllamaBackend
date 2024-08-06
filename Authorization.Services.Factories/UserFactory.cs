@@ -5,15 +5,15 @@ namespace Authorization.Services.Factories
 {
     public class UserFactory
     {
-        public UserEntity Create(Guid userId, UserCreateRequest createRequest, PersonaEntity defaultPersona, string userType)
+        public UserEntity Create(UserCreateRequest createRequest, string userType)
         {
             return new UserEntity()
             {
-                Id = userId,
+                Id = Guid.NewGuid(),
                 CreatedAt = DateTime.Now,
                 UserName = createRequest.UserName,
                 Role = userType,
-                Personas = [defaultPersona],
+                Personas = [],
             };
         }
     }

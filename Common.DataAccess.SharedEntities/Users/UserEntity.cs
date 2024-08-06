@@ -7,6 +7,6 @@ namespace Common.DataAccess.SharedEntities.Users
         public required  DateTime CreatedAt { get; set; }
         public required string Role { get; set; } //Identity role
         
-        public required ICollection<PersonaEntity> Personas { get; set; }
+        public required ICollection<PersonaEntity> Personas { get; set; } //Как минимум 1, задается при создании
     }
 }

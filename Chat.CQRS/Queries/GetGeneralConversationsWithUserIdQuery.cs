@@ -15,9 +15,9 @@ namespace Chat.CQRS.Queries
             _conversationRepository = conversationRepository;
         }
         
-        public async Task<IList<GeneralConversationViewModel>> Execute(Guid userId)
+        public async Task<IList<GeneralConversationViewModel>> Execute(Guid personaId)
         {
-            List<ConversationEntity> conversations = await _conversationRepository.GetGeneralConversations(userId);
+            List<ConversationEntity> conversations = await _conversationRepository.GetGeneralConversations(personaId);
             
             return conversations.Select(x => x.ToGeneralConversation()).ToList();
         }

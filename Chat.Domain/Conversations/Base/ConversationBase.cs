@@ -2,7 +2,7 @@
 {
     public record ConversationBase
     {
-        public string Name { get; set; }
-        public string GlobalContext { get; set; }
+        public required string Name { get; set; }
+        public required string Context { get; set; }
     }
 }
