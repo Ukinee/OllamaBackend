@@ -6,11 +6,11 @@ using Personas.Services.Interfaces;
 
 namespace Personas.Services.Implementations;
 
-public class PersonasesRepository : IPersonasRepository
+public class PersonasRepository : IPersonasRepository
 {
-    private readonly UserContext _userContext;
+    private readonly CompositeContext _userContext;
 
-    public PersonasesRepository(UserContext userContext)
+    public PersonasRepository(CompositeContext userContext)
     {
         _userContext = userContext;
     }

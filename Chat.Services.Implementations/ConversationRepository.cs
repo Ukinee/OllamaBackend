@@ -9,9 +9,9 @@ namespace Chat.Services.Implementations
 {
     public class ConversationRepository : IConversationRepository
     {
-        private readonly ChatContext _userDbContext;
+        private readonly CompositeContext _userDbContext;
 
-        public ConversationRepository(ChatContext userDbContext)
+        public ConversationRepository(CompositeContext userDbContext)
         {
             _userDbContext = userDbContext;
         }

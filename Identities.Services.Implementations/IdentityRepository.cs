@@ -7,9 +7,9 @@ namespace Identities.Services.Implementations
 {
     public class IdentityRepository : IIdentityRepository
     {
-        private readonly UserContext _dbContext;
+        private readonly CompositeContext _dbContext;
 
-        public IdentityRepository(UserContext dbContext)
+        public IdentityRepository(CompositeContext dbContext)
         {
             _dbContext = dbContext;
         }

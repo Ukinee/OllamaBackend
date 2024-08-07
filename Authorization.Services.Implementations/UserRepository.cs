@@ -7,9 +7,9 @@ namespace Authorization.Services.Implementations
 {
     public class UserRepository : IUserRepository
     {
-        private UserContext _dbContext;
+        private CompositeContext _dbContext;
 
-        public UserRepository(UserContext dbContext)
+        public UserRepository(CompositeContext dbContext)
         {
             _dbContext = dbContext;
         }
