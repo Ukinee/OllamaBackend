@@ -1,5 +1,6 @@
 ﻿using Common.DataAccess;
 using Common.DataAccess.SharedEntities.Users;
+using Identities.Models;
 using Identities.Services.Interfaces;
 
 namespace Identities.Services.Implementations
@@ -16,7 +17,7 @@ namespace Identities.Services.Implementations
         public async Task Add(IdentityEntity identity)
         {
             _dbContext.Identities.Add(identity);
-            
+
             await _dbContext.SaveChangesAsync();
         }
 
@@ -24,9 +25,26 @@ namespace Identities.Services.Implementations
         {
             identity.Persona = persona;
             identity.PersonaId = persona.Id;
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Update(PutIdentityRequest request, Guid id)
+        {
+            IdentityEntity? identity = await _dbContext
+                .Identities
+                .FindAsync(id);
+
+            if (identity is null)
+            {
+                throw new InvalidOperationException($"Identity {id} not found.");
+            }
+            
+            identity.Description = request.Description;
+            identity.PhysicalAttributes = request.PhysicalAttributes;
+            identity.Habits = request.Habits;
             
             await _dbContext.SaveChangesAsync();
         }
     }
 }
-

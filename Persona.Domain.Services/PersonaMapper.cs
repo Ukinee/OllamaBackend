@@ -16,10 +16,10 @@ public class PersonaMapper
         _personaCreationService = personaCreationService;
     }
 
-    public async Task<PersonaEntity> CreateEntity(PostPersonaRequest createPersonaRequest, Guid userId)
+    public async Task<PersonaEntity> CreateEntity(PostPersonaRequest createPersonaRequest)
     {
         IdentityEntity identity = await _identityCreationService.Create();
-        PersonaEntity persona = await _personaCreationService.Create(userId, identity, createPersonaRequest.Name);
+        PersonaEntity persona = await _personaCreationService.Create(createPersonaRequest.UserId, identity, createPersonaRequest.Name);
 
         return persona;
     }

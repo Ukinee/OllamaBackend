@@ -1,12 +1,10 @@
 ﻿using Chat.CQRS.Queries;
 using Chat.Domain.Messages;
-using Common.DataAccess.SharedEntities;
 using Common.DataAccess.SharedEntities.Chats;
 using Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Users.Authorization.Common;
 
 namespace Chat.Controllers
 {
@@ -37,11 +35,6 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            Guid userId = User.GetGuid();
-
-            if (await _checkUserOwnsMessageQuery.Execute(id, userId) == false)
-                return Unauthorized();
-
             MessageEntity message = await _getMessageQuery.Execute(id);
 
             return Ok(message.ToViewModel());
@@ -54,9 +47,7 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
             
-            Guid userId = User.GetGuid();
-
-            MessageViewModel messageViewModel = await _addMessageQuery.Handle(messageRequest, userId);
+            MessageViewModel messageViewModel = await _addMessageQuery.Handle(messageRequest);
 
             return CreatedAtAction(nameof(GetMessage), new { id = messageViewModel.Id }, messageViewModel);
         }
@@ -67,11 +58,6 @@ namespace Chat.Controllers
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-
-            Guid userId = User.GetGuid();
-
-            if (await _checkUserOwnsMessageQuery.Execute(id, userId) == false)
-                return Unauthorized();
 
             await _deleteMessageQuery.Remove(id);
 

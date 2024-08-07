@@ -27,10 +27,10 @@ public class PersonasesRepository : IPersonasRepository
         await SaveChangesAsync();
     }
 
-    public async Task Update(PutPersonaRequest request)
+    public async Task Update(PutPersonaRequest request, Guid id)
     {
         PersonaEntity? personaEntity = await _userContext.Personas
-            .FirstOrDefaultAsync(x => x.Id == request.Id);
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (personaEntity is null)
             throw new Exception("Persona not found");

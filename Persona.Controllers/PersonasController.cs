@@ -20,10 +20,8 @@ namespace Persona.Controllers
         
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromRoute] Guid userId)
         {
-            Guid userId = User.GetGuid();
-            
             PersonasViewModel personas = await _getPersonasQuery.Execute(userId);
             
             return Ok(personas);

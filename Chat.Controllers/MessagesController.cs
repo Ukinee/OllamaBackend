@@ -1,10 +1,8 @@
 ﻿using Chat.CQRS.Queries;
-using Common.DataAccess.SharedEntities;
 using Common.DataAccess.SharedEntities.Chats;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Users.Authorization.Common;
 
 namespace Chat.Controllers
 {
@@ -24,10 +22,9 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetMessages([FromRoute] Guid conversationId, int page = 1)
         {
-            Guid userId = User.GetGuid(); //todo: сделать проверку на владение диалогом
             int pageSize = 20; //todo: hardcode
 
-            IList<MessageEntity> messages = await _getMessages.Execute(conversationId, userId, page, pageSize);
+            IList<MessageEntity> messages = await _getMessages.Execute(conversationId, page, pageSize);
 
             return Ok(messages);
         }

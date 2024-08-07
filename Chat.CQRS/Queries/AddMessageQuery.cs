@@ -19,15 +19,12 @@ namespace Chat.CQRS.Queries
             _personasRepository = personasRepository;
         }
 
-        public async Task<MessageViewModel> Handle(PostMessageRequest request, Guid userId)
+        public async Task<MessageViewModel> Handle(PostMessageRequest request)
         {
-            PersonaEntity? personaEntity = await _personasRepository.Get(userId);
+            PersonaEntity? personaEntity = await _personasRepository.Get(request.PersonaId);
 
             if (personaEntity == null)
                 throw new InvalidOperationException("Persona does not exist");
-            
-            if(personaEntity.UserId != userId)
-                throw new InvalidOperationException("Not authorized to add message to this user");
             
             MessageEntity message = request.ToEntity();
             

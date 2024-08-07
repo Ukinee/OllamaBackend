@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common.DataAccess.SharedEntities\Common.DataAccess.SharedEntities.csproj" />
+      <ProjectReference Include="..\Identities.Models\Identities.Models.csproj" />
     </ItemGroup>
 
 </Project>

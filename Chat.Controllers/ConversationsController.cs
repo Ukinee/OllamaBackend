@@ -3,7 +3,6 @@ using Chat.Domain.Conversations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Users.Authorization.Common;
 
 namespace Chat.Controllers
 {
@@ -22,10 +21,6 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId)
         {
-            Guid userId = User.GetGuid();
-
-            //todo: check if user owns persona
-            
             IList<GeneralConversationViewModel> conversations = await _generalConversationsQuery.Execute(personaId);
             
             return Ok(conversations);

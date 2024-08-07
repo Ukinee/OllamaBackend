@@ -14,9 +14,9 @@ public class CreatePersonaQuery
         _personaMapper = personaMapper;
     }
     
-    public async Task<PersonaViewModel> Execute(PostPersonaRequest createPersonaRequest, Guid userId)
+    public async Task<PersonaViewModel> Execute(PostPersonaRequest createPersonaRequest)
     {
-        PersonaEntity entity = await _personaMapper.CreateEntity(createPersonaRequest, userId);
+        PersonaEntity entity = await _personaMapper.CreateEntity(createPersonaRequest);
         
         return _personaMapper.ToViewModel(entity);
     }

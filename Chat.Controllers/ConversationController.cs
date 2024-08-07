@@ -6,7 +6,6 @@ using Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Users.Authorization.Common;
 
 namespace Chat.Controllers
 {
@@ -47,15 +46,10 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            Guid userId = User.GetGuid();
-
-            if (await _checkUserInConversationQuery.Execute(id, userId) == false) //todo: isAdmin
-                return Unauthorized();
-
             int page = routePage ?? 1; //todo: hardcode
 
             ConversationEntity conversation = await _getConversationQuery.Execute(id);
-            IList<MessageEntity> messages = await _getMessagesQuery.Execute(id, userId, page, 20); //todo: hardcode
+            IList<MessageEntity> messages = await _getMessagesQuery.Execute(id, page, 20); //todo: hardcode
 
             return Ok(conversation.ToConcreteConversation(messages));
         }
@@ -67,9 +61,7 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            Guid userId = User.GetGuid();
-
-            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(request, userId);
+            GeneralConversationViewModel conversationViewModel = await _addConversation.Handle(request);
 
             return Ok(conversationViewModel);
         }
@@ -80,11 +72,6 @@ namespace Chat.Controllers
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
-
-            Guid userId = User.GetGuid();
-
-            if (await _checkUserInConversationQuery.Execute(conversation.Id, userId) == false) //todo: is admin
-                return Unauthorized($"{conversation.Id} does not belong to {userId}");
 
             await _updateConversationCommand.Execute(conversation);
 

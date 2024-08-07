@@ -19,15 +19,12 @@ namespace Chat.CQRS.Queries
             _conversationRepository = conversationRepository;
         }
 
-        public async Task<IList<MessageEntity>> Execute(Guid conversationId, Guid userId, int page, int pageSize)
+        public async Task<IList<MessageEntity>> Execute(Guid conversationId, int page, int pageSize)
         {
             ConversationEntity? conversation = await _conversationRepository.Get(conversationId);
 
             if (conversation == null)
                 throw new KeyNotFoundException("Conversation not found");
-            
-            if (conversation.Personas.Any(x => x.UserId == userId) == false)
-                throw new UnauthorizedAccessException("You don't have permission to access this conversation");
             
             return conversation
                 .Messages

@@ -1,4 +1,5 @@
 ﻿using Common.DataAccess.SharedEntities.Users;
+using Identities.Models;
 
 namespace Identities.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace Identities.Services.Interfaces
     {
         public Task Add(IdentityEntity identity);
         public Task Link(IdentityEntity identity, PersonaEntity persona);
+        public Task Update(PutIdentityRequest request, Guid id);
     }
 }

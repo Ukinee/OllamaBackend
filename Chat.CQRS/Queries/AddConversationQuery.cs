@@ -19,7 +19,7 @@ namespace Chat.CQRS.Queries
             _personasRepository = personasRepository;
         }
 
-        public async Task<GeneralConversationViewModel> Handle(PostConversationRequest request, Guid userId)
+        public async Task<GeneralConversationViewModel> Handle(PostConversationRequest request)
         {
             PersonaEntity? ownerPersona = await _personasRepository.Get(request.PersonaId);
             

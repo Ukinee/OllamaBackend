@@ -17,11 +17,11 @@ namespace Persona.CQRS.Queries
             _personaMapper = personaMapper;
         }
 
-        public async Task<PersonaViewModel> Execute(PutPersonaRequest updatePersonaRequest)
+        public async Task<PersonaViewModel> Execute(PutPersonaRequest updatePersonaRequest, Guid personaId)
         {
-            await _personasRepository.Update(updatePersonaRequest);
+            await _personasRepository.Update(updatePersonaRequest, personaId);
 
-            PersonaEntity? persona = await _personasRepository.Get(updatePersonaRequest.Id);
+            PersonaEntity? persona = await _personasRepository.Get(personaId);
 
             if (persona == null)
                 throw new NotFoundException(nameof(persona));
