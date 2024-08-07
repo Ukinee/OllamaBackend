@@ -21,13 +21,6 @@ namespace Identities.Services.Implementations
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Link(IdentityEntity identity, PersonaEntity persona)
-        {
-            identity.Persona = persona; //todo: убрать этот метод
-
-            await _dbContext.SaveChangesAsync();
-        }
-
         public async Task Update(PutIdentityRequest request, Guid id)
         {
             IdentityEntity? identity = await _dbContext

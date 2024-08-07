@@ -22,7 +22,6 @@ namespace Chat.Services.Implementations
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Where(conversation => conversation.Personas.Any(x => x.Id == personaId));
-
                 
             return await query.ToListAsync();
         }

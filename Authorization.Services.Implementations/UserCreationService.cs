@@ -12,7 +12,6 @@ namespace Authorization.Services.Implementations
     {
         private readonly IPersonaCreationService _personaCreationService;
         private readonly IIdentityCreationService _identityCreationService;
-        private readonly IIdentityRepository _identityRepository;
         private readonly UserFactory _userFactory;
         private readonly UserManager<UserEntity> _userManager;
 
@@ -20,14 +19,12 @@ namespace Authorization.Services.Implementations
         (
             IPersonaCreationService personaCreationService,
             IIdentityCreationService identityCreationService,
-            IIdentityRepository identityRepository,
             UserFactory userFactory,
             UserManager<UserEntity> userManager
         )
         {
             _personaCreationService = personaCreationService;
             _identityCreationService = identityCreationService;
-            _identityRepository = identityRepository;
             _userFactory = userFactory;
             _userManager = userManager;
         }
@@ -41,8 +38,6 @@ namespace Authorization.Services.Implementations
             IdentityEntity identity = await _identityCreationService.Create();
             PersonaEntity persona = await _personaCreationService.Create(user.Id, identity, createRequest.UserName);
             user.Personas.Add(persona);
-            
-            await _identityRepository.Link(identity, persona);
             
             return user;
         }
