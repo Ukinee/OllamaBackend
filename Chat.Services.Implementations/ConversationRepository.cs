@@ -18,10 +18,13 @@ namespace Chat.Services.Implementations
 
         public async Task<List<ConversationEntity>> GetGeneralConversations(Guid personaId)
         {
-            return await _userDbContext
+            var query = _userDbContext
                 .Conversations
-                .Where(conversationEntity => conversationEntity.Personas.Any(x => x.Id == personaId))
-                .ToListAsync();
+                .Include(conversation => conversation.Personas)
+                .Where(conversation => conversation.Personas.Any(x => x.Id == personaId));
+
+                
+            return await query.ToListAsync();
         }
 
         public async Task<ConversationEntity?> Get(Guid id)

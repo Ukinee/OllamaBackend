@@ -25,7 +25,7 @@ namespace Common.DataAccess
                 .HasOne(persona => persona.Identity)
                 .WithOne(identity => identity.Persona)
                 .HasForeignKey<PersonaEntity>(persona => persona.IdentityId)
-                .OnDelete(DeleteBehavior.Cascade); ;
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder
                 .Entity<PersonaEntity>()
@@ -33,6 +33,8 @@ namespace Common.DataAccess
                 .WithMany(user => user.Personas)
                 .HasForeignKey(persona => persona.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<PersonaEntity>().ToTable("Personas"); //todo: hardcode
         }
 
         private static void BuildRoles(ModelBuilder modelBuilder)

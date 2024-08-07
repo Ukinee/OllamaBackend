@@ -96,9 +96,6 @@ namespace Common.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PersonaId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("PhysicalAttributes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -153,6 +150,9 @@ namespace Common.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -188,6 +188,9 @@ namespace Common.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TelegramId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -255,13 +258,13 @@ namespace Common.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6b5d0643-06f2-4c31-983c-6211c2dc735b"),
+                            Id = new Guid("c12c0b3c-e650-49fe-a7df-5734dd97517e"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("afe38bd8-97e6-4cc0-81a3-ac281e793e6d"),
+                            Id = new Guid("5e613fe6-1256-407b-aea6-b2e16bdfa954"),
                             Name = "User",
                             NormalizedName = "USER"
                         });

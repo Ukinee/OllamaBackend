@@ -23,29 +23,26 @@ namespace Common.DataAccess
 
             BuildRoles(modelBuilder);
             
-            // Add configurations from UserContext
-            modelBuilder.Entity<PersonaEntity>()
+            modelBuilder
+                .Entity<PersonaEntity>()
                 .HasOne(persona => persona.Identity)
                 .WithOne(identity => identity.Persona)
                 .HasForeignKey<PersonaEntity>(persona => persona.IdentityId)
                 .OnDelete(DeleteBehavior.Cascade);
-
+            
             modelBuilder.Entity<PersonaEntity>()
                 .HasOne(persona => persona.User)
                 .WithMany(user => user.Personas)
                 .HasForeignKey(persona => persona.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+            
+            modelBuilder.Entity<PersonaEntity>().ToTable("Personas");
 
             modelBuilder
                 .Entity<PersonaEntity>()
                 .HasMany(persona => persona.Conversations)
                 .WithMany(conversation => conversation.Personas)
-                .UsingEntity(builder => builder.ToTable("PersonaConversations"));
-
-            // Add configurations from ChatContext
-            modelBuilder.Entity<ConversationEntity>()
-                .HasMany(conversation => conversation.Personas)
-                .WithMany(persona => persona.Conversations);
+                .UsingEntity(builder => builder.ToTable("PersonaConversations")); //todo: hardcode
         }
         
         private static void BuildRoles(ModelBuilder modelBuilder)

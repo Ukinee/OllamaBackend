@@ -41,29 +41,14 @@ namespace Users.Authorization.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
         {
-            Console.WriteLine("Register request");
-
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            Console.WriteLine("ValidModel");
+            UserEntity user = await _userCreationService.Create(createRequest);
 
-            try
-            {
-                UserEntity user = await _userCreationService.Create(createRequest);
+            string token = await _tokenService.CreateToken(_userManager, user);
 
-                Console.WriteLine("User created");
-                
-                string token = await _tokenService.CreateToken(_userManager, user);
-                
-                Console.WriteLine("User token created");
-
-                return Ok(user.ToViewModel(token));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return Ok(user.ToViewModel(token));
         }
 
         [HttpPost]

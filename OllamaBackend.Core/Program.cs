@@ -43,7 +43,7 @@ namespace OllamaBackend2
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            
             // WebSocketOptions webSocketOptions = new WebSocketOptions
             // {
             //     KeepAliveInterval = TimeSpan.FromMinutes(2),
@@ -51,6 +51,7 @@ namespace OllamaBackend2
             //
             // app.UseWebSockets(webSocketOptions);
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.MapControllers();
 

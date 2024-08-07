@@ -34,6 +34,8 @@ namespace Common.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DiscordId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelegramId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -77,8 +79,7 @@ namespace Common.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Habits = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhysicalAttributes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PhysicalAttributes = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -275,8 +276,8 @@ namespace Common.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("6b5d0643-06f2-4c31-983c-6211c2dc735b"), null, "Admin", "ADMIN" },
-                    { new Guid("afe38bd8-97e6-4cc0-81a3-ac281e793e6d"), null, "User", "USER" }
+                    { new Guid("5e613fe6-1256-407b-aea6-b2e16bdfa954"), null, "User", "USER" },
+                    { new Guid("c12c0b3c-e650-49fe-a7df-5734dd97517e"), null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -17,11 +17,13 @@ namespace Chat.Controllers
             _generalConversationsQuery = generalConversationsQuery;
         }
 
-        [HttpGet]
+        [HttpGet("{personaId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId)
         {
             IList<GeneralConversationViewModel> conversations = await _generalConversationsQuery.Execute(personaId);
+
+            Console.WriteLine($"Returned {conversations.Count} conversations");
             
             return Ok(conversations);
         }

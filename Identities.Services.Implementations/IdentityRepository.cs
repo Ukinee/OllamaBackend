@@ -23,8 +23,7 @@ namespace Identities.Services.Implementations
 
         public async Task Link(IdentityEntity identity, PersonaEntity persona)
         {
-            identity.Persona = persona;
-            identity.PersonaId = persona.Id;
+            identity.Persona = persona; //todo: убрать этот метод
 
             await _dbContext.SaveChangesAsync();
         }

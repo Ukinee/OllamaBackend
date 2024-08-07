@@ -17,19 +17,12 @@ namespace Common.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder
                 .Entity<PersonaEntity>()
                 .HasMany(persona => persona.Conversations)
                 .WithMany(conversation => conversation.Personas)
                 .UsingEntity(builder => builder.ToTable("PersonaConversations"));
-            
-            modelBuilder
-                .Entity<ConversationEntity>()
-                .HasMany(conversation => conversation.Personas)
-                .WithMany(persona => persona.Conversations) 
-                //.UsingEntity(builder => builder.ToTable("PersonaConversations"))
-                ;
         }
     }
 }
