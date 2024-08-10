@@ -22,20 +22,21 @@ namespace Common.DataAccess
             base.OnModelCreating(modelBuilder);
 
             BuildRoles(modelBuilder);
-            
+
             modelBuilder
                 .Entity<PersonaEntity>()
                 .HasOne(persona => persona.Identity)
                 .WithOne(identity => identity.Persona)
                 .HasForeignKey<PersonaEntity>(persona => persona.IdentityId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
-            modelBuilder.Entity<PersonaEntity>()
+
+            modelBuilder
+                .Entity<PersonaEntity>()
                 .HasOne(persona => persona.User)
                 .WithMany(user => user.Personas)
                 .HasForeignKey(persona => persona.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             modelBuilder.Entity<PersonaEntity>().ToTable("Personas");
 
             modelBuilder
@@ -44,7 +45,7 @@ namespace Common.DataAccess
                 .WithMany(conversation => conversation.Personas)
                 .UsingEntity(builder => builder.ToTable("PersonaConversations")); //todo: hardcode
         }
-        
+
         private static void BuildRoles(ModelBuilder modelBuilder)
         {
             List<IdentityRole<Guid>> roles =
@@ -55,7 +56,6 @@ namespace Common.DataAccess
                     Name = "Admin", //todo : hardcode
                     NormalizedName = "ADMIN", //todo : hardcode
                 },
-
                 new IdentityRole<Guid>
                 {
                     Id = Guid.NewGuid(),

@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Persona.CQRS\Persona.CQRS.csproj" />
       <ProjectReference Include="..\Personas.Services.Implementations\Personas.Services.Implementations.csproj" />
       <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
     </ItemGroup>

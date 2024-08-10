@@ -22,7 +22,6 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
             return new MessageViewModel
             {
                 Id = message.Id,
-                SenderId = message.SenderPersonaId,
                 PersonaId = message.SenderPersonaId,
                 Content = message.Content,
                 Images = message.Images,

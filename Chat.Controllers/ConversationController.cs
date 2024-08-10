@@ -17,6 +17,7 @@ namespace Chat.Controllers
         private readonly GetConversationQuery _getConversationQuery;
         private readonly AddConversationQuery _addConversation;
         private readonly CheckUserInConversationQuery _checkUserInConversationQuery;
+        private readonly GetConversationViewModelQuery _getConversationViewModelQuery;
         private readonly GetMessagesQuery _getMessagesQuery;
         private readonly UpdateConversationCommand _updateConversationCommand;
 
@@ -26,6 +27,7 @@ namespace Chat.Controllers
             GetConversationQuery getConversationQuery,
             AddConversationQuery addConversation,
             CheckUserInConversationQuery checkUserInConversationQuery,
+            GetConversationViewModelQuery getConversationViewModelQuery,
             GetMessagesQuery getMessagesQuery,
             UpdateConversationCommand updateConversationCommand
         )
@@ -34,24 +36,23 @@ namespace Chat.Controllers
             _getConversationQuery = getConversationQuery;
             _addConversation = addConversation;
             _checkUserInConversationQuery = checkUserInConversationQuery;
+            _getConversationViewModelQuery = getConversationViewModelQuery;
             _getMessagesQuery = getMessagesQuery;
             _updateConversationCommand = updateConversationCommand;
         }
 
-        [HttpGet("{id:guid}")]
-        [HttpGet("{id:guid}/messages/page/{routePage:int?}")]
+        [HttpGet("{conversationId:guid}")]
+        [HttpGet("{conversationId:guid}/messages/page/{routePage:int}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid id, int? routePage)
+        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid conversationId, int routePage)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            int page = routePage ?? 1; //todo: hardcode
+            ConcreteConversationViewModel result = await _getConversationViewModelQuery
+                .Execute(conversationId, routePage, 20); // TODO: make configurable
 
-            ConversationEntity conversation = await _getConversationQuery.Execute(id);
-            IList<MessageEntity> messages = await _getMessagesQuery.Execute(id, page, 20); //todo: hardcode
-
-            return Ok(conversation.ToConcreteConversation(messages));
+            return Ok(result);
         }
 
         [HttpPost]
@@ -77,7 +78,7 @@ namespace Chat.Controllers
 
             ConversationEntity updatedConversation = await _getConversationQuery.Execute(conversation.Id);
 
-            return Ok(updatedConversation.ToGeneralConversation());
+            return Ok(updatedConversation.ToGeneralConversationViewModel());
         }
 
         // [HttpDelete("{id:guid}")]

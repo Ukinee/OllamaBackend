@@ -4,9 +4,7 @@ namespace Chat.Domain.Messages
 {
     public record MessageViewModel : MessageBase
     {
-        public DateTime Timestamp { get; set; }
-        public Guid SenderId { get; init; }
-        
-        public Guid Id { get; init; }
+        public required DateTime Timestamp { get; set; }
+        public required Guid Id { get; init; }
     }
 }

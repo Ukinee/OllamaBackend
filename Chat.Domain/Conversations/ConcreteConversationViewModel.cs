@@ -5,8 +5,9 @@ namespace Chat.Domain.Conversations
 {
     public record ConcreteConversationViewModel : ConversationBase
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; set; }
+        public required List<Guid> PersonasId { get; set; }
 
-        public List<MessageViewModel> Messages { get; init; }
+        public required List<MessageViewModel> Messages { get; init; }
     }
 }

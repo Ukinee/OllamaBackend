@@ -16,7 +16,7 @@ namespace Chat.CQRS.Queries
 
         public async Task<bool> Execute(Guid conversationId, Guid userId)
         {
-            ConversationEntity? conversationEntity = await _conversationRepository.Get(conversationId);
+            ConversationEntity? conversationEntity = await _conversationRepository.GetConcreteConversation(conversationId);
 
             if (conversationEntity == null)
                 throw new NotFoundException(nameof(conversationEntity));

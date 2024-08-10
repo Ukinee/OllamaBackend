@@ -5,7 +5,7 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
 {
     public static class ConversationExtensions
     {
-        public static GeneralConversationViewModel ToGeneralConversation(this ConversationEntity conversation)
+        public static GeneralConversationViewModel ToGeneralConversationViewModel(this ConversationEntity conversation)
         {
             return new GeneralConversationViewModel
             {
@@ -18,13 +18,14 @@ namespace Common.DataAccess.SharedEntities.Chats.Mappers
         public static ConcreteConversationViewModel ToConcreteConversation
         (
             this ConversationEntity conversation,
-            IList<MessageEntity> messageEntities
+            IEnumerable<MessageEntity> messageEntities
         )
         {
             return new ConcreteConversationViewModel
             {
                 Id = conversation.Id,
                 Name = conversation.Name,
+                PersonasId = conversation.Personas.Select(x => x.Id).ToList(),
                 Context = conversation.Context,
                 Messages = messageEntities.Select(x => x.ToViewModel()).ToList(),
             };

@@ -24,6 +24,8 @@ namespace Persona.CQRS.Queries
             {
                 Personas = personas.Select(x => _personaMapper.ToViewModel(x)).ToArray(),
             };
+            
+            Console.WriteLine(personasViewModel.Personas.Count);
 
             return personasViewModel;
         }

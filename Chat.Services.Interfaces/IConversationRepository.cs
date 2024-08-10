@@ -6,9 +6,7 @@ namespace Chat.Services.Interfaces
 {
     public interface IConversationRepository
     {
-        public Task<List<ConversationEntity>> GetGeneralConversations(Guid personaId);
-        
-        public Task<ConversationEntity?> Get(Guid id);
+        public Task<ConversationEntity?> GetConcreteConversation(Guid id);
 
         public Task Add(ConversationEntity conversation);
         public Task Delete(Guid id);

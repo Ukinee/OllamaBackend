@@ -18,11 +18,11 @@ namespace Persona.Controllers
             _getPersonasQuery = getPersonasQuery;
         }
         
-        [HttpGet]
+        [HttpGet("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Get([FromRoute] Guid userId)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            PersonasViewModel personas = await _getPersonasQuery.Execute(userId);
+            PersonasViewModel personas = await _getPersonasQuery.Execute(id);
             
             return Ok(personas);
         }

@@ -33,7 +33,7 @@ namespace Chat.CQRS.Queries
 
             await _conversationRepository.Add(conversationEntity);
 
-            return conversationEntity.ToGeneralConversation();
+            return conversationEntity.ToGeneralConversationViewModel();
         }
     }
 }

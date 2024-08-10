@@ -21,7 +21,7 @@ namespace Chat.CQRS.Queries
 
         public async Task<IList<MessageEntity>> Execute(Guid conversationId, int page, int pageSize)
         {
-            ConversationEntity? conversation = await _conversationRepository.Get(conversationId);
+            ConversationEntity? conversation = await _conversationRepository.GetConcreteConversation(conversationId);
 
             if (conversation == null)
                 throw new KeyNotFoundException("Conversation not found");

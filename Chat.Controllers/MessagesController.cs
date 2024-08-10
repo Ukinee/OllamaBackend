@@ -1,5 +1,6 @@
 ﻿using Chat.CQRS.Queries;
 using Common.DataAccess.SharedEntities.Chats;
+using Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace Chat.Controllers
 
             IList<MessageEntity> messages = await _getMessages.Execute(conversationId, page, pageSize);
 
-            return Ok(messages);
+            return Ok(messages.Select(x => x.ToViewModel()));
         }
     }
 }

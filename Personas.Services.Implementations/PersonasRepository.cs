@@ -17,8 +17,20 @@ public class PersonasRepository : IPersonasRepository
 
     public async Task<PersonaEntity?> Get(Guid id)
     {
-        return await _userContext.Personas
+        return await _userContext
+            .Personas
+            .Include(persona => persona.Conversations)
+            .Include(persona => persona.Identity)
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<PersonaEntity?> GetWithConversations(Guid personaId)
+    {
+        return await _userContext
+            .Personas
+            .Include(persona => persona.Conversations)
+            .Include(persona => persona.Identity)
+            .FirstOrDefaultAsync(x => x.Id == personaId);
     }
 
     public async Task Add(PersonaEntity personaEntity)
@@ -27,13 +39,12 @@ public class PersonasRepository : IPersonasRepository
         await SaveChangesAsync();
     }
 
-    public async Task Update(PutPersonaRequest request, Guid id)
+    public async Task Update(PutPersonaRequest request, Guid personaId)
     {
         PersonaEntity? personaEntity = await _userContext.Personas
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(persona => persona.Id == personaId);
 
-        if (personaEntity is null)
-            throw new Exception("Persona not found");
+        ArgumentNullException.ThrowIfNull(personaEntity);
 
         personaEntity.Name = request.Name;
 
@@ -47,12 +58,9 @@ public class PersonasRepository : IPersonasRepository
             .ThenInclude(entity => entity.Personas)
             .FirstOrDefaultAsync(persona => persona.Id == id);
 
-        if (personaEntity is null)
-            throw new InvalidOperationException("Persona not found");
+        ArgumentNullException.ThrowIfNull(personaEntity);
+        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(personaEntity.User.Personas.Count, 1);
         
-        if(personaEntity.User.Personas.Count == 1)
-            throw new InvalidOperationException("Can't delete last persona");
-
         personaEntity.IsDeleted = true;
         await SaveChangesAsync();
     }
@@ -61,7 +69,8 @@ public class PersonasRepository : IPersonasRepository
     {
         PersonaEntity[] personas = await _userContext
             .Personas
-            .Where(x => x.UserId == userId && x.IsDeleted == false)
+            .Include(x => x.Conversations)
+            .Where(x => x.UserId == userId)
             .ToArrayAsync();
 
         return personas;
