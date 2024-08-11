@@ -7,18 +7,18 @@ namespace Persona.CQRS.Queries
 {
     public class GetPersonasQuery
     {
-        private readonly IPersonasRepository _personasRepository;
+        private readonly IPersonaRepository _personaRepository;
         private readonly PersonaMapper _personaMapper;
 
-        public GetPersonasQuery(IPersonasRepository personasRepository, PersonaMapper personaMapper)
+        public GetPersonasQuery(IPersonaRepository personaRepository, PersonaMapper personaMapper)
         {
-            _personasRepository = personasRepository;
+            _personaRepository = personaRepository;
             _personaMapper = personaMapper;
         }
 
         public async Task<PersonasViewModel> Execute(Guid userId)
         {
-            PersonaEntity[] personas = await _personasRepository.GetAll(userId);
+            PersonaEntity[] personas = await _personaRepository.GetAll(userId);
 
             PersonasViewModel personasViewModel = new PersonasViewModel
             {

@@ -6,19 +6,19 @@ namespace Personas.Services.Implementations
 {
     public class PersonaCreationService : IPersonaCreationService
     {
-        private readonly IPersonasRepository _personasRepository;
+        private readonly IPersonaRepository _personaRepository;
         private readonly PersonaFactory _personaFactory;
 
-        public PersonaCreationService(IPersonasRepository personasRepository, PersonaFactory personaFactory)
+        public PersonaCreationService(IPersonaRepository personaRepository, PersonaFactory personaFactory)
         {
-            _personasRepository = personasRepository;
+            _personaRepository = personaRepository;
             _personaFactory = personaFactory;
         }
         
         public async Task<PersonaEntity> Create(Guid userId, IdentityEntity identity, string name)
         {
             PersonaEntity personaEntity = _personaFactory.Create(userId, identity, name);
-            await _personasRepository.Add(personaEntity);
+            await _personaRepository.Add(personaEntity);
 
             return personaEntity;
         }

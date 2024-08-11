@@ -15,13 +15,13 @@ namespace Chat.Services.Implementations
             _userDbContext = userDbContext;
         }
 
-        public async Task<ConversationEntity?> GetConcreteConversation(Guid id)
+        public async Task<ConversationEntity?> GetConcreteConversation(Guid conversationId)
         {
             ConversationEntity? conversationEntity = await _userDbContext
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == conversationId);
             
             return conversationEntity;
         }
@@ -44,6 +44,11 @@ namespace Chat.Services.Implementations
 
             _userDbContext.Conversations.Remove(conversation);
 
+            await Save();
+        }
+
+        public async Task Update(ConversationEntity conversation)
+        {
             await Save();
         }
 

@@ -1,6 +1,7 @@
 ﻿using Authorization.Startup;
 using Chat.Startup;
 using Common.DataAccess;
+using Common.UserChatLinks.Startup;
 using Identities.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ namespace OllamaBackend2
                 .ConfigureAuthorization(configuration)
                 .ConfigureChat(configuration)
                 .ConfigurePersonas(configuration)
+                .ConfigureUserChatLinks(configuration)
                 .ConfigureIdentities(configuration)
                 .AddLogging
                 (

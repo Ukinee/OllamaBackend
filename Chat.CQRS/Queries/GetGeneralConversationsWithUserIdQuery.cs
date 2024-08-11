@@ -11,21 +11,21 @@ namespace Chat.CQRS.Queries
     public class GetGeneralConversationsWithUserIdQuery
     {
         private readonly IConversationRepository _conversationRepository;
-        private readonly IPersonasRepository _personasRepository;
+        private readonly IPersonaRepository _personaRepository;
 
         public GetGeneralConversationsWithUserIdQuery
         (
             IConversationRepository conversationRepository,
-            IPersonasRepository personasRepository
+            IPersonaRepository personaRepository
         )
         {
             _conversationRepository = conversationRepository;
-            _personasRepository = personasRepository;
+            _personaRepository = personaRepository;
         }
 
         public async Task<IList<GeneralConversationViewModel>> Execute(Guid personaId)
         {
-            PersonaEntity? persona = await _personasRepository.GetWithConversations(personaId);
+            PersonaEntity? persona = await _personaRepository.GetWithConversations(personaId);
             
             ArgumentNullException.ThrowIfNull(persona);
             

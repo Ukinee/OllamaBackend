@@ -16,6 +16,6 @@ namespace Common.DataAccess.SharedEntities.Users
         public required Guid IdentityId { get; set; }
         public IdentityEntity? Identity { get; set; }
         
-        public required ICollection<ConversationEntity> Conversations { get; set; }
+        public required List<ConversationEntity> Conversations { get; set; }
     }
 }

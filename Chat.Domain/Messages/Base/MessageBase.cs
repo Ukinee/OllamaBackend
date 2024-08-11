@@ -5,6 +5,6 @@
         public required Guid PersonaId { get; set; }
         public required string Content { get; set; }
         
-        public  string[]? Images { get; set; }
+        public required string[]? Images { get; set; }
     }
 }

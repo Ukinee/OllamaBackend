@@ -11,17 +11,17 @@ namespace Chat.CQRS.Queries
     public class AddConversationQuery
     {
         private readonly IConversationRepository _conversationRepository;
-        private readonly IPersonasRepository _personasRepository;
+        private readonly IPersonaRepository _personaRepository;
 
-        public AddConversationQuery(IConversationRepository conversationRepository, IPersonasRepository personasRepository)
+        public AddConversationQuery(IConversationRepository conversationRepository, IPersonaRepository personaRepository)
         {
             _conversationRepository = conversationRepository;
-            _personasRepository = personasRepository;
+            _personaRepository = personaRepository;
         }
 
         public async Task<GeneralConversationViewModel> Handle(PostConversationRequest request)
         {
-            PersonaEntity? ownerPersona = await _personasRepository.Get(request.PersonaId);
+            PersonaEntity? ownerPersona = await _personaRepository.Get(request.PersonaId);
             
             if(ownerPersona is null)
                 throw new InvalidOperationException($"Persona with Id {request.PersonaId} not found"); //todo: hardcode

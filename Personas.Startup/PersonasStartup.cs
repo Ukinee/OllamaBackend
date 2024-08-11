@@ -13,7 +13,7 @@ namespace Personas.Startup
         public static IServiceCollection ConfigurePersonas(this IServiceCollection services, IConfiguration configuration)
         {
             return services
-                    .AddScoped<IPersonasRepository, PersonasRepository>()
+                    .AddScoped<IPersonaRepository, PersonaRepository>()
                     .AddScoped<IPersonaCreationService, PersonaCreationService>()
                     .AddScoped<PersonaFactory>()
                     .AddScoped<PersonaMapper>()

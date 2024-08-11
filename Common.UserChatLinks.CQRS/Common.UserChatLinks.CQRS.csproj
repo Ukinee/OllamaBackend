@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
+      <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Models\Common.UserChatLinks.Models.csproj" />
+      <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Users.FakeUsers.Services.Interfaces\Users.FakeUsers.Services.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

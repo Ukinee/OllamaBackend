@@ -13,7 +13,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.3" NoWarn="NU1605"/>
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,6 +34,8 @@
       <ProjectReference Include="..\Authorization.Startup\Authorization.Startup.csproj" />
       <ProjectReference Include="..\Chat.Controllers\Chat.Controllers.csproj" />
       <ProjectReference Include="..\Chat.Startup\Chat.Startup.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Controllers\Common.UserChatLinks.Controllers.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Startup\Common.UserChatLinks.Startup.csproj" />
       <ProjectReference Include="..\Identities.Startup\Identities.Startup.csproj" />
       <ProjectReference Include="..\Persona.Controllers\Persona.Controllers.csproj" />
       <ProjectReference Include="..\Personas.Startup\Personas.Startup.csproj" />
