@@ -14,6 +14,11 @@ namespace Authorization.Services.Implementations
             _dbContext = dbContext;
         }
 
+        public Task<UserEntity?> Get(string username)
+        {
+            return _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == username);
+        }
+
         public async Task Add(UserEntity user)
         {
             await _dbContext.Users.AddAsync(user);

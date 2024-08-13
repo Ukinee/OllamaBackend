@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
       <ProjectReference Include="..\Common.DataAccess\Common.DataAccess.csproj" />
       <ProjectReference Include="..\Persona.Domain.Services\Persona.Domain.Services.csproj" />
       <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />

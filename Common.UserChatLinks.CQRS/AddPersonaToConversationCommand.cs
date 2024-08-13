@@ -34,6 +34,11 @@ namespace Common.UserChatLinks.CQRS
             ArgumentNullException.ThrowIfNull(persona);
             ArgumentNullException.ThrowIfNull(conversation);
 
+            if (conversation.Personas.Any(x => x.Id == persona.Id))
+            {
+                throw new Exception("Persona is already in the conversation");
+            }
+            
             conversation.Personas.Add(persona);
             await _conversationRepository.Update(conversation);
 

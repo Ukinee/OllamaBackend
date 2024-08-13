@@ -18,7 +18,7 @@ namespace OllamaBackend2
                 .ConfigureServices(builder.Configuration)
                 .AddEndpointsApiExplorer()
                 .AddControllers();
-            
+
             builder.Services.AddCors
             (
                 options =>
@@ -37,7 +37,6 @@ namespace OllamaBackend2
             );
 
             AddSwaggerGen(builder);
-
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -45,7 +44,7 @@ namespace OllamaBackend2
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            
+
             // WebSocketOptions webSocketOptions = new WebSocketOptions
             // {
             //     KeepAliveInterval = TimeSpan.FromMinutes(2),
@@ -144,4 +143,3 @@ drop table AspNetUserRoles;
 drop table AspNetUserClaims;
 drop table AspNetUserTokens;
  */
-

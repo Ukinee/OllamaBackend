@@ -13,31 +13,22 @@ namespace Chat.Controllers
     [Route("api/[controller]")]
     public class ConversationController : ControllerBase
     {
-        private readonly DeleteConversationCommand _deleteConversationCommand;
         private readonly GetConversationQuery _getConversationQuery;
         private readonly AddConversationQuery _addConversation;
-        private readonly CheckUserInConversationQuery _checkUserInConversationQuery;
         private readonly GetConversationViewModelQuery _getConversationViewModelQuery;
-        private readonly GetMessagesQuery _getMessagesQuery;
         private readonly UpdateConversationCommand _updateConversationCommand;
 
         public ConversationController
         (
-            DeleteConversationCommand deleteConversationCommand,
             GetConversationQuery getConversationQuery,
             AddConversationQuery addConversation,
-            CheckUserInConversationQuery checkUserInConversationQuery,
             GetConversationViewModelQuery getConversationViewModelQuery,
-            GetMessagesQuery getMessagesQuery,
             UpdateConversationCommand updateConversationCommand
         )
         {
-            _deleteConversationCommand = deleteConversationCommand;
             _getConversationQuery = getConversationQuery;
             _addConversation = addConversation;
-            _checkUserInConversationQuery = checkUserInConversationQuery;
             _getConversationViewModelQuery = getConversationViewModelQuery;
-            _getMessagesQuery = getMessagesQuery;
             _updateConversationCommand = updateConversationCommand;
         }
 
@@ -80,22 +71,5 @@ namespace Chat.Controllers
 
             return Ok(updatedConversation.ToGeneralConversationViewModel());
         }
-
-        // [HttpDelete("{id:guid}")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // public async Task<IActionResult> DeleteConversation([FromRoute] Guid id)
-        // {
-        //     if (ModelState.IsValid == false)
-        //         return BadRequest(ModelState);
-        //
-        //     Guid userId = User.GetGuid();
-        //
-        //     if (await _checkUserOwnsConversationQuery.Execute(id, userId) == false)
-        //         return Unauthorized();
-        //
-        //     await _deleteConversationCommand.Execute(id);
-        //
-        //     return NoContent();
-        // }
     }
 }

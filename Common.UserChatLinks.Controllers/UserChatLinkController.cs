@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Common.UserChatLinks.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     public class UserChatLinkController : ControllerBase
     {
         private readonly AddPersonaToConversationCommand _addPersonaToConversationCommand;
@@ -19,18 +19,30 @@ namespace Common.UserChatLinks.Controllers
             _addPersonaToConversationCommand = addPersonaToConversationCommand;
             _removePersonaFromConversationCommand = removePersonaFromConversationCommand;
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AddPersonaToConversationRequest userChatLink)
+        
+        [HttpPost("link/{conversationId:guid}/{personaId:guid}")]
+        public async Task<IActionResult> Post([FromRoute] Guid conversationId, [FromRoute] Guid personaId)
         {
+            AddPersonaToConversationRequest userChatLink = new AddPersonaToConversationRequest
+            {
+                ConversationId = conversationId,
+                PersonaId = personaId,
+            };
+            
             await _addPersonaToConversationCommand.Execute(userChatLink);
             
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] RemovePersonaFromConversationRequest userChatLink)
+        [HttpDelete("unlink/{conversationId:guid}/{personaId:guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid conversationId, [FromRoute] Guid personaId)
         {
+            RemovePersonaFromConversationRequest userChatLink = new RemovePersonaFromConversationRequest
+            {
+                ConversationId = conversationId,
+                PersonaId = personaId,
+            };
+            
             await _removePersonaFromConversationCommand.Execute(userChatLink);
             
             return Ok();

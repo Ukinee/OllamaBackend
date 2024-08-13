@@ -2,6 +2,6 @@
 {
     public class PersonasViewModel
     {
-        public IList<PersonaViewModel> Personas { get; set; }
+        public required IList<PersonaViewModel> Personas { get; set; }
     }
 }

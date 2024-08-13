@@ -33,7 +33,11 @@ namespace Common.UserChatLinks.CQRS
             ArgumentNullException.ThrowIfNull(persona);
             ArgumentNullException.ThrowIfNull(conversation);
 
-            conversation.Personas.Remove(persona);
+            if (conversation.Personas.Remove(persona) == false)
+            {
+                throw new Exception($"Persona {persona.Name} ({persona.Id}) not found in conversation {conversation.Id}");
+            }
+
             await _conversationRepository.Update(conversation);
 
             string content = $"Persona {persona.Name} ({persona.Id}) left the conversation"; //todo: hardcoded message
