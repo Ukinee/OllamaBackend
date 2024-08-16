@@ -1,7 +1,7 @@
-﻿using Chat.Services.Interfaces;
-using Common.DataAccess.SharedEntities.Chats;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Chat.DataAccess.Interfaces;
 using Common.UserChatLinks.Models;
+using Core.Common.DataAccess.SharedEntities.Chats;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Personas.Services.Interfaces;
 using Users.FakeUsers.Services.Interfaces;
 

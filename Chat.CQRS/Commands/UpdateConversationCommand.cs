@@ -1,5 +1,5 @@
-﻿using Chat.Domain.Conversations;
-using Chat.Services.Interfaces;
+﻿using Chat.DataAccess.Interfaces;
+using Chat.Domain.Conversations;
 
 namespace Chat.CQRS.Commands
 {

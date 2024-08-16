@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Authorization.Domain\Authorization.Domain.csproj" />
-      <ProjectReference Include="..\Common.DataAccess.SharedEntities\Common.DataAccess.SharedEntities.csproj" />
+      <ProjectReference Include="..\Core.Common.DataAccess.SharedEntities\Core.Common.DataAccess.SharedEntities.csproj" />
     </ItemGroup>
 
 </Project>

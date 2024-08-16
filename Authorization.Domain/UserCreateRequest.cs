@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Authorization.Domain.Base;
+﻿using Authorization.Domain.Base;
 
 namespace Authorization.Domain
 {

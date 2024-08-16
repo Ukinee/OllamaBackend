@@ -1,5 +1,5 @@
-﻿using Common.DataAccess;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Core.Common.DataAccess;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Microsoft.EntityFrameworkCore;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;

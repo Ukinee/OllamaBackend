@@ -2,10 +2,8 @@
 using Authorization.Services.Interfaces;
 using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
-using Chat.Services.Implementations;
-using Chat.Services.Interfaces;
-using Common.DataAccess;
-using Microsoft.EntityFrameworkCore;
+using Chat.DataAccess.Implementations;
+using Chat.DataAccess.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

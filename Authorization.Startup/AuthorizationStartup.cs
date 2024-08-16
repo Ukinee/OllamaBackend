@@ -2,9 +2,8 @@
 using Authorization.Services.Factories;
 using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
-using Common.DataAccess;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Users;
+using Core.Common.DataAccess;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -41,7 +40,7 @@ namespace Authorization.Startup
                         options.Password.RequiredLength = 6; //todo : hardcode
                     }
                 )
-                .AddEntityFrameworkStores<UserContext>();
+                .AddEntityFrameworkStores<CompositeContext>();
 
             return services;
         }

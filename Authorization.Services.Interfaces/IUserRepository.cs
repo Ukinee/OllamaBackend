@@ -1,6 +1,4 @@
-﻿using Authorization.Domain;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Core.Common.DataAccess.SharedEntities.Users;
 
 namespace Authorization.Services.Interfaces
 {

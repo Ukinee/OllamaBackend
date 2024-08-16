@@ -1,4 +1,4 @@
-﻿using Common.DataAccess.SharedEntities.Users;
+﻿using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.Services.Interfaces;
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;

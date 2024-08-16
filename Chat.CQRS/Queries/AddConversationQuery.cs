@@ -1,9 +1,8 @@
-﻿using Chat.Domain.Conversations;
-using Chat.Services.Interfaces;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Chats;
-using Common.DataAccess.SharedEntities.Chats.Mappers;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Chat.DataAccess.Interfaces;
+using Chat.Domain.Conversations;
+using Core.Common.DataAccess.SharedEntities.Chats;
+using Core.Common.DataAccess.SharedEntities.Chats.Mappers;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Personas.Services.Interfaces;
 
 namespace Chat.CQRS.Queries

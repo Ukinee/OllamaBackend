@@ -1,7 +1,7 @@
 ﻿using Authorization.Domain;
 using Authorization.Services.Factories;
 using Authorization.Services.Interfaces;
-using Common.DataAccess.SharedEntities.Users;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Personas.Services.Interfaces;

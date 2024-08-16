@@ -1,9 +1,8 @@
-﻿using Chat.Domain.Messages;
-using Chat.Services.Interfaces;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Chats;
-using Common.DataAccess.SharedEntities.Chats.Mappers;
-using Common.DataAccess.SharedEntities.Users;
+﻿using Chat.DataAccess.Interfaces;
+using Chat.Domain.Messages;
+using Core.Common.DataAccess.SharedEntities.Chats;
+using Core.Common.DataAccess.SharedEntities.Chats.Mappers;
+using Core.Common.DataAccess.SharedEntities.Users;
 using Personas.Services.Interfaces;
 
 namespace Chat.CQRS.Queries
@@ -26,7 +25,7 @@ namespace Chat.CQRS.Queries
             if (personaEntity == null)
                 throw new InvalidOperationException("Persona does not exist");
             
-            MessageEntity message = request.ToEntity();
+            MessageEntity message = request.ToEntity(personaEntity);
             
             await _messageRepository.Add(message);
             

@@ -1,13 +1,12 @@
 ﻿using Authorization.Startup;
 using Chat.Startup;
-using Common.DataAccess;
 using Common.UserChatLinks.Startup;
+using Core.Common.DataAccess;
 using Identities.Startup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Persona.Controllers;
 using Personas.Startup;
 
 namespace OllamaBackend2
@@ -37,12 +36,11 @@ namespace OllamaBackend2
         private static IServiceCollection AddDatabases(this IServiceCollection services, IConfiguration configuration)
         {
             return services
-                .AddDbContext<CompositeContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
-                .AddDbContext<ChatContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
-                .AddDbContext<UserContext>(options =>
-                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                .AddDbContext<CompositeContext>
+                (
+                    options =>
+                        options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                );
         }
     }
 }

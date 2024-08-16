@@ -1,7 +1,6 @@
-﻿using Common.DataAccess.SharedEntities.Users;
+﻿using Core.Common.DataAccess.SharedEntities.Users;
 using Persona.Domain.Services;
 using Persona.Models.Personas;
-using Personas.Services.Interfaces;
 
 namespace Persona.CQRS.Queries;
 

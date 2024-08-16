@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Common.DataAccess;
+using Core.Common.DataAccess;
 
 namespace Users.Authorization.Common
 {

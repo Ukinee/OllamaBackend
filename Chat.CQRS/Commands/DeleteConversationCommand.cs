@@ -1,10 +1,4 @@
-﻿using Authorization.Services.Interfaces;
-using Chat.Domain.Conversations;
-using Chat.Services.Interfaces;
-using Common.DataAccess;
-using Common.DataAccess.SharedEntities;
-using Common.DataAccess.SharedEntities.Chats;
-using Microsoft.AspNetCore.Mvc;
+﻿using Chat.DataAccess.Interfaces;
 
 namespace Chat.CQRS.Commands
 {
