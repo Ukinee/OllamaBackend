@@ -5,31 +5,29 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
 {
     public static class ConversationExtensions
     {
-        public static GeneralConversationViewModel ToGeneralConversationViewModel(this ConversationEntity conversation)
+        public static ConversationViewModel ToViewModel(this ConversationEntity conversation)
         {
-            return new GeneralConversationViewModel
+            return new ConversationViewModel
             {
-                Information = conversation.Information,
                 Id = conversation.Id,
+                Information = conversation.Information,
                 Name = conversation.Name,
                 Context = conversation.Context,
+                PersonasId = conversation.Personas.Select(x => x.Id).ToList(),
+                Messages = conversation.Messages.Select(x => x.ToViewModel()).ToList(),
             };
         }
 
-        public static ConcreteConversationViewModel ToConcreteConversation
-        (
-            this ConversationEntity conversation,
-            IEnumerable<MessageEntity> messageEntities
-        )
+        public static ConversationViewModel ToViewModel(this ConversationEntity conversation, IList<MessageEntity> messages)
         {
-            return new ConcreteConversationViewModel
+            return new ConversationViewModel
             {
                 Id = conversation.Id,
                 Information = conversation.Information,
                 Name = conversation.Name,
-                PersonasId = conversation.Personas.Select(x => x.Id).ToList(),
                 Context = conversation.Context,
-                Messages = messageEntities.Select(x => x.ToViewModel()).ToList(),
+                PersonasId = conversation.Personas.Select(x => x.Id).ToList(),
+                Messages = messages.Select(x => x.ToViewModel()).ToList(),
             };
         }
 

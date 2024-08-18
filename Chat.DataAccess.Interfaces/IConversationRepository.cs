@@ -1,16 +1,14 @@
-﻿using Chat.Domain.Conversations;
-using Core.Common.DataAccess.SharedEntities.Chats;
+﻿using Core.Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.DataAccess.Interfaces
 {
     public interface IConversationRepository
     {
-        public Task<ConversationEntity?> GetConcreteConversation(Guid conversationId);
-
-        public Task Add(ConversationEntity conversation);
-        public Task Delete(Guid id);
+        public Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate);
+        public Task<IEnumerable<ConversationEntity>> FindAll(Func<ConversationEntity, bool> predicate);
+        public Task<IEnumerable<ConversationEntity>> FindMany(int amount, Func<ConversationEntity, bool> predicate);
         
-        public Task Update(PutConversationRequest request);
-        public Task Update(ConversationEntity conversation);
+        public Task Add(ConversationEntity conversation, CancellationToken token);
+        public Task Save();
     }
 }

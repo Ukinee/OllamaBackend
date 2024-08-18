@@ -3,11 +3,11 @@ using Chat.Domain.Messages;
 
 namespace Chat.Domain.Conversations
 {
-    public record ConcreteConversationViewModel : ConversationBase
+    public record ConversationViewModel : ConversationBase
     {
-        public required Guid Id { get; set; }
-        public required List<Guid> PersonasId { get; set; }
-
+        public required Guid Id { get; init; }
+        
+        public required List<Guid> PersonasId { get; init; }
         public required List<MessageViewModel> Messages { get; init; }
     }
 }

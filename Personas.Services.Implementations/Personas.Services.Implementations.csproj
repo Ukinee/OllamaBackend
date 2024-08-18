@@ -7,10 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
       <ProjectReference Include="..\Core.Common.DataAccess\Core.Common.DataAccess.csproj" />
+      <ProjectReference Include="..\Identities.CQRS\Identities.CQRS.csproj" />
+      <ProjectReference Include="..\Persona.CQRS\Persona.CQRS.csproj" />
       <ProjectReference Include="..\Persona.Models\Persona.Models.csproj" />
       <ProjectReference Include="..\Persona.Services.Factories\Persona.Services.Factories.csproj" />
       <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
+      <ProjectReference Include="..\Users.CQRS\Users.CQRS.csproj" />
     </ItemGroup>
 
 </Project>

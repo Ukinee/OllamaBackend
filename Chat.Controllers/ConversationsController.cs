@@ -1,5 +1,5 @@
-﻿using Chat.CQRS.Queries;
-using Chat.Domain.Conversations;
+﻿using Chat.Domain.Conversations;
+using Chat.Services.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,23 +8,23 @@ namespace Chat.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    
     public class ConversationsController : ControllerBase
     {
-        private readonly GetGeneralConversationsWithUserIdQuery _generalConversationsQuery;
+        private readonly ConversationsService _conversationsService;
 
-        public ConversationsController(GetGeneralConversationsWithUserIdQuery generalConversationsQuery)
+        public ConversationsController(ConversationsService conversationsService)
         {
-            _generalConversationsQuery = generalConversationsQuery;
+            _conversationsService = conversationsService;
         }
 
         [HttpGet("{personaId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId)
+        public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId, CancellationToken token)
         {
-            IList<GeneralConversationViewModel> conversations = await _generalConversationsQuery.Execute(personaId);
+            IList<ConversationViewModel> conversations = await _conversationsService
+                .GetConversationsByPersona(personaId, token);
 
-            Console.WriteLine($"Returned {conversations.Count} conversations");
-            
             return Ok(conversations);
         }
     }

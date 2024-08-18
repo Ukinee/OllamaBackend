@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Persona.CQRS.Queries;
+using Persona.CQRS.Queries.Done;
 using Persona.Domain.Services;
 using Persona.Services.Factories;
 using Personas.Services.Implementations;
@@ -18,7 +19,6 @@ namespace Personas.Startup
                     .AddScoped<PersonaFactory>()
                     .AddScoped<PersonaMapper>()
                     .AddScoped<CreatePersonaQuery>()
-                    .AddScoped<GetUserOwnsPersonaQuery>()
                     .AddScoped<GetPersonaQuery>()
                     .AddScoped<GetPersonasQuery>()
                     .AddScoped<UpdatePersonaQuery>()

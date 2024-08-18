@@ -1,5 +1,7 @@
 ﻿using Chat.CQRS.Queries;
+using Chat.CQRS.Queries.Done;
 using Chat.Domain.Messages;
+using Chat.Services.Implementations;
 using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,58 +12,50 @@ namespace Chat.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Obsolete("", true)]
     public class MessageController : ControllerBase
     {
-        private readonly CheckUserOwnsMessageQuery _checkUserOwnsMessageQuery;
-        private readonly GetMessageQuery _getMessageQuery;
-        private readonly AddMessageQuery _addMessageQuery;
-        private readonly DeleteMessageQuery _deleteMessageQuery;
+        private readonly MessagesService _messagesService;
 
-        public MessageController(CheckUserOwnsMessageQuery checkUserOwnsMessageQuery,
-            GetMessageQuery getMessageQuery,
-            AddMessageQuery addMessageQuery,
-            DeleteMessageQuery deleteMessageQuery)
+        public MessageController(MessagesService messagesService)
         {
-            _checkUserOwnsMessageQuery = checkUserOwnsMessageQuery;
-            _getMessageQuery = getMessageQuery;
-            _addMessageQuery = addMessageQuery;
-            _deleteMessageQuery = deleteMessageQuery;
+            _messagesService = messagesService;
         }
 
-        [HttpGet("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetMessage([FromRoute] Guid id)
-        {
-            if (ModelState.IsValid == false)
-                return BadRequest(ModelState);
-
-            MessageEntity message = await _getMessageQuery.Execute(id);
-
-            return Ok(message.ToViewModel());
-        }
+        // [HttpGet("{id:guid}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // public async Task<IActionResult> GetMessage([FromRoute] Guid id)
+        // {
+        //     if (ModelState.IsValid == false)
+        //         return BadRequest(ModelState);
+        //
+        //     MessageEntity message = await _getMessageQuery.Execute(id);
+        //
+        //     return Ok(message.ToViewModel());
+        // }
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest)
-        {
-            if (ModelState.IsValid == false)
-                return BadRequest(ModelState);
-            
-            MessageViewModel messageViewModel = await _addMessageQuery.Handle(messageRequest);
-
-            return CreatedAtAction(nameof(GetMessage), new { id = messageViewModel.Id }, messageViewModel);
-        }
-
-        [HttpDelete("{id:guid}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
+        public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest, CancellationToken token)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            await _deleteMessageQuery.Remove(id);
+            MessageViewModel messageViewModel = await _messagesService.AddMessage(messageRequest, token);
 
-            return NoContent();
+            return Ok(messageViewModel);
         }
+
+        // [HttpDelete("{id:guid}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
+        // {
+        //     if (ModelState.IsValid == false)
+        //         return BadRequest(ModelState);
+        //
+        //     await _deleteMessageQuery.Remove(id);
+        //
+        //     return NoContent();
+        // }
     }
 }

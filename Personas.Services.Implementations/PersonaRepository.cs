@@ -1,7 +1,7 @@
-﻿using Core.Common.DataAccess;
+﻿using System.Linq.Expressions;
+using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Microsoft.EntityFrameworkCore;
-using Persona.Models.Personas;
 using Personas.Services.Interfaces;
 
 namespace Personas.Services.Implementations;
@@ -15,68 +15,50 @@ public class PersonaRepository : IPersonaRepository
         _userContext = userContext;
     }
 
-    public async Task<PersonaEntity?> Get(Guid id)
+    public async Task<PersonaEntity?> Find(Func<PersonaEntity, bool> predicate, CancellationToken token)
     {
+        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
+
         return await _userContext
             .Personas
             .Include(persona => persona.Conversations)
             .Include(persona => persona.Identity)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(expression, token);
     }
 
-    public async Task<PersonaEntity?> GetWithConversations(Guid personaId)
+    public async Task<IEnumerable<PersonaEntity>> FindAll(Func<PersonaEntity, bool> predicate)
     {
+        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
+
         return await _userContext
             .Personas
             .Include(persona => persona.Conversations)
             .Include(persona => persona.Identity)
-            .FirstOrDefaultAsync(x => x.Id == personaId);
+            .Where(expression)
+            .ToArrayAsync();
+    }
+
+    public async Task<IEnumerable<PersonaEntity>> FindMany(int amount, Func<PersonaEntity, bool> predicate)
+    {
+        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
+
+        return await _userContext
+            .Personas
+            .Include(persona => persona.Conversations)
+            .Include(persona => persona.Identity)
+            .Where(expression)
+            .Take(amount)
+            .ToArrayAsync();
     }
 
     public async Task Add(PersonaEntity personaEntity)
     {
         _userContext.Personas.Add(personaEntity);
-        await SaveChangesAsync();
-    }
-
-    public async Task Update(PutPersonaRequest request, Guid personaId)
-    {
-        PersonaEntity? personaEntity = await _userContext.Personas
-            .FirstOrDefaultAsync(persona => persona.Id == personaId);
-
-        ArgumentNullException.ThrowIfNull(personaEntity);
-
-        personaEntity.Name = request.Name;
-
-        await SaveChangesAsync();
-    }
-
-    public async Task Delete(Guid id)
-    {
-        PersonaEntity? personaEntity = await _userContext.Personas
-            .Include(persona => persona.User)
-            .ThenInclude(entity => entity.Personas)
-            .FirstOrDefaultAsync(persona => persona.Id == id);
-
-        ArgumentNullException.ThrowIfNull(personaEntity);
-        ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(personaEntity.User.Personas.Count, 1);
         
-        personaEntity.IsDeleted = true;
-        await SaveChangesAsync();
+        await Save();
     }
 
-    public async Task<PersonaEntity[]> GetAll(Guid userId)
-    {
-        PersonaEntity[] personas = await _userContext
-            .Personas
-            .Include(x => x.Conversations)
-            .Where(x => x.UserId == userId)
-            .ToArrayAsync();
-
-        return personas;
-    }
-
-    private async Task SaveChangesAsync()
+    public async Task Save()
     {
         await _userContext.SaveChangesAsync();
     }

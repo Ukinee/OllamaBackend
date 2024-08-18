@@ -4,6 +4,8 @@ namespace Authorization.Services.Interfaces
 {
     public interface IUserRepository
     {
+        public Task<UserEntity?> Find(Func<UserEntity, bool> predicate);
+        
         public Task<UserEntity?> Get(Guid id);
         public Task<UserEntity?> Get(string username);
         

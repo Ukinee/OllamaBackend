@@ -2,25 +2,26 @@
 using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Chats;
 
-namespace Chat.CQRS.Queries
+namespace Chat.CQRS.Queries.Done
 {
-    public class DeleteMessageQuery
+    [Obsolete("")]
+    public class GetMessageQuery
     {
         private readonly IMessageRepository _messageRepository;
 
-        public DeleteMessageQuery(IMessageRepository messageRepository)
+        public GetMessageQuery(IMessageRepository messageRepository)
         {
             _messageRepository = messageRepository;
         }
-        
-        public async Task Remove(Guid messageId)
+
+        public async Task<MessageEntity> Execute(Guid id)
         {
-            MessageEntity? message = await _messageRepository.Get(messageId);
-            
+            MessageEntity? message = await _messageRepository.Get(id);
+
             if (message == null)
                 throw new NotFoundException(nameof(message));
-            
-            await _messageRepository.Remove(message);
+
+            return message;
         }
     }
 }

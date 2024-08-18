@@ -1,7 +1,7 @@
 ﻿using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.Models;
 
-namespace Identities.Services.Interfaces
+namespace Identities.DataAccess.Interfaces
 {
     public interface IIdentityRepository
     {

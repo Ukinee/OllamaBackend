@@ -1,5 +1,6 @@
 ﻿using Chat.DataAccess.Interfaces;
 using Chat.Domain.Conversations;
+using Core.Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.CQRS.Commands
 {
@@ -11,10 +12,17 @@ namespace Chat.CQRS.Commands
         {
             _conversationRepository = conversationRepository;
         }
-        
-        public async Task Execute(PutConversationRequest request)
+
+        public async Task Execute
+        (
+            ConversationEntity conversationEntity,
+            PutConversationRequest request
+        )
         {
-            await _conversationRepository.Update(request);
+            conversationEntity.Name = request.Name;
+            conversationEntity.Information = request.Information;
+            conversationEntity.Context = request.Context;
+            await _conversationRepository.Save();
         }
     }
 }

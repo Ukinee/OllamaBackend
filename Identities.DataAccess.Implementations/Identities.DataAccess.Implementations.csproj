@@ -9,7 +9,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Core.Common.DataAccess\Core.Common.DataAccess.csproj" />
       <ProjectReference Include="..\Identities.DataAccess.Interfaces\Identities.DataAccess.Interfaces.csproj" />
-      <ProjectReference Include="..\Identities.Services.Factories\Identities.Services.Factories.csproj" />
       <ProjectReference Include="..\Identities.Services.Interfaces\Identities.Services.Interfaces.csproj" />
     </ItemGroup>
 

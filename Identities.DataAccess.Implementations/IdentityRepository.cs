@@ -1,9 +1,9 @@
 ﻿using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Users;
+using Identities.DataAccess.Interfaces;
 using Identities.Models;
-using Identities.Services.Interfaces;
 
-namespace Identities.Services.Implementations
+namespace Identities.DataAccess.Implementations
 {
     public class IdentityRepository : IIdentityRepository
     {

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Persona.CQRS.Queries;
+using Persona.CQRS.Queries.Done;
 using Persona.Models.Personas;
+using Personas.Services.Implementations;
 
 namespace Persona.Controllers
 {
@@ -11,23 +13,22 @@ namespace Persona.Controllers
     public class PersonaController : ControllerBase
     {
         private readonly CreatePersonaQuery _createPersonaQuery;
-        private readonly GetUserOwnsPersonaQuery _getUserOwnsPersonaQuery;
         private readonly GetPersonaQuery _getPersonaQuery;
         private readonly UpdatePersonaQuery _updatePersonaQuery;
-       
+        private readonly PersonaService _personaService;
 
         public PersonaController
         (
             CreatePersonaQuery createPersonaQuery,
-            GetUserOwnsPersonaQuery getUserOwnsPersonaQuery,
             GetPersonaQuery getPersonaQuery,
-            UpdatePersonaQuery updatePersonaQuery
+            UpdatePersonaQuery updatePersonaQuery,
+            PersonaService personaService
         )
         {
             _createPersonaQuery = createPersonaQuery;
-            _getUserOwnsPersonaQuery = getUserOwnsPersonaQuery;
             _getPersonaQuery = getPersonaQuery;
             _updatePersonaQuery = updatePersonaQuery;
+            _personaService = personaService;
         }
 
         // [HttpGet("{id:guid}")]
@@ -51,7 +52,7 @@ namespace Persona.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
             
-            PersonaViewModel viewModel = await _createPersonaQuery.Execute(personaRequest);
+            PersonaViewModel viewModel = await _personaService.Create(personaRequest);
 
             return Ok(viewModel);
         }
@@ -63,7 +64,7 @@ namespace Persona.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
             
-            PersonaViewModel viewModel = await _updatePersonaQuery.Execute(personaRequest, id);
+            PersonaViewModel viewModel = await _personaService.Update(personaRequest, id);
 
             return Ok(viewModel);
         }

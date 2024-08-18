@@ -12,6 +12,7 @@
       <ProjectReference Include="..\Chat.Services.Interfaces\Chat.Services.Interfaces.csproj" />
       <ProjectReference Include="..\Core.Common.DataAccess\Core.Common.DataAccess.csproj" />
       <ProjectReference Include="..\Persona.Domain.Services\Persona.Domain.Services.csproj" />
+      <ProjectReference Include="..\Persona.Services.Factories\Persona.Services.Factories.csproj" />
       <ProjectReference Include="..\Personas.Services.Interfaces\Personas.Services.Interfaces.csproj" />
     </ItemGroup>
 

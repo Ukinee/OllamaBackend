@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Persona.CQRS.Queries;
 using Persona.Models.Personas;
+using Personas.Services.Implementations;
 
 namespace Persona.Controllers
 {
@@ -10,18 +10,18 @@ namespace Persona.Controllers
     [Route("api/[controller]/[action]/")]
     public class PersonasController : ControllerBase
     {
-        private readonly GetPersonasQuery _getPersonasQuery;
+        private readonly PersonaService _personaService;
 
-        public PersonasController(GetPersonasQuery getPersonasQuery)
+        public PersonasController(PersonaService personaService)
         {
-            _getPersonasQuery = getPersonasQuery;
+            _personaService = personaService;
         }
 
         [HttpGet("{userId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetByUserId([FromRoute] Guid userId)
         {
-            PersonasViewModel personas = await _getPersonasQuery.ExecuteByUserId(userId);
+            IList<PersonaViewModel> personas = await _personaService.GetByUserId(userId);
 
             return Ok(personas);
         }
@@ -30,7 +30,7 @@ namespace Persona.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetByUsername([FromRoute] string username)
         {
-            PersonasViewModel personas = await _getPersonasQuery.ExecuteByUsername(username);
+            IList<PersonaViewModel> personas = await _personaService.GetByUsername(username);
 
             return Ok(personas);
         }
@@ -39,7 +39,7 @@ namespace Persona.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetByConversationId([FromRoute] Guid conversationId)
         {
-            PersonasViewModel personas = await _getPersonasQuery.ExecuteByConversationId(conversationId);
+            IList<PersonaViewModel> personas = await _personaService.GetByConversationId(conversationId);
 
             return Ok(personas);
         }

@@ -1,5 +1,5 @@
-﻿using Chat.DataAccess.Interfaces;
-using Chat.Domain.Conversations;
+﻿using System.Linq.Expressions;
+using Chat.DataAccess.Interfaces;
 using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Chats;
 using Microsoft.EntityFrameworkCore;
@@ -15,60 +15,55 @@ namespace Chat.DataAccess.Implementations
             _userDbContext = userDbContext;
         }
 
-        public async Task<ConversationEntity?> GetConcreteConversation(Guid conversationId)
+        public async Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate)
         {
+            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
+
             ConversationEntity? conversationEntity = await _userDbContext
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
                 .ThenInclude(x => x.SenderPersona)
-                .FirstOrDefaultAsync(x => x.Id == conversationId);
-            
+                .FirstOrDefaultAsync(expression);
+
             return conversationEntity;
         }
 
-        public async Task Add(ConversationEntity conversation)
+        public async Task<IEnumerable<ConversationEntity>> FindAll(Func<ConversationEntity, bool> predicate)
         {
-            await _userDbContext.Conversations.AddAsync(conversation);
-
-            await Save();
-        }
-
-        public async Task Delete(Guid conversationId)
-        {
-            ConversationEntity? conversation = await GetConcreteConversation(conversationId);
-
-            if (conversation == null)
-                throw new NotFoundException(nameof(conversation));
-
-            throw new NotImplementedException("Must not be implemented");
-
-            _userDbContext.Conversations.Remove(conversation);
-
-            await Save();
-        }
-
-        public async Task Update(ConversationEntity conversation)
-        {
-            await Save();
-        }
-
-        public async Task Update(PutConversationRequest request)
-        {
-            ConversationEntity? conversation = await _userDbContext
+            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
+            
+            return await _userDbContext
                 .Conversations
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
+                .Include(conversation => conversation.Personas)
+                .Include(conversation => conversation.Messages)
+                .ThenInclude(x => x.SenderPersona)
+                .Where(expression)
+                .ToListAsync();
+        }
 
-            if (conversation == null)
-                throw new NotFoundException(nameof(conversation));
+        public async Task<IEnumerable<ConversationEntity>> FindMany(int amount, Func<ConversationEntity, bool> predicate)
+        {
+            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
+            
+            return await _userDbContext
+                .Conversations
+                .Include(conversation => conversation.Personas)
+                .Include(conversation => conversation.Messages)
+                .ThenInclude(x => x.SenderPersona)
+                .Where(expression)
+                .Take(amount)
+                .ToListAsync();
+        }
 
-            conversation.Name = request.Name;
-            conversation.Context = request.Context;
+        public async Task Add(ConversationEntity conversation, CancellationToken token)
+        {
+            await _userDbContext.Conversations.AddAsync(conversation, token);
 
             await Save();
         }
 
-        private async Task Save()
+        public async Task Save()
         {
             await _userDbContext.SaveChangesAsync();
         }

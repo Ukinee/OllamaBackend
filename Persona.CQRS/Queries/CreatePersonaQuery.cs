@@ -1,22 +1,25 @@
 ﻿using Core.Common.DataAccess.SharedEntities.Users;
-using Persona.Domain.Services;
-using Persona.Models.Personas;
+using Persona.Services.Factories;
 
 namespace Persona.CQRS.Queries;
 
 public class CreatePersonaQuery
 {
-    private readonly PersonaMapper _personaMapper;
+    private readonly PersonaFactory _personaFactory;
 
-    public CreatePersonaQuery(PersonaMapper personaMapper)
+    public CreatePersonaQuery(PersonaFactory personaFactory)
     {
-        _personaMapper = personaMapper;
+        _personaFactory = personaFactory;
     }
     
-    public async Task<PersonaViewModel> Execute(PostPersonaRequest createPersonaRequest)
+    public PersonaEntity Execute(IdentityEntity identity, UserEntity user)
     {
-        PersonaEntity entity = await _personaMapper.CreateEntity(createPersonaRequest);
+        if(user.UserName == null)
+        {
+            throw new ArgumentNullException(nameof(user.UserName));
+        }
         
-        return _personaMapper.ToViewModel(entity);
+        return _personaFactory.Create(user.Id, identity, user.UserName);
     }
 }
+

@@ -10,19 +10,14 @@ namespace Identities.Controllers
     [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
-        private readonly IIdentityRepository _identityRepository;
-
-        public IdentityController(IIdentityRepository identityRepository)
+        public IdentityController()
         {
-            _identityRepository = identityRepository;
         }
         
         [HttpPut("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] PutIdentityRequest request)
         {
-            await _identityRepository.Update(request, id);
-            
             return Ok();
         }
     }

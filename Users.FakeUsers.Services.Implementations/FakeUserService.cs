@@ -1,4 +1,5 @@
 ﻿using Chat.CQRS.Queries;
+using Chat.CQRS.Queries.Done;
 using Chat.Domain.Messages;
 using Users.FakeUsers.Services.Interfaces;
 

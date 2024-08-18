@@ -4,12 +4,10 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Identities.SQRS</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Core.Common.DataAccess.SharedEntities\Core.Common.DataAccess.SharedEntities.csproj" />
-      <ProjectReference Include="..\Identities.Services.Factories\Identities.Services.Factories.csproj" />
     </ItemGroup>
 
 </Project>

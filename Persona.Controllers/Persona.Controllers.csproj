@@ -16,6 +16,7 @@
       <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
       <ProjectReference Include="..\Persona.CQRS\Persona.CQRS.csproj" />
       <ProjectReference Include="..\Persona.Models\Persona.Models.csproj" />
+      <ProjectReference Include="..\Personas.Services.Implementations\Personas.Services.Implementations.csproj" />
       <ProjectReference Include="..\Users.Authorization.Common\Users.Authorization.Common.csproj" />
     </ItemGroup>
 

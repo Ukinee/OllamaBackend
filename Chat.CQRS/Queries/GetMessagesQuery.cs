@@ -3,6 +3,7 @@ using Core.Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.CQRS.Queries
 {
+    [Obsolete("Rewrite", true)]
     public class GetMessagesQuery
     {
         private readonly IMessageRepository _messageRepository;
@@ -18,13 +19,8 @@ namespace Chat.CQRS.Queries
             _conversationRepository = conversationRepository;
         }
 
-        public async Task<IList<MessageEntity>> Execute(Guid conversationId, int page, int pageSize)
+        public IList<MessageEntity> Execute(ConversationEntity conversation, int page, int pageSize)
         {
-            ConversationEntity? conversation = await _conversationRepository.GetConcreteConversation(conversationId);
-
-            if (conversation == null)
-                throw new KeyNotFoundException("Conversation not found");
-            
             return conversation
                 .Messages
                 .Skip((page - 1) * pageSize)

@@ -1,30 +1,21 @@
 ﻿using Authorization.Domain;
 using Authorization.Services.Factories;
-using Authorization.Services.Interfaces;
 using Core.Common.DataAccess.SharedEntities.Users;
-using Identities.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Personas.Services.Interfaces;
 
-namespace Authorization.Services.Implementations
+namespace Users.CQRS
 {
-    public class UserCreationService : IUserCreationService
+    public class CreateUserQuery
     {
-        private readonly IPersonaCreationService _personaCreationService;
-        private readonly IIdentityCreationService _identityCreationService;
         private readonly UserFactory _userFactory;
         private readonly UserManager<UserEntity> _userManager;
 
-        public UserCreationService
+        public CreateUserQuery
         (
-            IPersonaCreationService personaCreationService,
-            IIdentityCreationService identityCreationService,
             UserFactory userFactory,
             UserManager<UserEntity> userManager
         )
         {
-            _personaCreationService = personaCreationService;
-            _identityCreationService = identityCreationService;
             _userFactory = userFactory;
             _userManager = userManager;
         }
@@ -35,10 +26,6 @@ namespace Authorization.Services.Implementations
                 
             await AssignRoles(user);
 
-            IdentityEntity identity = await _identityCreationService.Create();
-            PersonaEntity persona = await _personaCreationService.Create(user.Id, identity, createRequest.UserName);
-            user.Personas.Add(persona);
-            
             return user;
         }
 

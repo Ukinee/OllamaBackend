@@ -2,6 +2,7 @@
 using Authorization.Services.Interfaces;
 using Chat.CQRS.Commands;
 using Chat.CQRS.Queries;
+using Chat.CQRS.Queries.Done;
 using Chat.DataAccess.Implementations;
 using Chat.DataAccess.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -17,18 +18,17 @@ namespace Chat.Startup
                 .AddScoped<IConversationRepository, ConversationRepository>()
                 .AddScoped<IMessageRepository, MessageRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<DeleteConversationCommand>()
                 .AddScoped<CheckUserOwnsMessageQuery>()
                 .AddScoped<GetMessageQuery>()
-                .AddScoped<GetConversationViewModelQuery>()
+                .AddScoped<GetConversationPaginationQuery>()
                 .AddScoped<DeleteMessageQuery>()
                 .AddScoped<GetMessagesQuery>()
                 .AddScoped<AddMessageQuery>()
                 .AddScoped<CheckUserInConversationQuery>()
-                .AddScoped<AddConversationQuery>()
+                .AddScoped<AddConversationCommand>()
                 .AddScoped<UpdateConversationCommand>()
                 .AddScoped<GetConversationQuery>()
-                .AddScoped<GetGeneralConversationsWithUserIdQuery>();
+                .AddScoped<GetUserQuery>();
         }
     }
 }

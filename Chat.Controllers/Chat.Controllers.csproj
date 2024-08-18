@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
       <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
+      <ProjectReference Include="..\Chat.Services.Implementations\Chat.Services.Implementations.csproj" />
       <ProjectReference Include="..\Users.Authorization.Common\Users.Authorization.Common.csproj" />
     </ItemGroup>
 
