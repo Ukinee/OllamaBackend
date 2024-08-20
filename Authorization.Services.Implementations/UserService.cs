@@ -2,6 +2,7 @@
 using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.SQRS;
 using Persona.CQRS.Queries;
+using UserPersonaLinks.CQRS;
 using Users.CQRS;
 
 namespace Authorization.Services.Implementations
@@ -11,28 +12,31 @@ namespace Authorization.Services.Implementations
         private readonly CreateUserQuery _createUserQuery;
         private readonly CreatePersonaQuery _createPersonaQuery;
         private readonly CreateIdentityQuery _createIdentityQuery;
+        private readonly LinkPersonaToUserCommand _linkPersonaToUserCommand;
 
         public UserService
         (
             CreateUserQuery createUserQuery,
             CreatePersonaQuery createPersonaQuery,
-            CreateIdentityQuery createIdentityQuery
+            CreateIdentityQuery createIdentityQuery,
+            LinkPersonaToUserCommand linkPersonaToUserCommand
         )
         {
             _createUserQuery = createUserQuery;
             _createPersonaQuery = createPersonaQuery;
             _createIdentityQuery = createIdentityQuery;
+            _linkPersonaToUserCommand = linkPersonaToUserCommand;
         }
 
-        public async Task<UserViewModel> Create(UserCreateRequest userCreateRequest)
+        public async Task<UserViewModel> Create(UserCreateRequest userCreateRequest, CancellationToken token)
         {
-            UserEntity userEntity = await _createUserQuery.Create(userCreateRequest);
-            IdentityEntity identityEntity = _createIdentityQuery.Execute();
-            PersonaEntity persona = _createPersonaQuery.Execute(identityEntity, userEntity);
+            UserEntity user = await _createUserQuery.Create(userCreateRequest);
+            IdentityEntity identity = await _createIdentityQuery.Execute(token);
+            PersonaEntity persona = await _createPersonaQuery.Execute(identity, user, token);
             
-            throw new NotImplementedException("Link persona to user");
+            await _linkPersonaToUserCommand.Execute(user, persona, token);
 
-            return userEntity.ToViewModel();
+            return user.ToViewModel();
         }
     }
 }

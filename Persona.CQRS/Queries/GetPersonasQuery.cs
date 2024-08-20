@@ -1,8 +1,5 @@
-﻿using Authorization.Services.Interfaces;
-using Chat.DataAccess.Interfaces;
-using Core.Common.DataAccess.SharedEntities.Chats;
+﻿using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Users;
-using Persona.Domain.Services;
 using Persona.Models.Personas;
 
 namespace Persona.CQRS.Queries

@@ -51,15 +51,15 @@ public class PersonaRepository : IPersonaRepository
             .ToArrayAsync();
     }
 
-    public async Task Add(PersonaEntity personaEntity)
+    public async Task Add(PersonaEntity personaEntity, CancellationToken token)
     {
         _userContext.Personas.Add(personaEntity);
         
-        await Save();
+        await Save(token);
     }
 
-    public async Task Save()
+    public async Task Save(CancellationToken token)
     {
-        await _userContext.SaveChangesAsync();
+        await _userContext.SaveChangesAsync(token);
     }
 }

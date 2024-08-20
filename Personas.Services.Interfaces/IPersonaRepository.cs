@@ -9,7 +9,7 @@ namespace Personas.Services.Interfaces
         public Task<IEnumerable<PersonaEntity>> FindAll(Func<PersonaEntity, bool> predicate);
         public Task<IEnumerable<PersonaEntity>> FindMany(int amount, Func<PersonaEntity, bool> predicate);
         
-        public Task Add(PersonaEntity personaEntity);
-        public Task Save();
+        public Task Add(PersonaEntity personaEntity, CancellationToken token);
+        public Task Save(CancellationToken token);
     }
 }

@@ -6,12 +6,8 @@ namespace Authorization.Services.Interfaces
     {
         public Task<UserEntity?> Find(Func<UserEntity, bool> predicate);
         
-        public Task<UserEntity?> Get(Guid id);
-        public Task<UserEntity?> Get(string username);
+        public Task Add(UserEntity user, CancellationToken token);
         
-        public Task Add(UserEntity user);
-        public Task Delete(UserEntity entity);
-
-        public Task<bool> Exists(string name);
+        public Task Save(CancellationToken token);
     }
 }

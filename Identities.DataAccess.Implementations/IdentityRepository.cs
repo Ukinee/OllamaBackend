@@ -14,11 +14,11 @@ namespace Identities.DataAccess.Implementations
             _dbContext = dbContext;
         }
 
-        public async Task Add(IdentityEntity identity)
+        public async Task Add(IdentityEntity identity, CancellationToken token)
         {
             _dbContext.Identities.Add(identity);
 
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(token);
         }
 
         public async Task Update(PutIdentityRequest request, Guid id)

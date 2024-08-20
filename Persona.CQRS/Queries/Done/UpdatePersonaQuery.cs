@@ -16,12 +16,17 @@ namespace Persona.CQRS.Queries.Done
             _personaMapper = personaMapper;
         }
 
-        public async Task<PersonaViewModel> Execute(PersonaEntity personaEntity, PutPersonaRequest putPersonaRequest)
+        public async Task<PersonaViewModel> Execute
+        (
+            PersonaEntity personaEntity,
+            PutPersonaRequest putPersonaRequest,
+            CancellationToken token
+        )
         {
             personaEntity.Name = putPersonaRequest.Name;
 
-            await _personaRepository.Save();
-            
+            await _personaRepository.Save(token);
+
             return _personaMapper.ToViewModel(personaEntity);
         }
     }

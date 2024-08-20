@@ -1,4 +1,5 @@
-﻿using Authorization.Services.Interfaces;
+﻿using System.Linq.Expressions;
+using Authorization.Services.Interfaces;
 using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Microsoft.EntityFrameworkCore;
@@ -14,26 +15,21 @@ namespace Authorization.Services.Implementations
             _dbContext = dbContext;
         }
 
-        public Task<UserEntity?> Get(string username)
+        public Task<UserEntity?> Find(Func<UserEntity, bool> predicate)
         {
-            return _dbContext.Users.FirstOrDefaultAsync(user => user.UserName == username);
+            Expression<Func<UserEntity, bool>> expression = x => predicate.Invoke(x);
+            
+            return _dbContext
+                .Users
+                .Include(user => user.Personas)
+                .FirstOrDefaultAsync(expression);
         }
 
-        public async Task Add(UserEntity user)
+        public async Task Add(UserEntity user, CancellationToken token)
         {
-            await _dbContext.Users.AddAsync(user);
-            await Save();
-        }
-
-        public Task<UserEntity?> Get(Guid id)
-        {
-            return _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
-        }
-
-        public async Task Delete(UserEntity entity)
-        {
-            _dbContext.Users.Remove(entity);
-            await Save();
+            await _dbContext.Users.AddAsync(user, token);
+            
+            await Save(token);
         }
 
         public Task<bool> Exists(string name)
@@ -41,9 +37,9 @@ namespace Authorization.Services.Implementations
             return _dbContext.Users.AnyAsync(x => x.UserName == name);
         }
 
-        private async Task Save()
+        public async Task Save(CancellationToken token)
         {
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(token);
         }
     }
 }
