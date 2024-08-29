@@ -47,7 +47,7 @@ namespace Users.Authorization.Controllers
 
             UserEntity user = await _userService.Create(createRequest, cancellationToken);
 
-            string token = await _tokenService.CreateToken(_userManager, user);
+            string token = _tokenService.CreateToken(_userManager, user);
 
             return Ok(user.ToViewModel(token));
         }
@@ -69,7 +69,7 @@ namespace Users.Authorization.Controllers
             if (await _userManager.CheckPasswordAsync(user, userRequest.Password) == false)
                 return Unauthorized("Wrong username or password"); //todo : hardcode
 
-            string token = await _tokenService.CreateToken(_userManager, user);
+            string token = _tokenService.CreateToken(_userManager, user);
 
             return Ok(user.ToViewModel(token));
         }

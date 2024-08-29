@@ -1,5 +1,4 @@
-﻿using Chat.CQRS.Queries;
-using Chat.CQRS.Queries.Done;
+﻿using Chat.CQRS.Queries.Done;
 using Chat.Domain.Messages;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Persona.CQRS.Queries.Done;

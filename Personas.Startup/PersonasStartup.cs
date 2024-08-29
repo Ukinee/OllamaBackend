@@ -2,6 +2,7 @@
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persona.CQRS.Commands;
 using Persona.CQRS.Queries;
 using Persona.CQRS.Queries.Done;
 using Persona.Models.Personas;

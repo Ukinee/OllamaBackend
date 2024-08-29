@@ -24,7 +24,7 @@ namespace Authorization.Services.Implementations
             );
         }
 
-        public async Task<string> CreateToken(UserManager<UserEntity> userManager, UserEntity user)
+        public string CreateToken(UserManager<UserEntity> userManager, UserEntity user)
         {
             List<Claim> claims =
             [

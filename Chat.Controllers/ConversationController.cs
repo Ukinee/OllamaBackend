@@ -8,7 +8,6 @@ namespace Chat.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Obsolete("", true)]
     public class ConversationController : ControllerBase
     {
         private readonly ConversationsService _conversationsService;

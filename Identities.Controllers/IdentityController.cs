@@ -9,17 +9,11 @@ namespace Identities.Controllers
     [Route("api/[controller]")]
     public class IdentityController : ControllerBase
     {
-        public IdentityController()
-        {
-        }
-        
         [HttpPut("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] PutIdentityRequest request)
         {
             throw new NotImplementedException();
-            
-            return Ok();
         }
     }
 }

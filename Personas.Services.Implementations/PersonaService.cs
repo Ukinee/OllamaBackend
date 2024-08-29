@@ -3,6 +3,7 @@ using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.SQRS;
 using Mapster;
+using Persona.CQRS.Commands;
 using Persona.CQRS.Queries;
 using Persona.CQRS.Queries.Done;
 using Persona.Models.Personas;

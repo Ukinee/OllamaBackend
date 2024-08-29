@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Authorization.Domain.Base;
+﻿using Authorization.Domain.Base;
 
 namespace Authorization.Domain
 {
     public class UserLoginRequest : UserBase
     {
-        [Required] public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

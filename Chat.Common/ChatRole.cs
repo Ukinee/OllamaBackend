@@ -18,7 +18,7 @@ namespace Chat.Common
         [JsonConstructor]
         public ChatRole(object _)
         {
-            _value = null;
+            _value = string.Empty;
         }
 
         /// <summary> The role that instructs or sets the behavior of the assistant. </summary>

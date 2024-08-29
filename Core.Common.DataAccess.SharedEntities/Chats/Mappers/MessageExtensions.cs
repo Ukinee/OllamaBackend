@@ -14,7 +14,7 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
                 SenderPersona = personaEntity,
                 ConversationId = message.ConversationId,
                 Content = message.Content,
-                Images = message.Images,
+                Images = message.Images ?? [],
                 Timestamp = DateTime.UtcNow,
             };
         }

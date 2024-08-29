@@ -27,7 +27,7 @@ namespace Authorization.Startup
 
         private static IServiceCollection SetupIdentity(this IServiceCollection services)
         {
-            IdentityBuilder identityBuilder = services
+            services
                 .AddIdentity<UserEntity, IdentityRole<Guid>>
                 (
                     options =>

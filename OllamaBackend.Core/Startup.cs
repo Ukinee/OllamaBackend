@@ -3,7 +3,6 @@ using Chat.Startup;
 using Common.UserChatLinks.Startup;
 using Core.Common.DataAccess;
 using Identities.Startup;
-using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

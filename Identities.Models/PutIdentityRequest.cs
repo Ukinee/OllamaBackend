@@ -1,6 +1,4 @@
 ﻿namespace Identities.Models
 {
-    public class PutIdentityRequest : IdentityBase
-    {
-    }
+    public class PutIdentityRequest : IdentityBase;
 }

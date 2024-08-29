@@ -1,5 +1,4 @@
 ﻿using Core.Common.DataAccess.SharedEntities.Users;
-using Persona.Models.Personas;
 
 namespace Personas.Services.Interfaces
 {

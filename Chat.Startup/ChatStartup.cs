@@ -19,7 +19,6 @@ namespace Chat.Startup
                 .AddScoped<IConversationRepository, ConversationRepository>()
                 .AddScoped<IMessageRepository, MessageRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<GetMessageQuery>()
                 .AddScoped<GetConversationPaginationQuery>()
                 .AddScoped<GetMessagesQuery>()
                 .AddScoped<AddMessageQuery>()

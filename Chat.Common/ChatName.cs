@@ -2,7 +2,7 @@
 
 namespace Chat.Common
 {
-    public record struct ChatName
+    public readonly record struct ChatName
     {
         private readonly string _value;
 
@@ -14,7 +14,7 @@ namespace Chat.Common
         [JsonConstructor]
         public ChatName(object _)
         {
-            _value = null;
+            _value = string.Empty;
         }
 
         public string GetContent(string content)

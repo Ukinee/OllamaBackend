@@ -1,9 +1,5 @@
-﻿using Chat.CQRS.Queries;
-using Chat.CQRS.Queries.Done;
-using Chat.Domain.Messages;
+﻿using Chat.Domain.Messages;
 using Chat.Services.Implementations;
-using Core.Common.DataAccess.SharedEntities.Chats;
-using Core.Common.DataAccess.SharedEntities.Chats.Mappers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

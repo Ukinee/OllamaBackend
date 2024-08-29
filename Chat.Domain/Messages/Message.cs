@@ -29,20 +29,20 @@ namespace Chat.Domain.Messages
         public string[]? Images { get; init; }
 
         public void Deconstruct(
-            out ChatName ChatName,
-            out ChatRole Role,
-            out string Content,
-            out DateTime Timestamp,
-            out Guid Id,
-            out string[]? Images
+            out ChatName chatName,
+            out ChatRole role,
+            out string content,
+            out DateTime timestamp,
+            out Guid id,
+            out string[]? images
         )
         {
-            ChatName = this.ChatName;
-            Role = this.Role;
-            Content = this.Content;
-            Timestamp = this.Timestamp;
-            Id = this.Id;
-            Images = this.Images;
+            chatName = this.ChatName;
+            role = this.Role;
+            content = this.Content;
+            timestamp = this.Timestamp;
+            id = this.Id;
+            images = this.Images;
         }
     }
 }

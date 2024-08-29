@@ -2,7 +2,7 @@
 using Persona.Models.Personas;
 using Personas.Services.Interfaces;
 
-namespace Persona.CQRS.Queries.Done
+namespace Persona.CQRS.Commands
 {
     public class UpdatePersonaCommand
     {
