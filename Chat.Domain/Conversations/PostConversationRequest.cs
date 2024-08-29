@@ -2,7 +2,7 @@
 
 namespace Chat.Domain.Conversations
 {
-    public record PostConversationRequest : ConversationBase
+    public class PostConversationRequest : ConversationBase
     {
         public required Guid PersonaId { get; set; }
     }

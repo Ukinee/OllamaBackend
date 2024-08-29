@@ -2,6 +2,7 @@
 using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Identities.SQRS;
+using Mapster;
 using Persona.CQRS.Queries;
 using Persona.CQRS.Queries.Done;
 using Persona.Models.Personas;
@@ -19,7 +20,7 @@ namespace Personas.Services.Implementations
         private readonly CreatePersonaQuery _createPersonaQuery;
         private readonly CreateIdentityQuery _createIdentityQuery;
         private readonly LinkPersonaToUserCommand _linkPersonaToUserCommand;
-        private readonly UpdatePersonaQuery _updatePersonaQuery;
+        private readonly UpdatePersonaCommand _updatePersonaCommand;
 
         public PersonaService
         (
@@ -29,7 +30,7 @@ namespace Personas.Services.Implementations
             CreatePersonaQuery createPersonaQuery,
             CreateIdentityQuery createIdentityQuery,
             LinkPersonaToUserCommand linkPersonaToUserCommand,
-            UpdatePersonaQuery updatePersonaQuery,
+            UpdatePersonaCommand updatePersonaCommand,
             GetPersonaQuery getPersonaQuery
         )
         {
@@ -39,7 +40,7 @@ namespace Personas.Services.Implementations
             _createPersonaQuery = createPersonaQuery;
             _createIdentityQuery = createIdentityQuery;
             _linkPersonaToUserCommand = linkPersonaToUserCommand;
-            _updatePersonaQuery = updatePersonaQuery;
+            _updatePersonaCommand = updatePersonaCommand;
             _getPersonaQuery = getPersonaQuery;
         }
 
@@ -57,9 +58,9 @@ namespace Personas.Services.Implementations
             return _getPersonasQuery.ExecuteByUser(user);
         }
 
-        public async Task<IList<PersonaViewModel>> GetByConversationId(Guid conversationId)
+        public async Task<IList<PersonaViewModel>> GetByConversationId(Guid conversationId, CancellationToken cancellationToken)
         {
-            ConversationEntity conversation = await _getConversationQuery.Execute(conversationId);
+            ConversationEntity conversation = await _getConversationQuery.Execute(conversationId, cancellationToken);
 
             return _getPersonasQuery.ExecuteByConversation(conversation);
         }
@@ -72,14 +73,15 @@ namespace Personas.Services.Implementations
 
             await _linkPersonaToUserCommand.Execute(user, persona, token);
 
-            return persona.ToViewModel();
+            return persona.Adapt<PersonaViewModel>();
         }
 
         public async Task<PersonaViewModel> Update(PutPersonaRequest personaRequest, Guid personaId, CancellationToken token)
         {
             PersonaEntity persona = await _getPersonaQuery.Execute(personaId, token);
+            await _updatePersonaCommand.Execute(persona, personaRequest, token);
 
-            return await _updatePersonaQuery.Execute(persona, personaRequest, token);
+            return persona.Adapt<PersonaViewModel>();
         }
     }
 }

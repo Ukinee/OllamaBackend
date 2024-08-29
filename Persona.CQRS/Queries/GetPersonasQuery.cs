@@ -1,26 +1,17 @@
 ﻿using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Users;
+using Mapster;
 using Persona.Models.Personas;
 
 namespace Persona.CQRS.Queries
 {
     public class GetPersonasQuery
     {
-        private readonly PersonaMapper _personaMapper;
-
-        public GetPersonasQuery
-        (
-            PersonaMapper personaMapper
-        )
-        {
-            _personaMapper = personaMapper;
-        }
-
         public IList<PersonaViewModel> ExecuteByUser(UserEntity user)
         {
             return user
                 .Personas
-                .Select(x => _personaMapper.ToViewModel(x))
+                .Select(x => x.Adapt<PersonaViewModel>())
                 .ToArray();
         }
 
@@ -28,7 +19,7 @@ namespace Persona.CQRS.Queries
         {
             return conversation
                 .Personas
-                .Select(x => _personaMapper.ToViewModel(x))
+                .Select(x => x.Adapt<PersonaViewModel>())
                 .ToList();
         }
     }

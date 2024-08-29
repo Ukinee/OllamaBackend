@@ -3,7 +3,7 @@ using Chat.Domain.Messages;
 
 namespace Chat.Domain.Conversations
 {
-    public record ConversationViewModel : ConversationBase
+    public class ConversationViewModel : ConversationBase
     {
         public required Guid Id { get; init; }
         

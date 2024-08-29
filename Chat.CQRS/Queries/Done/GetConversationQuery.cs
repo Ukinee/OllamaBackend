@@ -13,10 +13,10 @@ namespace Chat.CQRS.Queries.Done
             _conversationRepository = conversationRepository;
         }
 
-        public async Task<ConversationEntity> Execute(Guid id)
+        public async Task<ConversationEntity> Execute(Guid guid, CancellationToken cancellationToken)
         {
             ConversationEntity? conversation = await _conversationRepository
-                .Find(x => x.Id == id);
+                .Find(x => x.Id == guid, cancellationToken);
 
             if (conversation == null)
                 throw new NotFoundException(nameof(conversation));

@@ -21,7 +21,7 @@ namespace Chat.Controllers
         [HttpGet("{conversationId:guid}")]
         [HttpGet("{conversationId:guid}/messages/page/{routePage:int}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid conversationId, int? routePage)
+        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid conversationId, int? routePage, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
@@ -29,7 +29,7 @@ namespace Chat.Controllers
             int page = routePage ?? 1;
             
             ConversationViewModel result = await _conversationsService.
-                GetPaginatedMessages(conversationId, page, 20); // TODO: make configurable
+                GetPaginatedMessages(conversationId, page, 20, cancellationToken); // TODO: make configurable
 
             return Ok(result);
         }

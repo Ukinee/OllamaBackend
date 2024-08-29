@@ -4,7 +4,7 @@ namespace Chat.DataAccess.Interfaces
 {
     public interface IConversationRepository
     {
-        public Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate);
+        public Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate, CancellationToken cancellationToken);
         public Task<IEnumerable<ConversationEntity>> FindAll(Func<ConversationEntity, bool> predicate);
         public Task<IEnumerable<ConversationEntity>> FindMany(int amount, Func<ConversationEntity, bool> predicate);
         

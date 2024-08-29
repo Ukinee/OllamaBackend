@@ -3,7 +3,7 @@ using Core.Common.DataAccess.SharedEntities.Users;
 
 namespace Core.Common.DataAccess.SharedEntities.Chats
 {
-    public record ConversationEntity : ConversationBase
+    public class ConversationEntity : ConversationBase
     {
         public required Guid Id { get; init; }
         

@@ -28,7 +28,7 @@ namespace Authorization.Services.Implementations
             _linkPersonaToUserCommand = linkPersonaToUserCommand;
         }
 
-        public async Task<UserViewModel> Create(UserCreateRequest userCreateRequest, CancellationToken token)
+        public async Task<UserEntity> Create(UserCreateRequest userCreateRequest, CancellationToken token)
         {
             UserEntity user = await _createUserQuery.Create(userCreateRequest);
             IdentityEntity identity = await _createIdentityQuery.Execute(token);
@@ -36,7 +36,7 @@ namespace Authorization.Services.Implementations
             
             await _linkPersonaToUserCommand.Execute(user, persona, token);
 
-            return user.ToViewModel();
+            return user;
         }
     }
 }

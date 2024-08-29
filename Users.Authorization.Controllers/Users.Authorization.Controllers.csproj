@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Authorization.Domain\Authorization.Domain.csproj" />
+      <ProjectReference Include="..\Authorization.Services.Implementations\Authorization.Services.Implementations.csproj" />
       <ProjectReference Include="..\Authorization.Services.Interfaces\Authorization.Services.Interfaces.csproj" />
     </ItemGroup>
 

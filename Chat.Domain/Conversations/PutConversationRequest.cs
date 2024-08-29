@@ -2,7 +2,7 @@
 
 namespace Chat.Domain.Conversations
 {
-    public record PutConversationRequest : ConversationBase
+    public class PutConversationRequest : ConversationBase
     {
         public Guid Id { get; set; }
     }

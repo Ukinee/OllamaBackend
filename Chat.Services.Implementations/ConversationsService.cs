@@ -30,15 +30,15 @@ namespace Chat.Services.Implementations
 
         public async Task<ConversationViewModel> Update(PutConversationRequest request, CancellationToken token)
         {
-            ConversationEntity conversation = await getConversationQuery.Execute(request.Id);
+            ConversationEntity conversation = await getConversationQuery.Execute(request.Id, token);
             await updateConversationCommand.Execute(conversation, request);
 
             return convertConversationToViewModelQuery.Execute(conversation);
         }
 
-        public async Task<ConversationViewModel> GetPaginatedMessages(Guid guid, int routePage, int pageSize)
+        public async Task<ConversationViewModel> GetPaginatedMessages(Guid guid, int routePage, int pageSize, CancellationToken cancellationToken)
         {
-            ConversationEntity conversation = await getConversationQuery.Execute(guid);
+            ConversationEntity conversation = await getConversationQuery.Execute(guid, cancellationToken);
 
             return getConversationPaginationQuery.Execute(conversation, routePage, pageSize);
         }

@@ -14,6 +14,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Common.UserChatLinks.CQRS\Common.UserChatLinks.CQRS.csproj" />
       <ProjectReference Include="..\Common.UserChatLinks.Models\Common.UserChatLinks.Models.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Services\Common.UserChatLinks.Services.csproj" />
     </ItemGroup>
 
 </Project>

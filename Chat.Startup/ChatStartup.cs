@@ -7,6 +7,7 @@ using Chat.DataAccess.Implementations;
 using Chat.DataAccess.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Users.CQRS;
 
 namespace Chat.Startup
 {
@@ -18,13 +19,10 @@ namespace Chat.Startup
                 .AddScoped<IConversationRepository, ConversationRepository>()
                 .AddScoped<IMessageRepository, MessageRepository>()
                 .AddScoped<IUserRepository, UserRepository>()
-                .AddScoped<CheckUserOwnsMessageQuery>()
                 .AddScoped<GetMessageQuery>()
                 .AddScoped<GetConversationPaginationQuery>()
-                .AddScoped<DeleteMessageQuery>()
                 .AddScoped<GetMessagesQuery>()
                 .AddScoped<AddMessageQuery>()
-                .AddScoped<CheckUserInConversationQuery>()
                 .AddScoped<AddConversationCommand>()
                 .AddScoped<UpdateConversationCommand>()
                 .AddScoped<GetConversationQuery>()

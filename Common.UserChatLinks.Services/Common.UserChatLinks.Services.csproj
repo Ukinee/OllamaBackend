@@ -8,8 +8,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Chat.CQRS\Chat.CQRS.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.CQRS\Common.UserChatLinks.CQRS.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Models\Common.UserChatLinks.Models.csproj" />
       <ProjectReference Include="..\Persona.CQRS\Persona.CQRS.csproj" />
-      <ProjectReference Include="..\Users.FakeUsers.Services.Interfaces\Users.FakeUsers.Services.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

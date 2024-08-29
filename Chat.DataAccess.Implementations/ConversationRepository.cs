@@ -15,7 +15,7 @@ namespace Chat.DataAccess.Implementations
             _userDbContext = userDbContext;
         }
 
-        public async Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate)
+        public async Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate, CancellationToken cancellationToken)
         {
             Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
 
@@ -24,7 +24,7 @@ namespace Chat.DataAccess.Implementations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
                 .ThenInclude(x => x.SenderPersona)
-                .FirstOrDefaultAsync(expression);
+                .FirstOrDefaultAsync(expression, cancellationToken);
 
             return conversationEntity;
         }

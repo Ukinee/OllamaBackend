@@ -4,7 +4,7 @@ using Core.Common.DataAccess.SharedEntities.Chats;
 
 namespace Chat.CQRS.Queries.Done
 {
-    [Obsolete("")]
+    [Obsolete("Не нужен")]
     public class GetMessageQuery
     {
         private readonly IMessageRepository _messageRepository;

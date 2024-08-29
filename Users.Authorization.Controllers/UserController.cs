@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Authorization.Domain;
+using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
 using Core.Common.DataAccess.SharedEntities.Users;
 using Core.Common.DataAccess.SharedEntities.Users.Mappers;
@@ -16,18 +17,18 @@ namespace Users.Authorization.Controllers
     public class UserController : ControllerBase
     {
         private readonly ITokenService _tokenService;
-        private readonly IUserCreationService _userCreationService;
+        private readonly UserService _userService;
         private readonly UserManager<UserEntity> _userManager;
 
         public UserController
         (
             ITokenService tokenService,
-            IUserCreationService userCreationService,
+            UserService userService,
             UserManager<UserEntity> userManager
         )
         {
             _tokenService = tokenService;
-            _userCreationService = userCreationService;
+            _userService = userService;
             _userManager = userManager;
         }
 
@@ -39,12 +40,12 @@ namespace Users.Authorization.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest)
+        public async Task<IActionResult> Register([FromBody] UserCreateRequest createRequest, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            UserEntity user = await _userCreationService.Create(createRequest);
+            UserEntity user = await _userService.Create(createRequest, cancellationToken);
 
             string token = await _tokenService.CreateToken(_userManager, user);
 

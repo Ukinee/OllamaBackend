@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Persona.CQRS.Queries;
-using Persona.CQRS.Queries.Done;
 using Persona.Models.Personas;
 using Personas.Services.Implementations;
 
@@ -33,12 +31,12 @@ namespace Persona.Controllers
 
         [HttpPut("{id:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] PutPersonaRequest personaRequest)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] PutPersonaRequest personaRequest, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            PersonaViewModel viewModel = await _personaService.Update(personaRequest, id);
+            PersonaViewModel viewModel = await _personaService.Update(personaRequest, id, cancellationToken);
 
             return Ok(viewModel);
         }

@@ -37,9 +37,9 @@ namespace Persona.Controllers
 
         [HttpGet("{conversationId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetByConversationId([FromRoute] Guid conversationId)
+        public async Task<IActionResult> GetByConversationId([FromRoute] Guid conversationId, CancellationToken cancellationToken)
         {
-            IList<PersonaViewModel> personas = await _personaService.GetByConversationId(conversationId);
+            IList<PersonaViewModel> personas = await _personaService.GetByConversationId(conversationId, cancellationToken);
 
             return Ok(personas);
         }

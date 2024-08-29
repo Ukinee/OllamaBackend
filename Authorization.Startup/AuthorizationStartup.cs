@@ -19,7 +19,6 @@ namespace Authorization.Startup
         {
             return services
                 .AddScoped<ITokenService, TokenService>()
-                .AddScoped<IUserCreationService, UserCreationService>()
                 .AddScoped<UserManager<UserEntity>>()
                 .AddScoped<UserFactory>()
                 .SetupJwt(configuration)

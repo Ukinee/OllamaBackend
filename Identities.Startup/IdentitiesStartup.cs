@@ -1,8 +1,6 @@
 ﻿using Identities.DataAccess.Implementations;
 using Identities.DataAccess.Interfaces;
 using Identities.Services.Factories;
-using Identities.Services.Implementations;
-using Identities.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +12,6 @@ namespace Identities.Startup
         {
             return services
                     .AddScoped<IIdentityRepository, IdentityRepository>()
-                    .AddScoped<IIdentityCreationService, IdentityCreationService>()
                     .AddScoped<IdentityFactory>()
                 ;
         }

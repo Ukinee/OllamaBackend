@@ -1,45 +1,34 @@
 ﻿using Chat.DataAccess.Interfaces;
-using Common.UserChatLinks.Models;
 using Core.Common.DataAccess.SharedEntities.Chats;
 using Core.Common.DataAccess.SharedEntities.Users;
-using Personas.Services.Interfaces;
 using Users.FakeUsers.Services.Interfaces;
 
 namespace Common.UserChatLinks.CQRS
 {
     public class AddPersonaToConversationCommand
     {
-        private readonly IPersonaRepository _personaRepository;
         private readonly IConversationRepository _conversationRepository;
         private readonly IFakeUserService _fakeUserService;
 
         public AddPersonaToConversationCommand
         (
-            IPersonaRepository personaRepository,
             IConversationRepository conversationRepository,
             IFakeUserService fakeUserService
         )
         {
-            _personaRepository = personaRepository;
             _conversationRepository = conversationRepository;
             _fakeUserService = fakeUserService;
         }
 
-        public async Task Execute(AddPersonaToConversationRequest request)
+        public async Task Execute(PersonaEntity persona, ConversationEntity conversation)
         {
-            PersonaEntity? persona = await _personaRepository.Get(request.PersonaId);
-            ConversationEntity? conversation = await _conversationRepository.GetConcreteConversation(request.ConversationId);
-
-            ArgumentNullException.ThrowIfNull(persona);
-            ArgumentNullException.ThrowIfNull(conversation);
-
             if (conversation.Personas.Any(x => x.Id == persona.Id))
             {
                 throw new Exception("Persona is already in the conversation");
             }
             
             conversation.Personas.Add(persona);
-            await _conversationRepository.Update(conversation);
+            await _conversationRepository.Save();
 
             string content = $"Persona {persona.Name} ({persona.Id}) joined the conversation"; //todo: hardcoded message
 
