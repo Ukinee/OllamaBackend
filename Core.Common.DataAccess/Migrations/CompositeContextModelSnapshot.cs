@@ -22,7 +22,22 @@ namespace Core.Common.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", b =>
+            modelBuilder.Entity("ConversationEntityPersonaEntity", b =>
+                {
+                    b.Property<Guid>("ConversationsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PersonasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ConversationsId", "PersonasId");
+
+                    b.HasIndex("PersonasId");
+
+                    b.ToTable("PersonaConversations", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,6 +53,10 @@ namespace Core.Common.DataAccess.Migrations
                     b.Property<DateTime>("EndedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Information")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
 
@@ -50,7 +69,7 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("Conversations");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Chats.MessageEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Chats.MessageEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +101,7 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,7 +124,7 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("Identities");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +153,7 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,21 +232,6 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ConversationEntityPersonaEntity", b =>
-                {
-                    b.Property<Guid>("ConversationsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PersonasId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ConversationsId", "PersonasId");
-
-                    b.HasIndex("PersonasId");
-
-                    b.ToTable("PersonaConversations", (string)null);
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -258,13 +262,13 @@ namespace Core.Common.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c12c0b3c-e650-49fe-a7df-5734dd97517e"),
+                            Id = new Guid("0fb4b6ba-f091-4097-ba38-dd9a113a864f"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("5e613fe6-1256-407b-aea6-b2e16bdfa954"),
+                            Id = new Guid("2dd27d36-6283-4600-9707-ae57b75b048b"),
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -373,15 +377,30 @@ namespace Core.Common.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Chats.MessageEntity", b =>
+            modelBuilder.Entity("ConversationEntityPersonaEntity", b =>
                 {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", "Conversation")
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ConversationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PersonasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Chats.MessageEntity", b =>
+                {
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", "Conversation")
                         .WithMany("Messages")
                         .HasForeignKey("ConversationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", "SenderPersona")
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", "SenderPersona")
                         .WithMany()
                         .HasForeignKey("SenderPersonaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -392,15 +411,15 @@ namespace Core.Common.DataAccess.Migrations
                     b.Navigation("SenderPersona");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", b =>
                 {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", "Identity")
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", "Identity")
                         .WithOne("Persona")
-                        .HasForeignKey("Core.Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", "IdentityId")
+                        .HasForeignKey("Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", "IdentityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", "User")
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.UserEntity", "User")
                         .WithMany("Personas")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -409,21 +428,6 @@ namespace Core.Common.DataAccess.Migrations
                     b.Navigation("Identity");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ConversationEntityPersonaEntity", b =>
-                {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ConversationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.PersonaEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PersonasId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -437,7 +441,7 @@ namespace Core.Common.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -446,7 +450,7 @@ namespace Core.Common.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -461,7 +465,7 @@ namespace Core.Common.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -470,24 +474,24 @@ namespace Core.Common.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
+                    b.HasOne("Core.Common.DataAccess.SharedEntities.Users.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Chats.ConversationEntity", b =>
                 {
                     b.Navigation("Messages");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.IdentityEntity", b =>
                 {
                     b.Navigation("Persona");
                 });
 
-            modelBuilder.Entity("Core.Core.Common.DataAccess.SharedEntities.Users.UserEntity", b =>
+            modelBuilder.Entity("Core.Common.DataAccess.SharedEntities.Users.UserEntity", b =>
                 {
                     b.Navigation("Personas");
                 });

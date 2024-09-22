@@ -1,6 +1,8 @@
 ﻿using Common.UserChatLinks.CQRS;
+using Common.UserChatLinks.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserPersonaLinks.CQRS;
 using Users.FakeUsers.Services.Implementations;
 using Users.FakeUsers.Services.Interfaces;
 
@@ -13,9 +15,11 @@ public static class UserChatLinksStartup
         services
             .AddScoped<AddPersonaToConversationCommand>()
             .AddScoped<RemovePersonaFromConversationCommand>()
-            .AddScoped<IFakeUserService, FakeUserService>()
+            .AddScoped<LinkPersonaToUserCommand>()
+            .AddScoped<UserChatLinkService>()
+            .AddScoped<ISystemMessageService, SystemMessageService>()
             ;
-        
+
         return services;
     }
 }

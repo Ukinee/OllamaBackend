@@ -15,38 +15,32 @@ public class PersonaRepository : IPersonaRepository
         _userContext = userContext;
     }
 
-    public async Task<PersonaEntity?> Find(Func<PersonaEntity, bool> predicate, CancellationToken token)
+    public async Task<PersonaEntity?> Find(Expression<Func<PersonaEntity, bool>> predicate, CancellationToken token)
     {
-        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
-
         return await _userContext
             .Personas
             .Include(persona => persona.Conversations)
             .Include(persona => persona.Identity)
-            .FirstOrDefaultAsync(expression, token);
+            .FirstOrDefaultAsync(predicate, token);
     }
 
-    public async Task<IEnumerable<PersonaEntity>> FindAll(Func<PersonaEntity, bool> predicate)
+    public async Task<IEnumerable<PersonaEntity>> FindAll(Expression<Func<PersonaEntity, bool>> predicate)
     {
-        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
-
         return await _userContext
             .Personas
             .Include(persona => persona.Conversations)
             .Include(persona => persona.Identity)
-            .Where(expression)
+            .Where(predicate)
             .ToArrayAsync();
     }
 
-    public async Task<IEnumerable<PersonaEntity>> FindMany(int amount, Func<PersonaEntity, bool> predicate)
+    public async Task<IEnumerable<PersonaEntity>> FindMany(int amount, Expression<Func<PersonaEntity, bool>> predicate)
     {
-        Expression<Func<PersonaEntity, bool>> expression = x => predicate.Invoke(x);
-
         return await _userContext
             .Personas
             .Include(persona => persona.Conversations)
             .Include(persona => persona.Identity)
-            .Where(expression)
+            .Where(predicate)
             .Take(amount)
             .ToArrayAsync();
     }
@@ -54,7 +48,7 @@ public class PersonaRepository : IPersonaRepository
     public async Task Add(PersonaEntity personaEntity, CancellationToken token)
     {
         _userContext.Personas.Add(personaEntity);
-        
+
         await Save(token);
     }
 

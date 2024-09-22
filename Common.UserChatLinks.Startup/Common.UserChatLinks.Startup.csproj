@@ -13,6 +13,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Common.UserChatLinks.CQRS\Common.UserChatLinks.CQRS.csproj" />
+      <ProjectReference Include="..\Common.UserChatLinks.Services\Common.UserChatLinks.Services.csproj" />
+      <ProjectReference Include="..\UserPersonaLinks.CQRS\UserPersonaLinks.CQRS.csproj" />
       <ProjectReference Include="..\Users.FakeUsers.Services.Implementations\Users.FakeUsers.Services.Implementations.csproj" />
     </ItemGroup>
 

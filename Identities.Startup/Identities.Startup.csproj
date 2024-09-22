@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Identities.CQRS\Identities.CQRS.csproj" />
       <ProjectReference Include="..\Identities.DataAccess.Implementations\Identities.DataAccess.Implementations.csproj" />
       <ProjectReference Include="..\Identities.Services.Implementations\Identities.Services.Implementations.csproj" />
       <ProjectReference Include="..\Identities.Services.Interfaces\Identities.Services.Interfaces.csproj" />

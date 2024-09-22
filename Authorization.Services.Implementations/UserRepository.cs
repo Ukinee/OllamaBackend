@@ -15,14 +15,13 @@ namespace Authorization.Services.Implementations
             _dbContext = dbContext;
         }
 
-        public Task<UserEntity?> Find(Func<UserEntity, bool> predicate)
+        public Task<UserEntity?> Find(Expression<Func<UserEntity, bool>> predicate)
         {
-            Expression<Func<UserEntity, bool>> expression = x => predicate.Invoke(x);
-            
             return _dbContext
                 .Users
                 .Include(user => user.Personas)
-                .FirstOrDefaultAsync(expression);
+                .ThenInclude(x => x.Conversations) //todo: bad
+                .FirstOrDefaultAsync(predicate);
         }
 
         public async Task Add(UserEntity user, CancellationToken token)

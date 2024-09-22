@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Memories.CQRS\Memories.CQRS.csproj" />
+      <ProjectReference Include="..\Memories.Domain\Memories.Domain.csproj" />
+      <ProjectReference Include="..\Memories.Services.Interfaces\Memories.Services.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -18,18 +18,6 @@ namespace Chat.Controllers
             _messagesService = messagesService;
         }
 
-        // [HttpGet("{id:guid}")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // public async Task<IActionResult> GetMessage([FromRoute] Guid id)
-        // {
-        //     if (ModelState.IsValid == false)
-        //         return BadRequest(ModelState);
-        //
-        //     MessageEntity message = await _getMessageQuery.Execute(id);
-        //
-        //     return Ok(message.ToViewModel());
-        // }
-
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostMessage([FromBody] PostMessageRequest messageRequest, CancellationToken token)
@@ -41,17 +29,5 @@ namespace Chat.Controllers
 
             return Ok(messageViewModel);
         }
-
-        // [HttpDelete("{id:guid}")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // public async Task<IActionResult> DeleteMessage([FromQuery] Guid id)
-        // {
-        //     if (ModelState.IsValid == false)
-        //         return BadRequest(ModelState);
-        //
-        //     await _deleteMessageQuery.Remove(id);
-        //
-        //     return NoContent();
-        // }
     }
 }

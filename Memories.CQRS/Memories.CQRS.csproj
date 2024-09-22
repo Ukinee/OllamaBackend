@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Core.Common.DataAccess.SharedEntities\Core.Common.DataAccess.SharedEntities.csproj" />
+      <ProjectReference Include="..\Memories.DataAccess.Interfaces\Memories.DataAccess.Interfaces.csproj" />
+      <ProjectReference Include="..\Memories.Services.Factories\Memories.Services.Factories.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Commands\" />
+    </ItemGroup>
+
+</Project>

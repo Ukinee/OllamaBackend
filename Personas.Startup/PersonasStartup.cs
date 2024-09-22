@@ -1,4 +1,5 @@
 ﻿using Core.Common.DataAccess.SharedEntities.Users;
+using Identities.SQRS;
 using Mapster;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Persona.Models.Personas;
 using Persona.Services.Factories;
 using Personas.Services.Implementations;
 using Personas.Services.Interfaces;
+using UserPersonaLinks.CQRS;
 
 namespace Personas.Startup
 {
@@ -22,6 +24,12 @@ namespace Personas.Startup
                     .AddScoped<PersonaFactory>()
                     .AddScoped<CreatePersonaQuery>()
                     .AddScoped<GetPersonaQuery>()
+                    .AddScoped<PersonaService>()
+                    .AddScoped<GetPersonasQuery>()
+                    .AddScoped<GetPersonaQuery>()
+                    .AddScoped<CreatePersonaQuery>()
+                    .AddScoped<CreateIdentityQuery>()
+                    .AddScoped<UpdatePersonaCommand>()
                     .AddScoped<GetPersonasQuery>()
                     .AddScoped<UpdatePersonaCommand>()
                 ;

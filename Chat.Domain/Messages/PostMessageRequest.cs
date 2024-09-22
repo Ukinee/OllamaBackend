@@ -4,6 +4,6 @@ namespace Chat.Domain.Messages
 {
     public record PostMessageRequest : MessageBase
     {
-        public Guid ConversationId { get; set; }
+        public Guid ConversationId { get; init; }
     }
 }

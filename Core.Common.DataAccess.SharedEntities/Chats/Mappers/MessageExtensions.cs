@@ -14,8 +14,10 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
                 SenderPersona = personaEntity,
                 ConversationId = message.ConversationId,
                 Content = message.Content,
-                Images = message.Images ?? [],
+                Images = message.Images,
+                RespondedMessageId = message.RespondedMessageId,
                 Timestamp = DateTime.UtcNow,
+                IsSystem = message.IsSystem,
             };
         }
 
@@ -29,6 +31,8 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
                 SenderName = message.SenderPersona.Name,
                 Images = message.Images,
                 Timestamp = message.Timestamp,
+                IsSystem = message.IsSystem,
+                RespondedMessageId = message.RespondedMessageId,
             };
         }
     }

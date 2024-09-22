@@ -5,19 +5,18 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
 {
     public static class ConversationExtensions
     {
-        public static ConversationViewModel ToViewModel(this ConversationEntity conversation)
+        public static GeneralConversationViewModel ToGeneralViewModel(this ConversationEntity conversation)
         {
-            return new ConversationViewModel
+            return new GeneralConversationViewModel()
             {
+                Context = conversation.Context,
+                LastProcessedMessageId = conversation.LastProcessedMessageId,
                 Id = conversation.Id,
                 Information = conversation.Information,
                 Name = conversation.Name,
-                Context = conversation.Context,
-                PersonasId = conversation.Personas.Select(x => x.Id).ToList(),
-                Messages = conversation.Messages.Select(x => x.ToViewModel()).ToList(),
             };
         }
-
+        
         public static ConversationViewModel ToViewModel(this ConversationEntity conversation, IList<MessageEntity> messages)
         {
             return new ConversationViewModel
@@ -36,6 +35,7 @@ namespace Core.Common.DataAccess.SharedEntities.Chats.Mappers
             return new ConversationEntity
             {
                 Id = Guid.NewGuid(),
+                LastProcessedMessageId = Guid.Empty,
                 IsFinished = false,
                 Information = conversation.Information,
                 CreatedAt = DateTime.Now,

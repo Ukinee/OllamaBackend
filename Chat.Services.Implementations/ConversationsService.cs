@@ -14,26 +14,26 @@ namespace Chat.Services.Implementations
         AddConversationCommand addConversationCommand,
         GetConversationQuery getConversationQuery,
         UpdateConversationCommand updateConversationCommand,
-        ConvertConversationToViewModelQuery convertConversationToViewModelQuery,
+        ConvertConversationToGeneralViewModelQuery convertConversationToGeneralViewModelQuery,
         GetConversationPaginationQuery getConversationPaginationQuery,
         GetConversationsFromPersonaQuery getConversationsFromPersonaQuery
     )
     {
-        public async Task<ConversationViewModel> Add(PostConversationRequest request, CancellationToken token)
+        public async Task<GeneralConversationViewModel> Add(PostConversationRequest request, CancellationToken token)
         {
             PersonaEntity persona = await getPersonaQuery.Execute(request.PersonaId, token);
             ConversationEntity conversation = createConversationQuery.Execute(persona, request);
             await addConversationCommand.Execute(conversation, token);
 
-            return convertConversationToViewModelQuery.Execute(conversation);
+            return convertConversationToGeneralViewModelQuery.Execute(conversation);
         }
 
-        public async Task<ConversationViewModel> Update(PutConversationRequest request, CancellationToken token)
+        public async Task<GeneralConversationViewModel> Update(PutConversationRequest request, CancellationToken token)
         {
             ConversationEntity conversation = await getConversationQuery.Execute(request.Id, token);
             await updateConversationCommand.Execute(conversation, request);
 
-            return convertConversationToViewModelQuery.Execute(conversation);
+            return convertConversationToGeneralViewModelQuery.Execute(conversation);
         }
 
         public async Task<ConversationViewModel> GetPaginatedMessages(Guid guid, int routePage, int pageSize, CancellationToken cancellationToken)
@@ -43,7 +43,7 @@ namespace Chat.Services.Implementations
             return getConversationPaginationQuery.Execute(conversation, routePage, pageSize);
         }
 
-        public async Task<IList<ConversationViewModel>> GetConversationsByPersona(Guid personaId, CancellationToken token)
+        public async Task<IList<GeneralConversationViewModel>> GetGeneralConversationsByPersona(Guid personaId, CancellationToken token)
         {
             PersonaEntity persona = await getPersonaQuery.Execute(personaId, token);
             

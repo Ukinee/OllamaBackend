@@ -4,11 +4,15 @@ using Authorization.Services.Implementations;
 using Authorization.Services.Interfaces;
 using Core.Common.DataAccess;
 using Core.Common.DataAccess.SharedEntities.Users;
+using Identities.SQRS;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Persona.CQRS.Queries;
+using UserPersonaLinks.CQRS;
+using Users.CQRS;
 
 namespace Authorization.Startup
 {
@@ -18,9 +22,14 @@ namespace Authorization.Startup
             (this IServiceCollection services, IConfiguration configuration)
         {
             return services
+                .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<ITokenService, TokenService>()
                 .AddScoped<UserManager<UserEntity>>()
                 .AddScoped<UserFactory>()
+                .AddScoped<UserService>()
+                .AddScoped<GetUserQuery>()
+                .AddScoped<CreateUserQuery>()
+                .AddScoped<LinkPersonaToUserCommand>()
                 .SetupJwt(configuration)
                 .SetupIdentity();
         }

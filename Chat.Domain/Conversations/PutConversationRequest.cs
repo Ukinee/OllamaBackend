@@ -4,6 +4,8 @@ namespace Chat.Domain.Conversations
 {
     public class PutConversationRequest : ConversationBase
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; init; }
+        
+        public Guid? LastProcessedMessageId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Persona.Models.Personas;
@@ -30,16 +31,26 @@ namespace Persona.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetByUsername([FromRoute] string username)
         {
-            IList<PersonaViewModel> personas = await _personaService.GetByUsername(username);
+            IList<PersonaViewModel> personas;
+
+            try
+            {
+                personas = await _personaService.GetByUsername(username);
+            }
+            catch (ArgumentNullException)
+            {
+                personas = [];
+                Trace.WriteLine("User not found");
+            }
 
             return Ok(personas);
         }
 
         [HttpGet("{conversationId:guid}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetByConversationId([FromRoute] Guid conversationId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetByConversationId([FromRoute] Guid conversationId, CancellationToken token)
         {
-            IList<PersonaViewModel> personas = await _personaService.GetByConversationId(conversationId, cancellationToken);
+            IList<PersonaViewModel> personas = await _personaService.GetByConversationId(conversationId, token);
 
             return Ok(personas);
         }

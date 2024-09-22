@@ -22,8 +22,8 @@ namespace Chat.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetGeneralConversations([FromRoute] Guid personaId, CancellationToken token)
         {
-            IList<ConversationViewModel> conversations = await _conversationsService
-                .GetConversationsByPersona(personaId, token);
+            IList<GeneralConversationViewModel> conversations = await _conversationsService
+                .GetGeneralConversationsByPersona(personaId, token);
 
             return Ok(conversations);
         }

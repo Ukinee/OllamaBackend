@@ -20,7 +20,7 @@ namespace Chat.Controllers
         [HttpGet("{conversationId:guid}")]
         [HttpGet("{conversationId:guid}/messages/page/{routePage:int}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid conversationId, int? routePage, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetConcreteConversation([FromRoute] Guid conversationId, [FromRoute] int? routePage, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
@@ -41,7 +41,7 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            ConversationViewModel conversationViewModel = await _conversationsService.Add(request, token);
+            GeneralConversationViewModel conversationViewModel = await _conversationsService.Add(request, token);
 
             return Ok(conversationViewModel);
         }
@@ -53,7 +53,7 @@ namespace Chat.Controllers
             if (ModelState.IsValid == false)
                 return BadRequest(ModelState);
 
-            ConversationViewModel viewModel = await _conversationsService.Update(request, token);
+            GeneralConversationViewModel viewModel = await _conversationsService.Update(request, token);
 
             return Ok(viewModel);
         }

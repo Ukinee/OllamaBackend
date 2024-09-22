@@ -15,43 +15,37 @@ namespace Chat.DataAccess.Implementations
             _userDbContext = userDbContext;
         }
 
-        public async Task<ConversationEntity?> Find(Func<ConversationEntity, bool> predicate, CancellationToken cancellationToken)
+        public async Task<ConversationEntity?> Find(Expression<Func<ConversationEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
-
             ConversationEntity? conversationEntity = await _userDbContext
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
                 .ThenInclude(x => x.SenderPersona)
-                .FirstOrDefaultAsync(expression, cancellationToken);
+                .FirstOrDefaultAsync(predicate, cancellationToken);
 
             return conversationEntity;
         }
 
-        public async Task<IEnumerable<ConversationEntity>> FindAll(Func<ConversationEntity, bool> predicate)
+        public async Task<IEnumerable<ConversationEntity>> FindAll(Expression<Func<ConversationEntity, bool>> predicate)
         {
-            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
-            
             return await _userDbContext
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
                 .ThenInclude(x => x.SenderPersona)
-                .Where(expression)
+                .Where(predicate)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ConversationEntity>> FindMany(int amount, Func<ConversationEntity, bool> predicate)
+        public async Task<IEnumerable<ConversationEntity>> FindMany(int amount, Expression<Func<ConversationEntity, bool>> predicate)
         {
-            Expression<Func<ConversationEntity, bool>> expression = x => predicate.Invoke(x);
-            
             return await _userDbContext
                 .Conversations
                 .Include(conversation => conversation.Personas)
                 .Include(conversation => conversation.Messages)
                 .ThenInclude(x => x.SenderPersona)
-                .Where(expression)
+                .Where(predicate)
                 .Take(amount)
                 .ToListAsync();
         }
